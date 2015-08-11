@@ -1,2 +1,48 @@
-# sdk-seed
-Seed project for enplug apps using the web page extension SDK. https://developers.enplug.com
+# sdk-seed - the seed for Enplug apps
+This project is an application skeleton for a typical Enplug web-based app. You can use it to quickly bootstrap your Enplug webapp projects and dev environment for these projects.
+
+## Getting Started
+To get you started you can simply clone the sdk-seed repository and install the dependencies:
+
+### Prerequisites
+You need git to clone the sdk-seed repository. You can get git from http://git-scm.com/.
+
+We also use a number of node.js tools to initialize and test angular-seed. You must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
+
+### Clone sdk-seed
+Clone the sdk-seed repository using [git](http://git-scm.com/):
+```
+git clone https://github.com/enplug/sdk-seed.git
+cd sdk-seed
+```
+If you just want to start a new project without the sdk-seed commit history then you can do:
+```
+git clone --depth=1 https://github.com/enplug/sdk-seed.git <your-project-name>
+```
+The `depth=1` tells git to only pull down one commit worth of historical data.
+
+### Install Dependencies
+We have two kinds of dependencies in this project: tools and enplug framework code. The tools help us manage and test the application.
+- We get the tools we depend upon via `npm`, the [node package manager](https://www.npmjs.org/).
+- We get the angular code via `bower`, a [client-side code package manager](http://bower.io/).
+
+First install the tools:
+```
+npm install
+```
+which will install bower. Then install the web dependencies:
+```
+bower install
+```
+
+You should find that you have two new folders in your project.
+
+- `node_modules` - contains the npm packages for the tools we need
+- `app/bower_components` - contains the enplug framework files
+
+## Developing
+Point your local web server to the `dist/` folder of your project. This is where the built files will be put.
+
+There are two commands to use when developing:
+- `grunt build`: builds the project, placing it in the `dist/` folder.
+- `grunt watch` (optional): compiles your files (Javascript, HTML, images, CSS) as you change them.
