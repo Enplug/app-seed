@@ -1,7 +1,7 @@
-# sdk-seed - the seed for Enplug apps
-This project is an application skeleton for a typical Enplug web-based app. You can use it to quickly bootstrap your Enplug webapp projects and dev environment for these projects.
+# sdk-seed - the seed for DisplayOS apps
+This project is an application skeleton for a typical DisplayOS web-based app. You can use it to quickly bootstrap your DisplayOS webapp projects and dev environment for these projects.
 
-Learn more about building apps for DisplayOS using the web extension SDK: https://developers.enplug.com/guides/building-web-page-app-extension/
+Learn more about building apps for DisplayOS using the web extension SDK: https://developers..com/guides/building-web-page-app-extension/
 
 ## Getting Started
 To get you started you can simply clone the sdk-seed repository and install the dependencies:
@@ -30,7 +30,7 @@ git push -u origin master
 ```
 
 ### Install Dependencies
-We have two kinds of dependencies in this project: tools and enplug framework code. The tools help us manage and test the application.
+We have two kinds of dependencies in this project: tools and DisplayOS framework code. The tools help us manage and test the application.
 - We get the tools we depend upon via `npm`, the [node package manager](https://www.npmjs.org/).
 - We get the sdk code via `bower`, a [client-side code package manager](http://bower.io/).
 
@@ -47,7 +47,7 @@ bower install
 You should find that you have two new folders in your project.
 
 - `node_modules` - contains the npm packages for the tools we need
-- `src/[app/dashboard]/bower_components` - contains the enplug framework files
+- `src/[app/dashboard]/bower_components` - contains the DisplayOS framework files
 
 ## Developing
 Point your local web server to the `dist/` folder of your project. This is where the built files will be put.
