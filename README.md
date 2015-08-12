@@ -24,7 +24,7 @@ git init
 git remote add origin <your-remote-repository-url>
 git add -A
 git commit -m 'Initial commit'
-git push origin master
+git push -u origin master
 ```
 
 ### Install Dependencies
