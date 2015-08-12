@@ -1,31 +1,37 @@
-module.exports = {
+module.exports = function (grunt) {
 
-    options: { livereload: false },
+    grunt.registerTask('project', 'Set project option.', function (value) {
+        grunt.config('project', value);
+    });
 
-    // Watch for JS changes and re-build app JS
-    scripts: {
-        files: ['src/<%= project %>/js/**/*.js'],
-        tasks: ['build-js']
-    },
+    return {
+        options: { livereload: false },
 
-    // Watch for SASS changes and recompile CSS files
-    sass: {
-        files: ['src/<%= project %>/sass/**/*.scss'],
-        tasks: ['build-css']
-    },
+        // Watch for JS changes and re-build app JS
+        scripts: {
+            files: ['src/<%= project %>/js/**/*.js'],
+            tasks: ['project:<%= project %>', 'build-js']
+        },
 
-    templates: {
-        files: ['src/<%= project %>/templates/**/*.html'],
-        tasks: ['build-templates', 'build-js']
-    },
+        // Watch for SASS changes and recompile CSS files
+        sass: {
+            files: ['src/<%= project %>/sass/**/*.scss'],
+            tasks: ['project:<%= project %>', 'build-css']
+        },
 
-    html: {
-        files: ['src/<%= project %>/index.html'],
-        tasks: ['build-html']
-    },
+        templates: {
+            files: ['src/<%= project %>/templates/**/*.html'],
+            tasks: ['project:<%= project %>', 'build-templates', 'build-js']
+        },
 
-    livereload: {
-        files: [ 'dist/**' ],
-        options: { livereload: true }
-    }
+        html: {
+            files: ['src/<%= project %>/index.html'],
+            tasks: ['build-html']
+        },
+
+        livereload: {
+            files: ['dist/**'],
+            options: {livereload: true}
+        }
+    };
 };
