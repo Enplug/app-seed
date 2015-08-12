@@ -22,6 +22,7 @@ If you just want to start a new project without the sdk-seed commit history then
 git clone https://github.com/enplug/sdk-seed.git <your-project-name>
 cd <your-project-name>
 rm -rf .git
+rm README.md
 git init
 git remote add origin <your-remote-repository-url>
 git add -A
