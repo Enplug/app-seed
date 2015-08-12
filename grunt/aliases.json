@@ -1,5 +1,6 @@
 {
     "build": [
+        "prompt:project",
         "clean:build",
         "build-libs",
         "build-templates",
@@ -8,15 +9,19 @@
         "build-css",
         "build-img"
     ],
+    "develop": [
+        "prompt:project",
+        "watch"
+    ],
+    "build-libs": [
+        "bower_concat:build"
+    ],
     "build-templates": [
         "html2js:build",
         "replace:build"
     ],
     "build-html": [
         "processhtml:build"
-    ],
-    "build-libs": [
-        "bower_concat:build"
     ],
     "build-js": [
         "clean:js",
@@ -40,6 +45,7 @@
         "cssmin:release"
     ],
     "pre-release": [
+        "prompt:project",
         "build",
         "release-css",
         "release-js",
@@ -47,7 +53,8 @@
         "replace:release"
     ],
     "release": [
+        "prompt:project",
         "pre-release",
-        "s3"
+        "s3:release"
     ]
 }

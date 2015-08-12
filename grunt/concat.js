@@ -1,20 +1,20 @@
 module.exports = {
     js: {
         src: [
-            'tmp/libs.js',
-            'src/js/module.js',
-            'src/js/**/*.js',
-            'tmp/*.js'
+            'src/<%= project %>/tmp/libs.js',
+            'src/<%= project %>/js/module.js',
+            'src/<%= project %>/js/**/*.js',
+            'src/<%= project %>/tmp/*.js'
         ],
-        dest: 'tmp/app.js',
+        dest: 'src/<%= project %>/tmp/app.js',
         nonull: true
     },
     css: {
         src: [
-            'tmp/libs.css',
-            'tmp/app.css'
+            'src/<%= project %>/tmp/libs.css',
+            'src/<%= project %>/tmp/app.css'
         ],
-        dest: 'dist/css/app.css',
+        dest: 'dist/<%= project %>/css/app.css',
         nonull: true
     }
 };

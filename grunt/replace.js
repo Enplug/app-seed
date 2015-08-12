@@ -8,9 +8,9 @@ module.exports = {
         ]
     },
     build: {
-        files: [{ 'tmp/templates.js': 'tmp/templates.js' }]
+        files: [{ 'src/<%= project %>/tmp/templates.js': 'src/<%= project %>/tmp/templates.js' }]
     },
     release: {
-        files: [{ 'dist/index.html': 'dist/index.html' }]
+        files: [{ 'dist/<%= project %>/index.html': 'dist/<%= project %>/index.html' }]
     }
 };

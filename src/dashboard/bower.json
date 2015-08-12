@@ -1,0 +1,9 @@
+{
+  "name": "sdk-seed",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "enplug-dashboard-sdk": "^2.0.0",
+    "enplug-dashboard-sdk-utils": "^1.0.0"
+  }
+}

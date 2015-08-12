@@ -7,7 +7,7 @@ module.exports = {
                 return moduleName.replace('.html', '');
             }
         },
-        src: ['src/templates/*.html'],
-        dest: 'tmp/templates.js'
+        src: ['src/<%= project %>/templates/*.html'],
+        dest: 'src/<%= project %>/tmp/templates.js'
     }
 };

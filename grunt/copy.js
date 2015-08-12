@@ -1,15 +1,15 @@
 module.exports = {
     img: {
         expand: true,
-        cwd: 'src/img/',
+        cwd: 'src/<%= project %>/img/',
         src: '**',
-        dest: 'dist/img/',
+        dest: 'dist/<%= project %>/img/',
         flatten: true,
         filter: 'isFile'
     },
     js: {
         files: {
-            'dist/js/app.js': 'tmp/app.js'
+            'dist/<%= project %>/js/app.js': 'src/<%= project %>/tmp/app.js'
         }
     }
 };

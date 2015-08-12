@@ -1,7 +1,7 @@
 module.exports = {
     release: {
         files: {
-            'dist/css/app.min.css': 'dist/css/app.css'
+            'dist/<%= project %>/css/app.min.css': 'dist/<%= project %>/css/app.css'
         }
     }
 };

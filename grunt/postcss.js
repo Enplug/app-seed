@@ -6,6 +6,6 @@ module.exports = {
         ]
     },
     build: {
-        src: 'dist/css/*.css'
+        src: 'dist/<%= project %>/css/*.css'
     }
 };

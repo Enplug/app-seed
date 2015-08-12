@@ -5,24 +5,15 @@
 *.private.*
 
 # Folders
-dist/*
-*/dist/*
-tmp/*
-*/tmp/*
-node_modules/*
-bower_components/*
-*/node_modules/*
-*/bower_components/*
-
+dist/
+tmp/
+node_modules/
+bower_components/
 
 # IntelliJ
-.idea/*
+.idea/
 *.iml
 
 # Sublime
 *.sublime-project
-*/*.sublime-project
-**/*.sublime-project
 *.sublime-workspace
-*/*.sublime-workspace
-**/*.sublime-workspace

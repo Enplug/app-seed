@@ -4,23 +4,23 @@ module.exports = {
 
     // Watch for JS changes and re-build app JS
     scripts: {
-        files: ['src/js/**/*.js'],
+        files: ['src/<%= project %>/js/**/*.js'],
         tasks: ['build-js']
     },
 
     // Watch for SASS changes and recompile CSS files
     sass: {
-        files: ['src/sass/**/*.scss'],
+        files: ['src/<%= project %>/sass/**/*.scss'],
         tasks: ['build-css']
     },
 
     templates: {
-        files: ['src/templates/**/*.html'],
+        files: ['src/<%= project %>/templates/**/*.html'],
         tasks: ['build-templates', 'build-js']
     },
 
     html: {
-        files: ['src/*.html'],
+        files: ['src/<%= project %>/index.html'],
         tasks: ['build-html']
     },
 

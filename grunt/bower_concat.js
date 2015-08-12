@@ -1,12 +1,10 @@
 module.exports = {
     build: {
-        dest: 'tmp/libs.js',
-        cssDest: 'tmp/libs.css',
+        dest: 'src/dashboard/tmp/libs.js',
+        cssDest: 'src/dashboard/tmp/libs.css',
         includeDev: true,
         exclude: [
-            'angular',
-            'ng-file-upload',
-            'ngDialog'
+            'angular' // Included from CDN
         ]
     }
 };
