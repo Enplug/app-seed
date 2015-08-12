@@ -45,4 +45,4 @@ Point your local web server to the `dist/` folder of your project. This is where
 
 There are two commands to use when developing:
 - `grunt build`: builds the project, placing it in the `dist/` folder.
-- `grunt watch` (optional): compiles your files (Javascript, HTML, images, CSS) as you change them.
+- `grunt develop` (optional): compiles your files (Javascript, HTML, images, CSS) as you change them.
