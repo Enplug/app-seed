@@ -7,7 +7,7 @@ To get you started you can simply clone the sdk-seed repository and install the 
 ### Prerequisites
 You need git to clone the sdk-seed repository. You can get git from http://git-scm.com/.
 
-We also use a number of node.js tools to initialize and test angular-seed. You must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
+We also use a number of node.js tools to initialize. You must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
 
 ### Clone sdk-seed
 Clone the sdk-seed repository using [git](http://git-scm.com/):
@@ -30,7 +30,7 @@ git push -u origin master
 ### Install Dependencies
 We have two kinds of dependencies in this project: tools and enplug framework code. The tools help us manage and test the application.
 - We get the tools we depend upon via `npm`, the [node package manager](https://www.npmjs.org/).
-- We get the angular code via `bower`, a [client-side code package manager](http://bower.io/).
+- We get the sdk code via `bower`, a [client-side code package manager](http://bower.io/).
 
 First install the tools:
 ```
