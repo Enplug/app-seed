@@ -1,0 +1,53 @@
+{
+    "build": [
+        "clean:build",
+        "build-libs",
+        "build-templates",
+        "build-html",
+        "build-js",
+        "build-css",
+        "build-img"
+    ],
+    "build-templates": [
+        "html2js:build",
+        "replace:build"
+    ],
+    "build-html": [
+        "processhtml:build"
+    ],
+    "build-libs": [
+        "bower_concat:build"
+    ],
+    "build-js": [
+        "clean:js",
+        "concat:js",
+        "copy:js"
+    ],
+    "build-css": [
+        "clean:css",
+        "sass:build",
+        "concat:css",
+        "postcss:build"
+    ],
+    "build-img": [
+        "copy:img"
+    ],
+    "release-js": [
+        "ngAnnotate:release",
+        "uglify:release"
+    ],
+    "release-css": [
+        "cssmin:release"
+    ],
+    "pre-release": [
+        "build",
+        "release-css",
+        "release-js",
+        "processhtml:release",
+        "replace:release"
+    ],
+    "release": [
+        "pre-release",
+        "s3"
+    ]
+}

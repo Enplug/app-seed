@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html ng-app="">
+    <head>
+        <!-- Non-bower libraries -->
+        <script src="//cdn.enplug.net/libs/angular/1.4.3/angular.js"></script>
+        <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+
+        <!-- build:css:release /dashboard/css/app.min.css?@@version -->
+        <link href="/dashboard/css/app.css?@@version" rel="stylesheet">
+        <!-- /build -->
+
+        <!-- build:js:release /dashboard/js/app.min.js?@@version -->
+        <script src="/dashboard/js/app.js?@@version"></script>
+        <!-- /build -->
+    </head>
+    <body>
+        <ng-view class="container"></ng-view>
+    </body>
+</html>
