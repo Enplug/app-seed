@@ -4,7 +4,7 @@ module.exports = {
     },
     release: {
         files: {
-            'dist/<%= project %>/js/app.js': ['src/<%= project %>/tmp/app.js']
+            'dist/<%= project %>/js/app.js': ['tmp/<%= project %>/app.js']
         }
     }
 };

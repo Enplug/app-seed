@@ -1,7 +1,7 @@
 module.exports = {
     build: {
-        dest: 'src/dashboard/tmp/libs.js',
-        cssDest: 'src/dashboard/tmp/libs.css',
+        dest: 'tmp/<%= project %>/libs.js',
+        cssDest: 'tmp/<%= project %>/libs.css',
         includeDev: true,
         exclude: [
             'angular' // Included from CDN

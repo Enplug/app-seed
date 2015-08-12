@@ -8,6 +8,6 @@ module.exports = {
             }
         },
         src: ['src/<%= project %>/templates/*.html'],
-        dest: 'src/<%= project %>/tmp/templates.js'
+        dest: 'tmp/<%= project %>/templates.js'
     }
 };
