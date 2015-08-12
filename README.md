@@ -1,25 +1,25 @@
-# sdk-seed - the seed for DisplayOS apps
+# app-seed - the seed for DisplayOS apps
 This project is an application skeleton for a typical DisplayOS web-based app. You can use it to quickly bootstrap your DisplayOS webapp projects and dev environment for these projects.
 
 Learn more about building apps for DisplayOS using the web extension SDK: https://developers..com/guides/building-web-page-app-extension/
 
 ## Getting Started
-To get you started you can simply clone the sdk-seed repository and install the dependencies:
+To get you started you can simply clone the app-seed repository and install the dependencies:
 
 ### Prerequisites
-You need git to clone the sdk-seed repository. You can get git from http://git-scm.com/.
+You need git to clone the app-seed repository. You can get git from http://git-scm.com/.
 
 We also use a number of node.js tools to initialize. You must have node.js and its package manager (npm) installed. You can get them from http://nodejs.org/.
 
-### Clone sdk-seed
-Clone the sdk-seed repository using [git](http://git-scm.com/):
+### Clone app-seed
+Clone the app-seed repository using [git](http://git-scm.com/):
 ```
-git clone https://github.com/enplug/sdk-seed.git
-cd sdk-seed
+git clone https://github.com/enplug/app-seed.git
+cd app-seed
 ```
-If you just want to start a new project without the sdk-seed commit history then you can do:
+If you just want to start a new project without the app-seed commit history then you can do:
 ```
-git clone https://github.com/enplug/sdk-seed.git <your-project-name>
+git clone https://github.com/enplug/app-seed.git <your-project-name>
 cd <your-project-name>
 rm -rf .git
 rm README.md
