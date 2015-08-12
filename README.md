@@ -29,6 +29,15 @@ git add -A
 git commit -m 'Initial commit'
 git push -u origin master
 ```
+### Set up Amazon S3 credentials
+If you'll be deploying your app on S3, you need to add an aws.private.json file containing your credentials in this format:
+```
+{
+    "accessKeyId": "<your-aws-access-key-id>",
+    "secretAccessKey": "<your-aws-secret-access-key>"
+}
+```
+If you won't be using S3, you can remove the `grunt/aws.js` task.
 
 ### Install Dependencies
 We have two kinds of dependencies in this project: tools and DisplayOS framework code. The tools help us manage and test the application.
