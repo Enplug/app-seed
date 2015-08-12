@@ -17,9 +17,15 @@ cd sdk-seed
 ```
 If you just want to start a new project without the sdk-seed commit history then you can do:
 ```
-git clone --depth=1 https://github.com/enplug/sdk-seed.git <your-project-name>
+git clone https://github.com/enplug/sdk-seed.git <your-project-name>
+cd <your-project-name>
+rm -rf .git
+git init
+git remote add origin <your-remote-repository-url>
+git add -A
+git commit -m 'Initial commit'
+git push origin master
 ```
-The `depth=1` tells git to only pull down one commit worth of historical data.
 
 ### Install Dependencies
 We have two kinds of dependencies in this project: tools and enplug framework code. The tools help us manage and test the application.
