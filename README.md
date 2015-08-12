@@ -30,15 +30,16 @@ First install the tools:
 ```
 npm install
 ```
-which will install bower. Then install the web dependencies:
+which will install bower. Then install the web dependencies for the dashboard component:
 ```
+cd src/dashboard
 bower install
 ```
 
 You should find that you have two new folders in your project.
 
 - `node_modules` - contains the npm packages for the tools we need
-- `app/bower_components` - contains the enplug framework files
+- `src/[app/dashboard]/bower_components` - contains the enplug framework files
 
 ## Developing
 Point your local web server to the `dist/` folder of your project. This is where the built files will be put.
