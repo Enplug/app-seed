@@ -1,5 +1,5 @@
 module.exports = {
     build: ['tmp', 'dist'],
-    js: ['tmp/<%= project %>/app.js', 'dist/<%= project %>/js'],
-    css: ['tmp/<%= project %>/app.css', 'dist/<%= project %>/css']
+    js: ['tmp/<%= project %>/js/app.js', 'dist/<%= project %>/js'],
+    css: ['tmp/<%= project %>/css/app.css', 'dist/<%= project %>/css']
 };

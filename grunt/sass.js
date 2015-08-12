@@ -5,7 +5,7 @@ module.exports = {
     },
     build: {
         files: {
-            'tmp/<%= project %>/app.css': 'src/<%= project %>/sass/app.scss'
+            'tmp/<%= project %>/css/app.css': 'src/<%= project %>/sass/app.scss'
         }
     }
 };
