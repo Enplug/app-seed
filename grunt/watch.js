@@ -16,7 +16,8 @@ module.exports = function (grunt) {
         // Watch for SASS changes and recompile CSS files
         sass: {
             files: ['src/<%= project %>/sass/**/*.scss'],
-            tasks: ['project:<%= project %>', 'build-css']
+            tasks: ['project:<%= project %>', 'build-css'],
+            options: { livereload: true }
         },
 
         templates: {
