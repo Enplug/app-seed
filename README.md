@@ -1,7 +1,7 @@
 # app-seed - the seed for DisplayOS apps
 This project is an application skeleton for a typical DisplayOS web-based app. You can use it to quickly bootstrap your DisplayOS webapp projects and dev environment for these projects.
 
-Learn more about building apps for DisplayOS using the web extension SDK: https://developers..com/guides/building-web-page-app-extension/
+Learn more about building apps for DisplayOS using the web extension SDK: https://developers.enplug.com/guides/building-web-page-app-extension/
 
 ## Getting Started
 To get you started you can simply clone the app-seed repository and install the dependencies:
