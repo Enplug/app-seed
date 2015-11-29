@@ -37,31 +37,29 @@ If you'll be deploying your app on S3, you need to add an aws.private.json file 
     "secretAccessKey": "<your-aws-secret-access-key>"
 }
 ```
-If you won't be using S3, you can remove the `grunt/aws.js` task.
+If you won't be using S3, you can remove the Grunt task by removing the `aws.js` file in the `/grunt` directory.
 
 ### Install Dependencies
 We have two kinds of dependencies in this project: tools and DisplayOS framework code. The tools help us manage and test the application.
 - We get the tools we depend upon via `npm`, the [node package manager](https://www.npmjs.org/).
 - We get the sdk code via `bower`, a [client-side code package manager](http://bower.io/).
 
-First install the tools:
+First, install the tools from the main directory:
 ```
 npm install
 ```
-which will install bower. Then install the web dependencies for the dashboard component:
+This will install bower. Then install the web dependencies for the dashboard component:
 ```
-cd src/dashboard
 bower install
 ```
 
 You should find that you have two new folders in your project.
 
-- `node_modules` - contains the npm packages for the tools we need
-- `src/[app/dashboard]/bower_components` - contains the DisplayOS framework files
+- `/node_modules` - contains the npm packages for the tools we need
+- `/bower_components` - contains the DisplayOS framework files
 
 ## Developing
-Point your local web server to the `dist/` folder of your project. This is where the built files will be put.
 
 There are two commands to use when developing:
-- `grunt build`: builds the project, placing it in the `dist/` folder.
+- `grunt build`: builds the project, placing it in the `dist/` folder. Point your local web server to the `dist/` directory to run your app.
 - `grunt develop` (optional): compiles your files (Javascript, HTML, images, CSS) as you change them.
