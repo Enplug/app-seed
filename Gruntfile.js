@@ -6,12 +6,8 @@ module.exports = function (grunt) {
         // auto grunt.initConfig
         init: true,
 
-        // Needed to know which tasks to load
-        loadGruntTasks: {
-
-            config: require('./package.json'),
-            scope: 'devDependencies'
-        }
+        // automatically lazy-loads tasks
+        jitGrunt: true
     });
 
 };
