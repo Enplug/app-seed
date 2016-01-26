@@ -37,6 +37,10 @@
     "build-img": [
         "copy:img"
     ],
+    "version": [
+        "prompt:version",
+        "bump"
+    ],
     "release-js": [
         "ngAnnotate:release",
         "uglify:release"

@@ -1,8 +1,8 @@
 module.exports = {
     options: {
-        map: false,
+        map: false, // will point to sass task css map
         processors: [
-            require('autoprefixer-core')({ browsers: 'last 2 versions' })
+            require('autoprefixer')({ browsers: 'last 2 versions' })
         ]
     },
     build: {
