@@ -25,6 +25,27 @@ module.exports = function (grunt) {
                 ]
             }
         },
+        environment: {
+            options: {
+                questions: [
+                    {
+                        config: 'env',
+                        type: 'list',
+                        message: 'Which environment?',
+                        choices: [
+                            {
+                                value: 'prod',
+                                name: 'Production'
+                            },
+                            {
+                                value: 'staging',
+                                name: 'Staging'
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
         version: {
             options: {
                 questions: [

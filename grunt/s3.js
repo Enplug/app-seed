@@ -4,7 +4,13 @@ module.exports = {
         secretAccessKey: '<%= aws.secretAccessKey %>',
         bucket: '[yourbucket]',
         cacheTTL: 0,
-        overwrite: true
+        overwrite: true,
+
+        // Auto-config buckets
+    //    createBucket: true,
+    //    enableWeb: true,
+    //    access: 'public-read',
+    //    region: 'US Standard'
     },
     release: {
         cwd: 'dist/',

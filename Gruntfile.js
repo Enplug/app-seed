@@ -6,8 +6,11 @@ module.exports = function (grunt) {
         // auto grunt.initConfig
         init: true,
 
-        // automatically lazy-loads tasks
-        jitGrunt: true
+        // lazy-load tasks from grunt/ folder
+        jitGrunt: {
+            staticMappings: {
+                s3: 'grunt-aws'
+            }
+        }
     });
-
 };

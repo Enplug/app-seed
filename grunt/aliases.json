@@ -49,7 +49,6 @@
         "cssmin:release"
     ],
     "pre-release": [
-        "prompt:project",
         "build",
         "release-css",
         "release-js",
@@ -57,7 +56,8 @@
         "replace:release"
     ],
     "release": [
-        "prompt:project",
+        "prompt:environment",
+        "environment",
         "pre-release",
         "s3:release"
     ]
