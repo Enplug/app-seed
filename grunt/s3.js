@@ -7,10 +7,10 @@ module.exports = {
         overwrite: true,
 
         // Auto-config buckets
-    //    createBucket: true,
-    //    enableWeb: true,
-    //    access: 'public-read',
-    //    region: 'US Standard'
+        createBucket: true,
+        enableWeb: true,
+        access: 'public-read',
+        region: 'us-east-1'
     },
     release: {
         cwd: 'dist/',
