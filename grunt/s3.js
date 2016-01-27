@@ -10,10 +10,10 @@ module.exports = {
         createBucket: true,
         enableWeb: true,
         access: 'public-read',
-        region: 'us-east-1'
+        region: 'us-east-1',
     },
     release: {
         cwd: 'dist/',
-        src: ['**']
+        src: ['<%= project %>/**']
     }
 };
