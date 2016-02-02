@@ -2,14 +2,14 @@
     "staging": {
         "s3": {
             "options": {
-                "bucket": "test.enplug.net"
+                "bucket": "test.enplug.in"
             }
         }
     },
     "prod": {
         "s3": {
             "options": {
-                "bucket": "test.enplug.in"
+                "bucket": "test.enplug.net"
             }
         }
     }
