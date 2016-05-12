@@ -1,10 +1,28 @@
 {
   "name": "sdk-seed",
-  "version": "1.1.3",
+  "version": "2.0.0",
   "private": true,
+  "scripts": {
+    "build:dash": "npm run build:dashboard",
+    "build:dashboard": "webpack --config webpack.config.dashboard.js",
+    "build:app": "webpack --config webpack.config.app.js",
+    "build": "node scripts/build.js",
+    "release": "node scripts/release.js",
+    "test": "",
+    "dev": "node scripts/build.js watch",
+    "serve": ""
+  },
+  "dependencies": {
+    "angular": "~1.4.10",
+    "babel-plugin-transform-runtime": "^6.8.0"
+  },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
     "bower": "^1.7.2",
+    "boxcutter": "^1.2.0",
     "grunt": "^0.4.5",
     "grunt-aws": "^0.6.1",
     "grunt-bower-concat": "^0.6.0",
@@ -22,8 +40,17 @@
     "grunt-prompt": "^1.3.3",
     "grunt-replace": "^0.11.0",
     "grunt-sass": "^1.1.0",
+    "html-loader": "^0.4.3",
+    "inquirer": "^1.0.2",
     "jit-grunt": "^0.9.1",
     "load-grunt-config": "^0.19.1",
-    "semver": "^5.1.0"
+    "ng-annotate-loader": "^0.1.0",
+    "ngtemplate-loader": "^1.3.1",
+    "npm": "^3.8.9",
+    "rimraf": "^2.5.2",
+    "semver": "^5.1.0",
+    "shelljs": "^0.7.0",
+    "webpack": "^1.13.0",
+    "webpack-combine-loaders": "^2.0.0"
   }
 }

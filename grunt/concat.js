@@ -2,7 +2,7 @@ module.exports = {
     js: {
         src: [
             'tmp/<%= project %>/js/libs.js',
-            'src/<%= project %>/js/module.js',
+            'src/<%= project %>/js/main.js',
             'src/<%= project %>/js/**/*.js',
             'tmp/<%= project %>/js/*.js'
         ],
