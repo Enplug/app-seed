@@ -1,49 +1,98 @@
 'use strict';
 
 const
-    path = require( 'path' ),
-    boxcutter = Object.assign({}, require( 'boxcutter' ).Boxcutter ),
-    prompts = require( './prompts' ),
-    build = require( './build' );
+  fs = require( 'fs' ),
+  sh = require( 'shelljs' ),
+  AWS = require( 'aws-sdk' ),
+  pkg = require( '../package.json' );
 
-var release;
 
-release = module.exports = {
-    runRelease: function() {
-        // git check on master?
-        // prompt for version change
-            // update package.json
-        // run build
-        // git tag
-        // upload to S3
+// wraps the AWS.S3.upload call in a promise
+function uploadFile( s3, key, fileStream ) {
+  var params = {
+    Key: key,
+    Body: fileStream
+  };
 
-        return prompts.versionBump().then(function( versionAnswer ) {
-            // update package.json if needed
-            if ( versionAnswer.needsBump ) {
-                boxcutter.load( path.normalize( __dirname + '/../package.json' ));
-                boxcutter.set( 'version', versionAnswer.bumpTo );
-                boxcutter.save( path.normalize( __dirname + '/../package.json' ));
-            }
+  return new Promise(function( resolve, reject ) {
+    var data = [];
+    fileStream.on( 'data', function( chunk ) {
+      console.log( 'got some data for file: ' + key );
+      console.log( chunk );
+      data.push( chunk );
+    });
 
-            return prompts.preBuild( true );
-        }).then(function( buildAnswers ) {
-            return build.runBuild( buildAnswers.toBuild, buildAnswers.env, false );
-        }).then(function( stats ) {
+    fileStream.on( 'end', function(){
+      console.log( 'ending file ' + key );
+      resolve( data );
+    });
 
-            console.log( "Webpack stats from build: " );
-            console.log( stats.toString({ colors: true }));
+    fileStream.on( 'error', function( err ) {
+      reject( err );
+    });
+  });
 
-            // todo git tag
-            // todo upload to S3
+  return new Promise(function( resolve, reject ) {
+    s3.upload( params, function( err, data ) {
+      if ( err ) {
+        reject( err );
+        return;
+      }
 
-        }).catch(function( error ) {
-            console.log( '\nThere was an error duing the release process' );
-            console.error( error.stack );
-        });
+      resolve( data );
+    });
+  });
+}
+
+const release = module.exports = {
+  runRelease: function() {
+    var
+      s3,
+      s3Config = Object.assign( {}, pkg.config.aws.s3 );
+
+    // git check on master?
+    // git tag?
+    // upload to S3
+
+    if ( !sh.test( '-f', 'aws.private.json' )) {
+//      throw new Error( `"aws.private.json" does not exist in ${ process.cwd() } Please create it with "accessKeyId" and "secretAccessKey" fields.` );
     }
+
+    // load config
+//    AWS.config.loadFromPath( './aws.private.json' );
+
+    // add console for logging
+//    s3Config.logger = process.stdout;
+
+    // create s3 service
+    // http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#constructor-property
+//    s3 = new AWS.S3( s3Config );
+
+    sh.cd( 'dist' );
+    sh.echo( 'Uploading files to S3' );
+    sh.ls( '-RA', './' )
+      .filter( fileOrDir => sh.test( '-f', fileOrDir ))
+      .reduce(function( lastOp, nextFile ){
+        return lastOp.then(function() {
+            return uploadFile( s3, nextFile, fs.createReadStream( nextFile ));
+          })
+          .catch(function( err ) {
+            throw err;
+          });
+      }, Promise.resolve( null ))
+      .then(function( result ) {
+        console.log( 'last file uploaded' );
+      })
+      .catch(function( err ) {
+        console.error( 'There was an error uploading to S3' );
+        console.error( err.stack );
+      });
+
+    return;
+  }
 };
 
 // run directly from cli or 'npm run'
 if ( require.main === module ) {
-    release.runRelease();
+  release.runRelease();
 }

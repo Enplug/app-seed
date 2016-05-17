@@ -1,4 +1,4 @@
 
 import enplug from '@enplug/player-sdk';
 
-enplug.notifications.post( '', '' );
+enplug.notifications.post( '/img/notification-icon.png', 'Hello World!' );
