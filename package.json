@@ -1,16 +1,36 @@
 {
-  "name": "sdk-seed",
+  "name": "enplug-seed",
   "version": "2.0.0",
   "private": true,
+  "config": {
+    "ports": {
+      "dashboard": 50000,
+      "app": 50001,
+      "browsersync": 50002
+    },
+    "build_env": "prod"
+  },
   "scripts": {
-    "build:dash": "npm run build:dashboard",
+    "postinstall": "node scripts/init.js",
+    "clean:dashboard": "node scripts/clean.js 'dist/dashboard/*'",
+    "clean:dash": "npm run clean:dashboard",
+    "clean:app": "node scripts/clean.js 'dist/app/*'",
+    "clean": "node scripts/clean.js 'dist/dashboard/*' 'dist/app/*'",
+    "prebuild:dashboard": "npm run clean:dashboard",
     "build:dashboard": "webpack --config webpack.config.dashboard.js",
+    "build:dash": "npm run build:dashboard",
+    "prebuild:app": "npm run clean:app",
     "build:app": "webpack --config webpack.config.app.js",
-    "build": "node scripts/build.js",
+    "prebuild": "npm run clean",
+    "build": "webpack --config webpack.config.js",
+    "dev:dash": "npm run dev:dashboard",
+    "dev:dashboard": "npm run build:dashboard --enplug-seed:build_env=local",
+    "dev:app": "npm run build:app --enplug-seed:build_env=local",
+    "dev": "npm run build --enplug-seed:build_env=local",
+    "prerelease": "npm-run-all -s bump build",
     "release": "node scripts/release.js",
-    "test": "",
-    "dev": "node scripts/build.js watch",
-    "serve": ""
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bump": "node scripts/bump.js"
   },
   "dependencies": {
     "angular": "~1.4.10",
@@ -46,7 +66,7 @@
     "load-grunt-config": "^0.19.1",
     "ng-annotate-loader": "^0.1.0",
     "ngtemplate-loader": "^1.3.1",
-    "npm": "^3.8.9",
+    "npm-run-all": "^2.1.0",
     "rimraf": "^2.5.2",
     "semver": "^5.1.0",
     "shelljs": "^0.7.0",
