@@ -38,8 +38,3 @@ if ( sh.exec( 'boxcutter get name', silent ).toString() === 'enplug-seed\n' ) {
     sh.echo();
   });
 }
-
-
-if ( !sh.test( '-f', 'aws.private.json' )) {
-  sh.touch( 'aws.private.json' );
-}
