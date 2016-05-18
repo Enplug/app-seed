@@ -65,8 +65,6 @@ var config = {
         include: [ appPath ],
         loader: 'babel-loader',
         query: {
-          presets: [ 'es2015' ],
-          plugins: [ 'transform-runtime' ],
           cacheDirectory: path.join( __dirname, 'tmp' )
         }
       }
