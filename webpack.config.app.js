@@ -1,27 +1,68 @@
 'use strict';
 
-var
-    path = require( 'path' ),
-    webpack = require( 'webpack' );
-//    autoprefixer = require( 'autoprefixer' );
+const
+  env = process.env.npm_package_config_build_env || 'prod',
+  path = require( 'path' ),
+  webpack = require( 'webpack' ),
+  combineLoaders = require( 'webpack-combine-loaders' ),
+  HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
+  autoprefixer = require( 'autoprefixer' );
 
-const env = process.env.npm_package_config_build_env;
-console.log( 'in app config env: ', env );
+const appPath = path.resolve( __dirname, 'src/app' );
 
-module.exports = {
+var config = {
   target: 'web',
-  entry: './src/app/js/main.js',
+  entry: './js/main.js',
+  context: path.join( __dirname, 'src', 'app' ),
   output: {
-    path: path.join( __dirname, 'dist', 'app', 'js' ),
-    filename: 'main.js'
+    filename: 'js/main.js',
+    path: path.join( __dirname, 'dist', 'app' ),
+    publicPath: '/'
   },
   module: {
-    preloaders: [],
-    loaders: [
+    preloaders: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|bower_components)/,
-        include: [ path.resolve( __dirname, 'src/app' )],
+        include: [ appPath ],
+        loader: 'eslint-loader'
+      }
+    ],
+    loaders: [
+      // assets
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+        loader: 'file-loader'
+      },
+      // styles
+      {
+        test: /\.scss$/,
+        include: [ appPath ],
+        loader: combineLoaders([
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            query: {
+              minimize: false
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            query: {
+              outputStyle: 'nested'
+            }
+          }
+        ])
+      },
+      // javascript
+      {
+        test: /\.js$/,
+//        exclude: /(node_modules|bower_components)/,
+        include: [ appPath ],
         loader: 'babel-loader',
         query: {
           presets: [ 'es2015' ],
@@ -30,6 +71,38 @@ module.exports = {
         }
       }
     ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './index.html'
+    })
+  ],
+  eslint: {
+    configFile: path.resolve( __dirname, '../.eslintrc' )
+  },
+  postcss() {
+    return [
+      autoprefixer({
+        browsers: [ 'last 2 versions' ]
+      })
+    ];
   }
 };
 
+
+if ( env === 'local' ) {
+
+  config.debug = true;
+  config.devtool = '#eval-source-map';
+
+
+} else if ( env === 'prod' ) {
+
+
+
+}
+
+
+
+module.exports = config;

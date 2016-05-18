@@ -1,33 +1,44 @@
 'use strict';
 
-var
-    path = require( 'path' ),
-    webpack = require( 'webpack' ),
-    combineLoaders = require( 'webpack-combine-loaders' );
-//    autoprefixer = require( 'autoprefixer' );
+const
+  env = process.env.npm_package_config_build_env || 'prod',
+  path = require( 'path' ),
+  webpack = require( 'webpack' ),
+  combineLoaders = require( 'webpack-combine-loaders' ),
+  HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
+  autoprefixer = require( 'autoprefixer' );
 
-const env = process.env.npm_package_config_build_env;
-console.log( 'in dash config env: ', env );
+const dashboardPath = path.resolve( __dirname, 'src/dashboard' );
 
-module.exports = {
+var config  = {
   target: 'web',
-  entry: './src/dashboard/js/main.js',
+  entry: './js/main.js',
+  context: path.join( __dirname, 'src', 'dashboard' ),
   output: {
-    path: path.join( __dirname, 'dist', 'dashboard', 'js' ),
-    filename: 'main.js'
+    filename: 'js/main.js',
+    path: path.join( __dirname, 'dist', 'dashboard' ),
+    publicPath: '/'
   },
   module: {
+    // linting preloader
     preloaders: [
       {
         test: /\.js$/,
-        include: [ path.resolve( __dirname, 'src/dashboard' ) ],
+        include: [ dashboardPath ],
         loader: 'eslint-loader'
       }
     ],
+    // main loaders: [ html, scss, js ]
     loaders: [
+      // assets
+      {
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$/,
+        loader: 'file-loader'
+      },
+      // ng-template html
       {
         test: /\.tpl\.html$/,
-        include: [ path.resolve( __dirname, 'src/dashboard' )],
+        include: [ dashboardPath ],
         loader: combineLoaders([
           {
             loader: 'ngtemplate-loader'
@@ -38,30 +49,85 @@ module.exports = {
               attrs: false
             }
           }
-              ])
+        ])
+      },
+      // styles
+      {
+        test: /\.scss$/,
+        include: [ dashboardPath ],
+        loader: combineLoaders([
+          {
+            loader: 'style-loader'
           },
           {
-              test: /\.js$/,
-//                  exclude: /(node_modules|bower_components)/,
-              include: [ path.resolve( __dirname, 'src/dashboard' )],
-              loader: combineLoaders([
-                  {
-                      loader: 'ng-annotate-loader'
-//                          query: {}
-                  },
-                  {
-                      loader: 'babel-loader',
-                      query: {
-                          presets: [ 'es2015' ],
-                          plugins: [ 'transform-runtime' ],
-                          cacheDirectory: path.join( __dirname, 'tmp' )
-                      }
-                  }
-              ])
+            loader: 'css-loader',
+            query: {
+              minimize: false
+            }
+          },
+          {
+            loader: 'postcss-loader'
+          },
+          {
+            loader: 'sass-loader',
+            query: {
+              outputStyle: 'nested'
+            }
           }
+        ])
+      },
+      // javascript
+      {
+        test: /\.js$/,
+//        exclude: /(node_modules|bower_components)/,
+        include: [ dashboardPath ],
+        loader: combineLoaders([
+          {
+            loader: 'ng-annotate-loader'
+//            query: {}
+            },
+            {
+              loader: 'babel-loader',
+              query: {
+              presets: [ 'es2015' ],
+              plugins: [ 'transform-runtime' ],
+              cacheDirectory: path.join( __dirname, 'tmp' )
+            }
+          }
+        ])
+      }
     ]
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: './index.html'
+    })
+  ],
   eslint: {
-    extends: 'enplug'
+    configFile: path.resolve( __dirname, '../.eslintrc' )
+  },
+  postcss() {
+    return [
+      autoprefixer({
+        browsers: [ 'last 2 versions' ]
+      })
+    ];
   }
 };
+
+
+if ( env === 'local' ) {
+
+  config.debug = true;
+  config.devtool = '#eval-source-map';
+
+
+} else if ( env === 'prod' ) {
+
+
+
+}
+
+
+module.exports = config;
