@@ -3,8 +3,8 @@
   "version": "2.0.0",
   "private": true,
   "engines": {
-    "node": "^6.1.0",
-    "npm": "^3.0.0"
+    "node": ">=6.1.0",
+    "npm": ">=3.0.0"
   },
   "config": {
     "ports": {
@@ -52,10 +52,16 @@
     "lint": "eslint src/"
   },
   "dependencies": {
+    "@enplug/dashboard-sdk": "^3.0.3",
+    "@enplug/dashboard-sdk-utils": "^2.0.0",
+    "@enplug/player-sdk": "0.0.2",
     "angular": "~1.4.10",
-    "babel-plugin-transform-runtime": "^6.8.0"
+    "babel-plugin-transform-runtime": "^6.8.0",
+    "lodash": "~3.10.0"
   },
   "devDependencies": {
+    "@enplug/babel-preset": "^1.0.0",
+    "@enplug/eslint-config": "^1.0.0",
     "autoprefixer": "^6.3.6",
     "aws-sdk": "^2.3.11",
     "babel-core": "^6.8.0",

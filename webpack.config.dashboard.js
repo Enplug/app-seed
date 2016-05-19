@@ -3,7 +3,6 @@
 const
   env = process.env.npm_package_config_build_env || 'prod',
   path = require( 'path' ),
-  webpack = require( 'webpack' ),
   combineLoaders = require( 'webpack-combine-loaders' ),
   HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
   autoprefixer = require( 'autoprefixer' );
@@ -20,14 +19,7 @@ var config  = {
     publicPath: '/'
   },
   module: {
-    // linting preloader
-    preloaders: [
-      {
-        test: /\.js$/,
-        include: [ dashboardPath ],
-        loader: 'eslint-loader'
-      }
-    ],
+    preloaders: [],
     // main loaders: [ html, scss, js ]
     loaders: [
       // assets
@@ -52,6 +44,21 @@ var config  = {
         ])
       },
       // styles
+      {
+        test: /\.css$/,
+        include: [ path.resolve( __dirname, 'node_modules' )],
+        loader: combineLoaders([
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader',
+            query: {
+              minimize: false
+            }
+          }
+        ])
+      },
       {
         test: /\.scss$/,
         include: [ dashboardPath ],
@@ -85,10 +92,10 @@ var config  = {
           {
             loader: 'ng-annotate-loader'
 //            query: {}
-            },
-            {
-              loader: 'babel-loader',
-              query: {
+          },
+          {
+            loader: 'babel-loader',
+            query: {
               cacheDirectory: path.join( __dirname, 'tmp' )
             }
           }
@@ -114,12 +121,16 @@ var config  = {
   }
 };
 
-
 if ( env === 'local' ) {
 
   config.debug = true;
   config.devtool = '#eval-source-map';
 
+  config.module.preloaders.push({
+    test: /\.js$/,
+    include: [ dashboardPath ],
+    loader: 'eslint-loader'
+  });
 
 } else if ( env === 'prod' ) {
 

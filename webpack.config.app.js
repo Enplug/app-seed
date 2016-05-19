@@ -3,7 +3,6 @@
 const
   env = process.env.npm_package_config_build_env || 'prod',
   path = require( 'path' ),
-  webpack = require( 'webpack' ),
   combineLoaders = require( 'webpack-combine-loaders' ),
   HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
   autoprefixer = require( 'autoprefixer' );
@@ -20,13 +19,7 @@ var config = {
     publicPath: '/'
   },
   module: {
-    preloaders: [
-      {
-        test: /\.js$/,
-        include: [ appPath ],
-        loader: 'eslint-loader'
-      }
-    ],
+    preloaders: [],
     loaders: [
       // assets
       {
@@ -94,6 +87,11 @@ if ( env === 'local' ) {
   config.debug = true;
   config.devtool = '#eval-source-map';
 
+  config.module.preloaders.push({
+    test: /\.js$/,
+    include: [ appPath ],
+    loader: 'eslint-loader'
+  });
 
 } else if ( env === 'prod' ) {
 

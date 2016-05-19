@@ -54,6 +54,8 @@ const release = module.exports = {
     // git tag?
     // upload to S3
 
+    // todo metadata
+
     if ( !sh.test( '-f', 'aws.private.json' )) {
 //      throw new Error( `"aws.private.json" does not exist in ${ process.cwd() } Please create it with "accessKeyId" and "secretAccessKey" fields.` );
     }
