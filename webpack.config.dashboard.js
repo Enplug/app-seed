@@ -60,7 +60,7 @@ var config  = {
           {
             loader: 'css-loader',
             query: {
-              minimize: false
+              minimize: env === 'prod'
             }
           }
         ]).split( '!' ))
@@ -75,7 +75,7 @@ var config  = {
           {
             loader: 'css-loader',
             query: {
-              minimize: false
+              minimize: env === 'prod'
             }
           },
           {
@@ -136,19 +136,9 @@ var config  = {
 };
 
 if ( env === 'local' ) {
+
   config.debug = true;
   config.devtool = '#eval-source-map';
-
-//  config.entry.unshift(
-//    'webpack-dev-server/client?http://localhost:50000/',
-//    'webpack/hot/dev-server'
-//  );
-//  config.devServer = {
-//    hot: true,
-//    contentBase: path.join( 'dist', 'dashboard' )
-//  };
-
-//  config.plugins.push( new webpack.HotModuleReplacementPlugin());
 
   config.module.preloaders.push({
     test: /\.js$/,

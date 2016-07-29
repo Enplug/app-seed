@@ -14,7 +14,8 @@ if ( sh.exec( 'boxcutter get scripts.postinstall', silent ).toString() === 'node
 
   sh.echo( 'Resetting Version Numbers to 1.0.0' );
   sh.exec( 'boxcutter set version 1.0.0' );
-  sh.exec( 'boxcutter --file bower.json set version 1.0.0' );
+  // if you add bower uncomment this line
+//  sh.exec( 'boxcutter --file bower.json set version 1.0.0' );
   sh.echo();
 }
 
@@ -23,18 +24,20 @@ if ( sh.exec( 'boxcutter get name', silent ).toString() === 'enplug-seed\n' ) {
   inquirer.prompt({
     message: [
       'Make sure to follow npm naming rules found here: https://docs.npmjs.com/files/package.json#name',
-      'What name do you want to use in package.json for this app?'
+      'What name do you want to use as a name for this app in package.json?'
     ].join( '\n' ),
     name: 'appName',
     type: 'input'
     // todo add validation?
   }).then(function( answers ) {
     sh.sed( '-i', 'enplug-seed', answers.appName, 'package.json' );
-    sh.sed( '-i', 'enplug-seed', answers.appName, 'bower.json' );
+
+    // if you add bower uncomment this line
+//    sh.sed( '-i', 'enplug-seed', answers.appName, 'bower.json' );
     // could possibly commit these changes from here
 
     sh.echo();
-    sh.echo( 'Please commit the changes to package.json and bower.json' );
+    sh.echo( 'Please commit the changes to package.json' );
     sh.echo();
   });
 }

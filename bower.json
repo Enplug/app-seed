@@ -1,9 +1,0 @@
-{
-  "name": "enplug-seed",
-  "version": "2.0.0",
-  "private": true,
-  "devDependencies": {
-    "enplug-dashboard-sdk": "^3.0.2",
-    "enplug-dashboard-sdk-utils": "^1.19.5"
-  }
-}

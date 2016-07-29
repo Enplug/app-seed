@@ -33,7 +33,7 @@ function createS3Client() {
       )
     );
   } catch ( e ) {
-    console.error( 'Error finding aws.private.json' );
+    console.error( 'Error finding/parsing aws.private.json' );
     throw e;
   }
 
