@@ -1,6 +1,7 @@
 
 // main deps
 import angular from 'angular';
+import 'angular-route';
 import 'lodash';
 import '@enplug/dashboard-sdk';
 import '@enplug/dashboard-sdk-utils';
@@ -10,6 +11,9 @@ import '@enplug/dashboard-sdk-utils/dist/dashboard-sdk-utils.css';
 import HomeTpl from '../templates/home.tpl.html';
 import NotFoundTpl from '../templates/not.found.tpl.html';
 
+// main scss
+import '../sass/app.scss';
+
 // route controllers
 import NotFoundController from './controllers/NotFoundController';
 
@@ -18,12 +22,18 @@ const APP_NAME = 'dashboard-app';
 
 // create app instance
 const app = angular.module( 'dashboard-app', [
+  'ngRoute',
   'enplug.sdk',
   'enplug.sdk.utils'
 ]);
 
 // main module config
-app.config( function( $locationProvider, $routeProvider ) {
+app.config( function( $locationProvider, $routeProvider, $compileProvider ) {
+  'ngInject';
+
+  if ( EP_ENV === 'prod' ) {
+    $compileProvider.debugInfoEnabled( false );
+  }
 
   $routeProvider
     .when( '/', {
@@ -38,6 +48,7 @@ app.config( function( $locationProvider, $routeProvider ) {
 
 // initial run + setup
 app.run( function( $rootScope ) {
+  'ngInject';
 
 });
 

@@ -3,11 +3,15 @@
 const
   env = process.env.npm_package_config_build_env || 'prod',
   path = require( 'path' ),
+  webpack = require( 'webpack' ),
   combineLoaders = require( 'webpack-combine-loaders' ),
   HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
+  ExtractTextPlugin = require( 'extract-text-webpack-plugin' ),
   autoprefixer = require( 'autoprefixer' );
 
 const appPath = path.resolve( __dirname, 'src/app' );
+
+const extractSass = new ExtractTextPlugin( 'styles.css' );
 
 var config = {
   target: 'web',
@@ -16,7 +20,7 @@ var config = {
   output: {
     filename: 'js/main.js',
     path: path.join( __dirname, 'dist', 'app' ),
-    publicPath: '/'
+    publicPath: '/app'
   },
   module: {
     preloaders: [],
@@ -30,7 +34,7 @@ var config = {
       {
         test: /\.scss$/,
         include: [ appPath ],
-        loader: combineLoaders([
+        loader: extractSass.extract( ...combineLoaders([
           {
             loader: 'style-loader'
           },
@@ -49,7 +53,7 @@ var config = {
               outputStyle: 'nested'
             }
           }
-        ])
+        ]).split( '!' ))
       },
       // javascript
       {
@@ -64,10 +68,14 @@ var config = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      EP_ENV: `"${env}"`
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html'
-    })
+    }),
+    extractSass
   ],
   eslint: {
     configFile: path.resolve( __dirname, '../.eslintrc' )
@@ -83,9 +91,19 @@ var config = {
 
 
 if ( env === 'local' ) {
-
   config.debug = true;
   config.devtool = '#eval-source-map';
+
+//  config.entry.unshift(
+//    'webpack-dev-server/client?http://localhost:50000/',
+//    'webpack/hot/dev-server'
+//  );
+//  config.devServer = {
+//    hot: true,
+//    contentBase: path.join( 'dist', 'app' )
+//  };
+
+//  config.plugins.push( new webpack.HotModuleReplacementPlugin());
 
   config.module.preloaders.push({
     test: /\.js$/,
@@ -95,7 +113,16 @@ if ( env === 'local' ) {
 
 } else if ( env === 'prod' ) {
 
-
+  config.plugins.push(
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    })
+  );
 
 }
 

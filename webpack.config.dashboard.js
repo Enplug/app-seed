@@ -3,11 +3,17 @@
 const
   env = process.env.npm_package_config_build_env || 'prod',
   path = require( 'path' ),
+  webpack = require( 'webpack' ),
   combineLoaders = require( 'webpack-combine-loaders' ),
   HtmlWebpackPlugin = require( 'html-webpack-plugin' ),
+  ExtractTextPlugin = require( 'extract-text-webpack-plugin' ),
   autoprefixer = require( 'autoprefixer' );
 
 const dashboardPath = path.resolve( __dirname, 'src/dashboard' );
+
+const
+  extractCss = new ExtractTextPlugin( 'vendor.css' ),
+  extractSass = new ExtractTextPlugin( 'styles.css' );
 
 var config  = {
   target: 'web',
@@ -16,7 +22,7 @@ var config  = {
   output: {
     filename: 'js/main.js',
     path: path.join( __dirname, 'dist', 'dashboard' ),
-    publicPath: '/'
+    publicPath: '/dashboard'
   },
   module: {
     preloaders: [],
@@ -47,7 +53,7 @@ var config  = {
       {
         test: /\.css$/,
         include: [ path.resolve( __dirname, 'node_modules' )],
-        loader: combineLoaders([
+        loader: extractCss.extract( ...combineLoaders([
           {
             loader: 'style-loader'
           },
@@ -57,12 +63,12 @@ var config  = {
               minimize: false
             }
           }
-        ])
+        ]).split( '!' ))
       },
       {
         test: /\.scss$/,
         include: [ dashboardPath ],
-        loader: combineLoaders([
+        loader: extractSass.extract( ...combineLoaders([
           {
             loader: 'style-loader'
           },
@@ -81,7 +87,7 @@ var config  = {
               outputStyle: 'nested'
             }
           }
-        ])
+        ]).split( '!' ))
       },
       // javascript
       {
@@ -90,8 +96,10 @@ var config  = {
         include: [ dashboardPath ],
         loader: combineLoaders([
           {
-            loader: 'ng-annotate-loader'
-//            query: {}
+            loader: 'ng-annotate-loader',
+            query: {
+              add: true
+            }
           },
           {
             loader: 'babel-loader',
@@ -104,10 +112,15 @@ var config  = {
     ]
   },
   plugins: [
+    new webpack.DefinePlugin({
+      EP_ENV: `"${env}"`
+    }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: './index.html'
-    })
+    }),
+    extractCss,
+    extractSass
   ],
   eslint: {
     configFile: path.resolve( __dirname, '../.eslintrc' )
@@ -122,9 +135,19 @@ var config  = {
 };
 
 if ( env === 'local' ) {
-
   config.debug = true;
   config.devtool = '#eval-source-map';
+
+//  config.entry.unshift(
+//    'webpack-dev-server/client?http://localhost:50000/',
+//    'webpack/hot/dev-server'
+//  );
+//  config.devServer = {
+//    hot: true,
+//    contentBase: path.join( 'dist', 'dashboard' )
+//  };
+
+//  config.plugins.push( new webpack.HotModuleReplacementPlugin());
 
   config.module.preloaders.push({
     test: /\.js$/,
@@ -134,7 +157,16 @@ if ( env === 'local' ) {
 
 } else if ( env === 'prod' ) {
 
-
+  config.plugins.push(
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+      compressor: {
+        warnings: false
+      }
+    })
+  );
 
 }
 
