@@ -69,7 +69,8 @@ var config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      EP_ENV: `"${env}"`
+      EP_ENV: `"${env}"`,
+      EP_VERSION: `"${process.env.npm_package_version}"`
     }),
     new HtmlWebpackPlugin({
       filename: 'index.html',
