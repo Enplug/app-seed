@@ -40,5 +40,5 @@ inquirer.prompt({
 
   sh.exec( `boxcutter set version ${ answer.bumpTo }` );
   sh.exec( `boxcutter --file bower.json set version ${ answer.bumpTo }` );
-  sh.echo( 'Version bumped to: ' + answer.bumpTo );
+  sh.echo( `Version bumped to: ${ answer.bumpTo }` );
 });

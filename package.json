@@ -12,13 +12,16 @@
     },
     "build_env": "prod",
     "aws": {
+      "buckets": [
+        "TODO: insert.staging.bucket.name.here",
+        "TODO: insert.production.bucket.name.here"
+      ],
       "s3": {
-        "region": "us-east-1",
+        "region": "us-west-2",
         "sslEnabled": true,
         "apiVersion": "2016-05-01",
         "params": {
-          "ACL": "public-read",
-          "bucket": "TODO: insert.bucket.name.here"
+          "ACL": "public-read"
         }
       }
     }
@@ -63,7 +66,6 @@
     "@enplug/babel-preset": "^1.0.0",
     "@enplug/eslint-config": "^1.0.0",
     "autoprefixer": "^6.3.6",
-    "aws-sdk": "^2.3.11",
     "babel-core": "^6.8.0",
     "babel-eslint": "^6.0.4",
     "babel-loader": "^6.2.4",
@@ -83,6 +85,7 @@
     "npm-run-all": "^2.1.0",
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
+    "s3": "^4.4.0",
     "sass-loader": "^3.2.0",
     "semver": "^5.1.0",
     "shelljs": "^0.7.0",
