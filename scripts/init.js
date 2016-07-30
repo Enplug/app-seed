@@ -24,7 +24,7 @@ if ( sh.exec( 'boxcutter get name', silent ).toString() === 'enplug-seed\n' ) {
   inquirer.prompt({
     message: [
       'Make sure to follow npm naming rules found here: https://docs.npmjs.com/files/package.json#name',
-      'What name do you want to use as a name for this app in package.json?'
+      'What do you want to use as a name for this app in package.json?\n'
     ].join( '\n' ),
     name: 'appName',
     type: 'input'
