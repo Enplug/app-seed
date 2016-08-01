@@ -54,9 +54,9 @@
     "lint": "eslint src/"
   },
   "dependencies": {
-    "@enplug/dashboard-sdk": "^3.0.3",
+    "@enplug/dashboard-sdk": "^4.0.0",
     "@enplug/dashboard-sdk-utils": "^2.1.0",
-    "@enplug/player-sdk": "0.0.2",
+    "@enplug/player-sdk": "0.0.7",
     "angular": "~1.4.10",
     "angular-route": "^1.5.8",
     "babel-plugin-transform-runtime": "^6.8.0",
