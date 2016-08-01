@@ -1,20 +1,13 @@
 <!DOCTYPE html>
-<html ng-app="">
+<html ng-app="dashboard-app" ng-strict-di>
     <head>
-        <base href="/dashboard/">
-        <!-- Non-bower libraries -->
-        <script src="//cdn.enplug.net/libs/angular/1.4.3/angular.js"></script>
+        <!-- Non-NPM libraries -->
+        <link rel="icon" type="image/ico" href="//cdn.enplug.net/brand/favicon.ico">
+        <link rel="icon" type="image/png" href="//cdn.enplug.net/brand/favicon.png" sizes="32x32">
         <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
-
-        <!-- build:css:release /dashboard/css/app.min.css?@@version -->
-        <link href="/dashboard/css/app.css?@@version" rel="stylesheet">
-        <!-- /build -->
-
-        <!-- build:js:release /dashboard/js/app.min.js?@@version -->
-        <script src="/dashboard/js/app.js?@@version"></script>
-        <!-- /build -->
     </head>
     <body>
         <ng-view class="container"></ng-view>
+        <first-directive></first-directive>
     </body>
 </html>
