@@ -25,8 +25,6 @@ If you'll be deploying your app on S3, you need to add an `aws.private.json` fil
 ### Build Setup
 As shown in this app, we are using `Webpack` as a build and development tool. There are two configuration files, one for the `dashboard` part of your project, and one for the `player` or app portion of the project. Both of these are contained in separate subdirectories under `src/`.
 
-![Src Directory](./img/src.png)
-
 When the application is built it will be in the `dist/` directory. You can point a local web server to the dist/ directory if you want to preview the production build locally.
 
 ![Npm run dev](./img/webpack-dev.png)
@@ -44,15 +42,15 @@ There are only a few commands that you will need to use:
 
 ## Create App
 
-Select an account in order to create an app through the Enplug Dashboard: `dashboard.enplug.com/developers`. In order to test the application in our dashboard, you will need to configure the urls in the settings tab and any include any additional metadata about your application, including title, supported languages, marketing details, etc.
+Select an account in order to create an app through the Enplug Dashboard: `dashboard.enplug.com/developers`. In order to render your app in the dashboard, you will need to configure the urls in the settings tab and additional metadata about your application, including name, screen orientations, etc.
 
 ![App Creation](./img/developers-template.png)
 
-Under the `settings` tab make sure to enable `web application` and enter the two urls for both the dashboard and player/app portions. If working locally, these should point to your computer's IP address, cooresponding with the port numbers listed in the `package.json`. If your deploying to S3, these urls should point to bucket instead.
+Under the `settings` tab make sure to enable `web application` and enter the two urls for both the dashboard and player/app portions. If working locally, these should point to your computer's IP address, corresponding with the port numbers listed in the `package.json`. If your deploying to S3, these urls should point to bucket instead.
 
 ![Url Configuration](./img/url-config.png)
 
-Then simply, run `npm run dev` locally to spin up your server and render it by select your newly created app under the `Apps` dropdown.
+Then simply, run `npm run dev` locally to spin up your server and select your newly created app from the `Apps` dropdown.
 
 ## Dashboard SDK
 ![Player ScreenShot](./img/dashboard-graphic.png)
