@@ -23,7 +23,7 @@ export default class EditController {
 
             $scope.changesToSave = (
                 feed.title != $scope.feed.title
-                || feed.url != $scope.feed.url)
+                || feed.graphicUrl != $scope.feed.graphicUrl)
 
             if ($scope.changesToSave) {
                 $scope.changesToSave = validateForm();
@@ -47,7 +47,7 @@ export default class EditController {
         }
 
         function validateForm() {
-            return $scope.feed.title && $scope.feed.url
+            return $scope.feed.title && $scope.feed.graphicUrl
         }
 
         // Confirms with user if they want to abort their changes, then takes them back to root path

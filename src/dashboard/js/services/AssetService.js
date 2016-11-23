@@ -30,7 +30,7 @@ export default class AssetService {
                 Created: feed.created,
                 Value: {
                     title: feed.title,
-                    url: feed.url
+                    graphicUrl: feed.graphicUrl
                 },
                 Schedule: feed.schedule,
                 Duration: feed.duration,
@@ -43,7 +43,7 @@ export default class AssetService {
             let feed = newFeed();
             feed.id = asset.Id;
             feed.title = asset.Value.title;
-            feed.url = asset.Value.url;
+            feed.graphicUrl = asset.Value.graphicUrl;
             feed.duration = asset.Duration;
             feed.schedule = asset.Schedule;
             feed.venueIds = asset.VenueIds;
