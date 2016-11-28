@@ -10,7 +10,7 @@ export function demoDirective ( ) {
         restrict: 'E',
         templateUrl: template,
         scope: {
-            url: '='
+            content: '='
         },
         link: function (scope, element, attrs) {
 

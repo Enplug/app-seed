@@ -22,10 +22,10 @@ import EditTpl from '../templates/edit.tpl.html';
 import './constants/Info';
 
 // import services
-import './services/AssetService';
+import './services/DemoService';
 
 // import controllers
-import './controllers/AssetIndexController';
+import './controllers/IndexController';
 import './controllers/EditController';
 
 // import directives
@@ -37,12 +37,12 @@ app.config( function( $locationProvider, $routeProvider, $compileProvider ) {
 
     $routeProvider
     .when( '/', {
-        name: 'list',
+        name: 'index',
         templateUrl: IndexTpl,
-        controller: 'AssetIndexController',
+        controller: 'IndexController',
         resolve: {
-            feeds: function(AssetService) {
-                return AssetService.loadFeeds();
+            feeds: function(DemoService) {
+                return DemoService.loadFeeds();
             }
         }
     })
@@ -51,8 +51,8 @@ app.config( function( $locationProvider, $routeProvider, $compileProvider ) {
         templateUrl: EditTpl,
         controller: 'EditController',
         resolve: {
-            feed: function (AssetService) {
-                return AssetService.newFeed(true);
+            feed: function (DemoService) {
+                return DemoService.newFeed(true);
             }
         }
     })
@@ -61,9 +61,9 @@ app.config( function( $locationProvider, $routeProvider, $compileProvider ) {
         templateUrl: EditTpl,
         controller: 'EditController',
         resolve: {
-            feed: function (AssetService, $route) {
+            feed: function (DemoService, $route) {
 
-                return AssetService.loadFeed($route.current.params.id);
+                return DemoService.loadFeed($route.current.params.id);
             }
         }
     })

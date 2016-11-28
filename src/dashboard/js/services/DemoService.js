@@ -2,7 +2,7 @@
 import app from '../app';
 import moment from 'moment';
 
-export default class AssetService {
+export default class DemoService {
 
     constructor ( $enplugAccount, $q) {
 
@@ -18,32 +18,27 @@ export default class AssetService {
             return {
                 id: '',
                 title: '',
-                url: '',
                 venueIds: []
             };
         }
-
         // Data abstraction from feed to asset before saving. Please note, any data saved under nested 'Value' property will be available in the player portion of the application
         function convertFeedToAsset (feed) {
             return {
                 Id: feed.id,
                 Created: feed.created,
                 Value: {
-                    title: feed.title,
-                    graphicUrl: feed.graphicUrl
+                    title: feed.title
                 },
                 Schedule: feed.schedule,
                 Duration: feed.duration,
                 VenueIds: feed.venueIds
             };
         }
-
         // Data abstraction to convert saved asset into feed
         function convertAssetToFeed (asset) {
             let feed = newFeed();
             feed.id = asset.Id;
             feed.title = asset.Value.title;
-            feed.graphicUrl = asset.Value.graphicUrl;
             feed.duration = asset.Duration;
             feed.schedule = asset.Schedule;
             feed.venueIds = asset.VenueIds;
@@ -117,4 +112,4 @@ export default class AssetService {
 
 };
 
-app.service( 'AssetService', AssetService );
+app.service( 'DemoService', DemoService );
