@@ -1,0 +1,35 @@
+<form class="form-material container" name="forms.form" novalidate>
+    <div class="row">
+        <div class="col-sm-3 section-summary">
+            <h3>Video Configuration</h3>
+            <p>Show a selection of
+                the latest YouTube videos of your choosing to
+                look great on your digital displays</p>
+        </div>
+        <div class="col-sm-9">
+            <div class="card card-form">
+                <div class="card-content clearfix">
+                    <!-- Configuration Title -->
+                    <div class="section-item section-title">
+                        <!--Directive Available through SDK utils -->
+                        <material-input field="feed.title"
+                            label="Name Your Video Configuration"
+                            type="text"
+                            required>
+                        </material-input>
+                    </div>
+                    <!--Url Input Section -->
+                    <div class="section-item list-holder">
+                        <div class="item-header">
+                            <h3>YouTube Video Url: </h3>
+                        </div>
+                        <div class="item-content url-input">
+                            <!--Custom Directive  -->
+                            <input-url url="feed.url"></input-url>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

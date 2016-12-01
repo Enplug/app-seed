@@ -1,0 +1,8 @@
+{
+  "presets": [
+    "@enplug/babel-preset"
+  ],
+  "plugins": [
+    "transform-runtime"
+  ]
+}

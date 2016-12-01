@@ -1,5 +1,3 @@
-# app-seed - the seed for DisplayOS apps
-This project is an application skeleton for a typical DisplayOS web-based app. You can use it to quickly bootstrap your DisplayOS webapp projects and dev environment for these projects.
 # Enplug - Example App
 
 Learn more about building apps through our SDK: https://developers.enplug.com/
@@ -16,19 +14,19 @@ We have moved to an entirely NPM managed dependency system. The devDependencies 
 - Everything is installed via `npm`, the [node package manager](https://www.npmjs.org/). NPM scripts are used to perform the build operations listed below as well.
 
 ### Set up Amazon S3 credentials
-If you'll be deploying your app on S3, you need to add an aws.private.json file containing your credentials in this format:
+If you'll be deploying your app on S3, you need to add an `aws.private.json` file containing your credentials in this format in the root of your project directory:
 ```
 {
     "accessKeyId": "<your-aws-access-key-id>",
     "secretAccessKey": "<your-aws-secret-access-key>"
 }
 ```
-If you won't be using S3, you can remove the `grunt/aws.js` task.
-
 ### Build Setup
-As shown in this app, we are using `Webpack` as a build and development tool. There are two configuration files, one for the dashboard part of your project, and one for the display/player portion of the project.  
+As shown in this app, we are using `Webpack` as a build and development tool. There are two configuration files, one for the `dashboard` part of your project, and one for the `player` or app portion of the project. Both of these are contained in separate subdirectories under `src/`.
 
-When the application is built it will be in the dist/ directory. You can point a local web server to the dist/ directory if you want to preview the production build locally.
+When the application is built it will be in the `dist/` directory. You can point a local web server to the dist/ directory if you want to preview the production build locally.
+
+![Npm run dev](./img/webpack-dev.png)
 
 ### Scripts
 There are only a few commands that you will need to use:
@@ -40,6 +38,18 @@ There are only a few commands that you will need to use:
 `npm run dev`: this is for development. It will first build then spin up a webpack-dev-server and enable hot module reloading.  
 
 `npm run release`: this is for deploying your project. If you choose to deploy to S3, you will need to do additional configuration to the package.json and script to match your credentials/bucket information.
+
+## Create App
+
+Select an account in order to create an app through the Enplug Dashboard: `dashboard.enplug.com/developers`. In order to render your app in the dashboard, you will need to configure the urls in the settings tab and additional metadata about your application, including name, screen orientations, etc.
+
+![App Creation](./img/developers-template.png)
+
+Under the `settings` tab make sure to enable `web application` and enter the two urls for both the dashboard and player/app portions. If working locally, these should point to your computer's IP address, corresponding with the port numbers listed in the `package.json`. If your deploying to S3, these urls should point to bucket instead.
+
+![Url Configuration](./img/url-config.png)
+
+Then simply, run `npm run dev` locally to spin up your server and select your newly created app from the `Apps` dropdown.
 
 ## Dashboard SDK
 ![Player ScreenShot](./img/dashboard-graphic.png)
