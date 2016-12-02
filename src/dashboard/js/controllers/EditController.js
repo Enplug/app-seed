@@ -8,6 +8,10 @@ export default class EditController {
 
         'ngInject';
 
+        // Scope property that will be passed into demo directive 
+        $scope.demoContent = {
+            'title': 'Demo for Directive. Content will passed to directive scope'
+        }
         // Dashboard header configuration
         $enplugDashboard.setHeaderTitle( feed.id == '' ? 'Setup' : 'Edit' );
         $enplugDashboard.setDisplaySelectorVisibility(false);
@@ -24,9 +28,6 @@ export default class EditController {
 
         setHeaderButtons();
 
-        $scope.demoContent = {
-            'title': 'Demo for Directive. Content will passed to directive scope'
-        }
     }
 };
 
