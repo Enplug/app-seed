@@ -8,6 +8,7 @@ export default class DemoService {
 
         'ngInject';
 
+        // "Feed" or "feeds" is the terminology we are using to describe an "asset" that's data we are modifying
         var feeds = [];
 
         function newFeed(setDefaultValue) {
@@ -17,7 +18,7 @@ export default class DemoService {
                 venueIds: []
             };
         }
-        // Data abstraction from feed to asset before saving. Please note, any data saved under nested 'Value' property will be available in the player portion of the application
+        // Data abstraction back to "asset" before saving. Please note, any data saved under nested 'Value' property will be available in the player portion of the application
         function convertFeedToAsset (feed) {
             return {
                 Id: feed.id,
@@ -42,9 +43,7 @@ export default class DemoService {
             return feed;
         }
 
-        /*****************************************
-          Dashboard SDK - $enplugAccount methods
-        *****************************************/
+        // Dashboard SDK - $enplugAccount methods
 
          function loadFeeds(){
             feeds.length = 0;

@@ -17,7 +17,7 @@
                             </li>
                             <li ng-repeat="feed in feeds track by $index" class="item clearfix">
 
-                                <div class="section width-55 btn text" ng-click="editFeed(feed.id)">
+                                <div class="section width-55 btn text" ng-click="renderEdit(feed.id)">
                                     <span class="truncate" ng-bind="feed.title"></span>
                                 </div>
                                 <div class="section width-15 btn" ng-click="deployFeed(feed)" >

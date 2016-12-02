@@ -8,21 +8,35 @@ export default class EditController {
 
         'ngInject';
 
-        // Scope property that will be passed into demo directive 
+        // Scope property feed
+        $scope.feed = feed;
+
+        // Scope property that will be passed into demo directive
         $scope.demoContent = {
             'title': 'Demo for Directive. Content will passed to directive scope'
         }
+
         // Dashboard header configuration
         $enplugDashboard.setHeaderTitle( feed.id == '' ? 'Setup' : 'Edit' );
         $enplugDashboard.setDisplaySelectorVisibility(false);
 
-        function renderIndexTpl() {
+
+        function saveAsset() {
+            DemoService.saveFeed($scope.feed, feed.id=='').then(function(){
+                renderIndex();
+            }, function(error) {
+                console.log('Save was aborted');
+            });
+        }
+
+        function renderIndex() {
             $location.path('/');
         }
 
         function setHeaderButtons() {
             $enplugDashboard.setHeaderButtons([
-                { text: 'All Assets', action: renderIndexTpl, class: 'btn-primary'}
+                { text: 'All Assets', action: renderIndex, class: 'btn-primary'},
+                {text: 'Save', action: saveAsset, class: 'btn-primary'}
             ]);
         }
 

@@ -8,20 +8,14 @@ import logger from './loggerConsole';
 
         // Player SDK - Methods
 
-        // Listening for a 'destroy` event from the server
-        enplug.on( 'destroy', function( done ) {
-            console.log('App is about to be destroyed!')
-            done();
-        });
-
         // Grabbing saved asset, created in the dashboard
-        function initalize() {
+        function initialize() {
             enplug.assets.getNext().then(function( asset ) {
                 console.log('Grabbing asset: ' +  JSON.stringify(asset) + '. Now going to start enplug player!')
                 startPlayer();
             });
         }
-        // Starting Enplug Player 
+        // Starting Enplug Player
         function startPlayer() {
             enplug.appStatus.start().then(function() {
                 console.log('Starting enplug player now!')
@@ -31,6 +25,14 @@ import logger from './loggerConsole';
         function error() {
             return enplug.appStatus.hide();
         }
+
+        // Listening for a 'destroy` event from the server
+        enplug.on( 'destroy', function( done ) {
+            console.log('App is about to be destroyed!')
+            done();
+        });
+
+        initialize();
 
 
     })( enplug );

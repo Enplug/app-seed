@@ -14,6 +14,7 @@ export function demoDirective ( ) {
         },
         link: function (scope, element, attrs) {
 
+            // Directive scope methods, functions, etc go here..
 
         }
     };
