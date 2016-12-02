@@ -10,10 +10,6 @@ export default class DemoService {
 
         var feeds = [];
 
-        function getNumberOfFeeds() {
-            return feeds.length;
-        }
-
         function newFeed(setDefaultValue) {
             return {
                 id: '',
@@ -103,9 +99,8 @@ export default class DemoService {
 
             saveFeed: saveFeed,
 
-            deleteById: deleteById,
+            deleteById: deleteById
 
-            getNumberOfFeeds: getNumberOfFeeds
         }
 
     }
