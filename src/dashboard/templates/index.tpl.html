@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3 section-summary">
+            <h3>App Seed</h3>
+            <p>This page list all the saved assets for your application.</p>
+        </div>
+        <div class="col-sm-9">
+            <div class="card card-form">
+                <div class="card-content clearfix">
+                    <div class="grid-list">
+                        <ul class="list">
+                            <li class="item clearfix header">
+                                <span class="section width-55 text">Edit</span>
+                                <span class="section width-15 text center">Displays Groups</span>
+                                <span class="section width-15 text center">Last Modified</span>
+                                <span class="section width-15 text center">Delete</span>
+                            </li>
+                            <li ng-repeat="feed in feeds track by $index" class="item clearfix">
+
+                                <div class="section width-55 btn text" ng-click="renderEdit(feed.id)">
+                                    <span class="truncate" ng-bind="feed.title"></span>
+                                </div>
+                                <div class="section width-15 btn" ng-click="deployFeed(feed)" >
+                                    <display-counter count="feed.venueIds.length"> </display-counter>
+                                </div>
+                                <div class="section width-15 text center">
+                                    <span ng-bind="feed.created"></span>
+                                </div>
+                                <div class="section width-15 btn" ng-click="deleteFeed(feed)">
+                                    <i class="icon ion-ios-trash-outline"></i>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
