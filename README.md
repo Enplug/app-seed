@@ -1,6 +1,12 @@
 # App Seed - seed for creating apps using Enplug's Web SDK
 This project is an application skeleton for creating web based apps through our Dashboard and Player SDKs. You can use it to quickly bootstrap your webapp projects and dev environment for these projects.
 
+If you would like to see a completed app using the SDK, checkout to the `example-app` branch
+
+```
+git checkout example-app
+```
+
 Learn more about building apps through our SDK: https://developers.enplug.com/
 
 ## Getting Started
@@ -51,7 +57,6 @@ Under the `settings` tab make sure to enable `web application` and enter the two
 ![Url Configuration](./img/url-config.png)
 
 Then simply, run `npm run dev` locally to spin up your server and select your newly created app from the `Apps` dropdown.
-
 ## Dashboard SDK
 ![Player ScreenShot](./img/dashboard-graphic.png)
 [Dashboard SDK - Github](https://github.com/Enplug/dashboard-sdk)
