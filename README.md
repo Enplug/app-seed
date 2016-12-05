@@ -1,12 +1,19 @@
-# Enplug - Example App
+# App Seed - seed for creating apps using Enplug's Web SDK
+This project is an application skeleton for creating web based apps through our Dashboard and Player SDKs. You can use it to quickly bootstrap your webapp projects and dev environment for these projects.
+
+If you would like to see a completed app using the SDK, checkout to the `example-app` branch
+
+```
+git checkout example-app
+```
 
 Learn more about building apps through our SDK: https://developers.enplug.com/
 
 ## Getting Started
-To get you started, you can simply clone the example-app repository and install the dependencies with `npm install`.
+To get you started, you can simply clone this repository and install the dependencies with `npm install`.
 
 ```
-git clone https://github.com/enplug/example-app.git
+git clone https://github.com/enplug/app-seed.git
 ```
 
 ### Install Dependencies
@@ -26,7 +33,7 @@ As shown in this app, we are using `Webpack` as a build and development tool. Th
 
 When the application is built it will be in the `dist/` directory. You can point a local web server to the dist/ directory if you want to preview the production build locally.
 
-![Npm run dev](./img/webpack-dev.png)
+![Npm run dev](./img/webpack-server.png)
 
 ### Scripts
 There are only a few commands that you will need to use:
@@ -39,17 +46,26 @@ There are only a few commands that you will need to use:
 
 `npm run release`: this is for deploying your project. If you choose to deploy to S3, you will need to do additional configuration to the package.json and script to match your credentials/bucket information.
 
-## Create App
+## Dashboard App Configuration
+
+### Create App
 
 Select an account in order to create an app through the Enplug Dashboard: `dashboard.enplug.com/developers`. In order to render your app in the dashboard, you will need to configure the urls in the settings tab and additional metadata about your application, including name, screen orientations, etc.
 
 ![App Creation](./img/developers-template.png)
 
+### App Urls
+
 Under the `settings` tab make sure to enable `web application` and enter the two urls for both the dashboard and player/app portions. If working locally, these should point to your computer's IP address, corresponding with the port numbers listed in the `package.json`. If your deploying to S3, these urls should point to bucket instead.
 
 ![Url Configuration](./img/url-config.png)
 
+The Dashboard Url for the local dev server is configured by default to use `https`, while the app/player portion of the application must use `http` to render in our player. If you would like to change the dashboard configuration to use http instead, remove the `--https` argument from the build script on line 87:
+
+![Build Script](./img/build-script.png)
+
 Then simply, run `npm run dev` locally to spin up your server and select your newly created app from the `Apps` dropdown.
+
 
 ## Dashboard SDK
 ![Player ScreenShot](./img/dashboard-graphic.png)
@@ -59,9 +75,9 @@ The Dashboard SDK is used to create the interface for saving, editing and deploy
 
 We use `$enplugDashboard` to interact and modify the dashboard display. For example, adding a header button for saving.
 
-Additionally, we use `$enplugAccount` to store various types of data and properties we might need when displaying content for our youtube videos, like a video url.
+Additionally, we use `$enplugAccount` to store various types of data and properties we might need when displaying content, such as a title or video url.
 
-The data we store is encapsulated in an `asset` object using the `$enplugAccount.saveAsset()` endpoint. For example, in this app we are storing an asset object with the following properties:
+The data we store is encapsulated in an `asset` object using the `$enplugAccount.saveAsset()` endpoint. For example, an asset might look like the following:
 
 ```js
 {
@@ -79,7 +95,7 @@ The data we store is encapsulated in an `asset` object using the `$enplugAccount
 ![Player ScreenShot](./img/player-screenshot.png)
 [Player SDK - Github](https://github.com/Enplug/js-player-sdk)
 
-In the Player SDK, we are using the [YouTube API](https://developers.google.com/youtube/iframe_api_reference) and [youtube-player](https://www.npmjs.com/package/youtube-player) `npm` dependency to display different YouTube videos on screen. We are able to use the Player SDK methods to effectively show the player on screen, grab our asset data, then load the respective video onscreen.
+In the player portion of our applications, we are able to use the Player SDK methods to effectively grab our asset data stored in the Value object, load our content, then start the enplug player
 
 We use several different methods in our player application including `enplug.appStatus.start()` which tells the player it's ready to be rendered, and `enplug.appStatus.hide()` to let the server know when our video is done playing.
 
