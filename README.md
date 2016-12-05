@@ -33,7 +33,7 @@ As shown in this app, we are using `Webpack` as a build and development tool. Th
 
 When the application is built it will be in the `dist/` directory. You can point a local web server to the dist/ directory if you want to preview the production build locally.
 
-![Npm run dev](./img/webpack-dev.png)
+![Npm run dev](./img/webpack-server.png)
 
 ### Scripts
 There are only a few commands that you will need to use:
@@ -46,17 +46,27 @@ There are only a few commands that you will need to use:
 
 `npm run release`: this is for deploying your project. If you choose to deploy to S3, you will need to do additional configuration to the package.json and script to match your credentials/bucket information.
 
-## Create App
+## Dashboard App Configuration
+
+### Create App
 
 Select an account in order to create an app through the Enplug Dashboard: `dashboard.enplug.com/developers`. In order to render your app in the dashboard, you will need to configure the urls in the settings tab and additional metadata about your application, including name, screen orientations, etc.
 
 ![App Creation](./img/developers-template.png)
 
+### App Urls
+
 Under the `settings` tab make sure to enable `web application` and enter the two urls for both the dashboard and player/app portions. If working locally, these should point to your computer's IP address, corresponding with the port numbers listed in the `package.json`. If your deploying to S3, these urls should point to bucket instead.
 
 ![Url Configuration](./img/url-config.png)
 
+The Dashboard Url for the local dev server is configured by default to use `https`, while the app/player portion of the application must use `http` to render in our player. If you would like to change the dashboard configuration to use http instead, remove the `--https` argument from the build script on line 87:
+
+![Build Script](./img/build-script.png)
+
 Then simply, run `npm run dev` locally to spin up your server and select your newly created app from the `Apps` dropdown.
+
+
 ## Dashboard SDK
 ![Player ScreenShot](./img/dashboard-graphic.png)
 [Dashboard SDK - Github](https://github.com/Enplug/dashboard-sdk)
