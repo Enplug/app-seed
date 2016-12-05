@@ -12,100 +12,111 @@ import YT from 'youtube-player';
 
         // Variable assigned to instance of YouTube player
         let player;
-        // Video id from asset's url;
+        // Asset's Video Id;
         let assetVideoId;
         // Timeout id for buffering. Cleared when video begins playing.
         let bufferTimeoutId;
-        // Duration of timeout before hide is called if a video is buffering. Default set to 60 seconds.
-        let bufferTime = 60000;
+        // Duration of timeout before finished is called if a video is buffering.
+        let bufferTime = 15000;
+        // Variable to check if the app is first loading
+        let initalLoad = true;
+        // Iframe container
+        let iframe = document.querySelector('.iframe-container ');
+        // Variable to check if youtube player started up
+        let playerStarted = false;
 
          /*************************
          * YouTube Player Methods
          **************************/
 
         // Assigning player to new instance of YouTube player
-        player = YT('player');
+        player = YT('player', {
+			playerVars: {
+				controls: 0,
+				rel: 0,
+				showinfo: 0
+			}
+		});
 
         // Callback invoked when the player is ready
         player.on('ready', function(event) {
-            cueVideo();
+            console.log('YouTube Player is ready.');
+
+            enplug.appStatus.start().then(function() {
+                console.log("Starting video. Video id: " + assetVideoId);
+                // Method setCanInterrupt prevents video from being interrupted from another enplug app or asset playing
+                enplug.appStatus.setCanInterrupt(false);
+                // Loading and playing video by id
+                player.loadVideoById(assetVideoId);
+
+                setTimeout(function() {
+                    if (!playerStarted) {
+                        console.log("Video never started. Calling finish.");
+                        setToFinish();
+                    }
+                }, bufferTime)
+            })
         })
 
         player.on('error', function(event) {
-            hideCurrentState();
+            console.log("There is an error with the video. Error code: " + event.data);
+            setToFinish();
         });
 
         // Callback invoked on 'stateChange'. Stopping player and calling playVideo function to play next video
         player.on('stateChange', function(event) {
 
+                playerStarted = true;
+
                 let playerStates = {
                     0: ended,
                     1: playing,
-                    3: buffering,
-                    5: playCued
+                    3: buffering
                 }
                 // If event exists in stageChange obj (doesn't return undefined), invokes that function
-                if(playerStates[event.data]) {
+                if (playerStates[event.data]) {
                     playerStates[event.data]();
+                } else {
+                    console.log("Received unhandled state change " + event.data)
                 }
         });
 
         function playing() {
             clearTimeout(bufferTimeoutId)
+            console.log('Video is playing. Clearing timeout id for buffering. Timeout id: ' + bufferTimeoutId)
         }
 
         function buffering() {
+            console.log('Video is buffering.')
             bufferTimeoutId = setTimeout(function() {
-                hideCurrentState();
+                console.log("Video has buffered for too long. Ending video early.");
+                setToFinish();
             }, bufferTime)
         }
 
         function ended() {
-             enplug.appStatus.setCanInterrupt(true);
-             // Function letting server know that video is finished playing
-             hideCurrentState().then(function() {
-                 console.log('Calling Hide Promise Resolved!')
-             });
+            console.log('Video has finished playing.')
+            setToFinish();
         }
 
-        function cueVideo() {
-            player.cueVideoById(assetVideoId).then(function() {
-                getNextAsset();
-            })
-        }
-
-        // Checking rotationIndex value and calling loadVideoById
-        function playCued() {
-            // Setting canSetInterrupt to false. Prevents other apps being deployed from interrupting video
-            enplug.appStatus.setCanInterrupt(false);
-            // Calling appStatus.start() to start application & render on player
-            enplug.appStatus.start().then(function() {
-                enplug.notifications.post('Starting Player..')
-                // Loading player to play next asset video
-                player.playVideo().then(function(event) {
-                    console.log('Starting playing video with the id: ' + assetVideoId + '!')
-                });
-            })
-        }
-
-        /*****************
+        /******************
         * Player SDK - Methods
-        ****************/
+        ******************/
 
         // Listening for a 'destroy` event from the server
         enplug.on( 'destroy', function( done ) {
-            console.log('App is about to be destroyed!')
             done();
         });
+
         /***********************************
-        * Player SDK - Functions
+        * Player SDK - Asset Related Functions
         ************************************/
 
         // Function calling `enplug.appStatus.hide()`, letting the server know the video has finished playing
-        function hideCurrentState() {
-            return enplug.appStatus.hide();
+        function setToFinish() {
+            enplug.appStatus.setCanInterrupt(true);
+            enplug.appStatus.hide();
         }
-
         // Matching RegExp patterns to url & extracting the id of the YouTube video if it's a match. Otherwise, the function will return null and a video will not be shown.
         function extractUrlId(url) {
             if ( (/be\//).test(url)) {
@@ -118,17 +129,12 @@ import YT from 'youtube-player';
                 return null
             }
         }
-
-        // Grabbing Next Asset for any deployed to the Device
-        function getNextAsset() {
+        // Immediately invoked function grabbing next asset for any deployed to the device
+        (function (){
             enplug.assets.getNext().then(function( asset ) {
-                console.log('Resolved promise for getNext :   ', asset)
                 assetVideoId = extractUrlId(asset.url);
             });
-        }
-
-        // Immediately invoked to getAsset
-        getNextAsset();
+        })();
 
 
     })( enplug, YT );
