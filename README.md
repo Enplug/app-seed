@@ -60,7 +60,7 @@ Under the settings tab, select web application and enter the two urls for both t
 
 If working locally, these should point to your computer's IP address, corresponding with the port numbers listed in the package.json. When your ready to deploy, you should enter your S3 buckets or urls of your hosted application instead.
 
-![Url Configuration](./img/url-config.png)
+![Url Configuration](./img/app-urls.png)
 
 The Dashboard url for the local dev server is configured by default to use `https`, while the app/player portion of the application must use `http` to render in our player. If you would like to change the dashboard configuration to use http instead, remove the `--https` argument from the build script on line 87:
 
