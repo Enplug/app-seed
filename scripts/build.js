@@ -84,7 +84,8 @@ function runBuild () {
    }
    command += ' '+(needsDevServer?'webpack-dev-server':'webpack'); // webpack server or regular webpack?
    command += ' --config webpack.config.'+target+'.'+ (needsDevServer?'dev':'prod' ) +'.js '; // proper config, proper target
-   command += needsDevServer ? ' --watch --colors --inline --progress --host 0.0.0.0 ' : ' --bail --progress --profile ';
+   command += needsDevServer ? ' --watch --colors --inline  --progress  --host 0.0.0.0 ' + (target == 'dashboard' ? '--https' : '') : ' --bail --progress --profile ';
+
    command += needsVersionDirectory ? ' --directory-version' : '';
 
   sh.exec( command, function(argument) {
