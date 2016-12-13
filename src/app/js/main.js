@@ -134,7 +134,7 @@ import YT from 'youtube-player';
             }
         }
         // Function to grab next asset
-        (function()){
+        (function(){
             enplug.assets.getNext().then(function( asset ) {
             assetVideoId = extractUrlId(asset.url);
             initializePlayer();
