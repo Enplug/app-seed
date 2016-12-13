@@ -29,57 +29,61 @@ import YT from 'youtube-player';
          * YouTube Player Methods
          **************************/
 
-        // Assigning player to new instance of YouTube player
-        player = YT('player', {
-			playerVars: {
-				controls: 0,
-				rel: 0,
-				showinfo: 0
-			}
-		});
+        //  Function to initialize Youtube player and methods. Function invoked once enplug.assets.getNext() promise is resolved
+        function initializePlayer() {
+            // Assigning player to new instance of YouTube player
+            player = YT('player', {
+    			playerVars: {
+    				controls: 0,
+    				rel: 0,
+    				showinfo: 0
+    			}
+    		});
 
-        // Callback invoked when the player is ready
-        player.on('ready', function(event) {
-            console.log('YouTube Player is ready.');
+            // Callback invoked when the player is ready
+            player.on('ready', function(event) {
+                console.log('YouTube Player is ready.');
 
-            enplug.appStatus.start().then(function() {
-                console.log("Starting video. Video id: " + assetVideoId);
-                // Method setCanInterrupt prevents video from being interrupted from another enplug app or asset playing
-                enplug.appStatus.setCanInterrupt(false);
-                // Loading and playing video by id
-                player.loadVideoById(assetVideoId);
+                enplug.appStatus.start().then(function() {
+                    console.log("Starting video. Video id: " + assetVideoId);
+                    // Method setCanInterrupt prevents video from being interrupted from another enplug app or asset playing
+                    enplug.appStatus.setCanInterrupt(false);
+                    // Loading and playing video by id
+                    player.loadVideoById(assetVideoId);
 
-                setTimeout(function() {
-                    if (!playerStarted) {
-                        console.log("Video never started. Calling finish.");
-                        setToFinish();
-                    }
-                }, bufferTime)
+                    setTimeout(function() {
+                        if (!playerStarted) {
+                            console.log("Video never started. Calling finish.");
+                            setToFinish();
+                        }
+                    }, bufferTime)
+                })
             })
-        })
 
-        player.on('error', function(event) {
-            console.log("There is an error with the video. Error code: " + event.data);
-            setToFinish();
-        });
+            player.on('error', function(event) {
+                console.log("There is an error with the video. Error code: " + event.data);
+                setToFinish();
+            });
 
-        // Callback invoked on 'stateChange'. Stopping player and calling playVideo function to play next video
-        player.on('stateChange', function(event) {
+            // Callback invoked on 'stateChange'. Stopping player and calling playVideo function to play next video
+            player.on('stateChange', function(event) {
 
-                playerStarted = true;
+                    playerStarted = true;
 
-                let playerStates = {
-                    0: ended,
-                    1: playing,
-                    3: buffering
-                }
-                // If event exists in stageChange obj (doesn't return undefined), invokes that function
-                if (playerStates[event.data]) {
-                    playerStates[event.data]();
-                } else {
-                    console.log("Received unhandled state change " + event.data)
-                }
-        });
+                    let playerStates = {
+                        0: ended,
+                        1: playing,
+                        3: buffering
+                    }
+                    // If event exists in stageChange obj (doesn't return undefined), invokes that function
+                    if (playerStates[event.data]) {
+                        playerStates[event.data]();
+                    } else {
+                        console.log("Received unhandled state change " + event.data)
+                    }
+            });
+
+        }
 
         function playing() {
             clearTimeout(bufferTimeoutId)
@@ -129,10 +133,11 @@ import YT from 'youtube-player';
                 return null
             }
         }
-        // Immediately invoked function grabbing next asset for any deployed to the device
-        (function (){
+        // Function to grab next asset
+        (function()){
             enplug.assets.getNext().then(function( asset ) {
-                assetVideoId = extractUrlId(asset.url);
+            assetVideoId = extractUrlId(asset.url);
+            initializePlayer();
             });
         })();
 
