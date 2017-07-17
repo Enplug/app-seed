@@ -42,8 +42,31 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
+    "rimraf": "^2.6.1",
+    "s3": "^4.4.0",
     "ts-node": "~3.0.4",
     "tslint": "~5.3.2",
     "typescript": "~2.3.3"
+  },
+  "config": {
+    "port": 50002,
+    "destination": "enplug/appseed/",
+    "target": "dashboard",
+    "aws": {
+      "buckets": [
+        "apps.enplug.in",
+        "apps.enplug.com"
+      ],
+      "s3": {
+        "cache": false,
+        "overwrite": true,
+        "region": "us-west-2",
+        "sslEnabled": true,
+        "apiVersion": "2016-05-01",
+        "params": {
+          "ACL": "public-read"
+        }
+      }
+    }
   }
 }
