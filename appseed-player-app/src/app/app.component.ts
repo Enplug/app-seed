@@ -1,24 +1,24 @@
+/**
+ *  @author Your Name (login@enplug.com)
+ */
+
 import {
   Component,
-  ViewChild,
-  ElementRef
+  OnInit
 } from '@angular/core';
 
+
 @Component({
-  selector: 'app-root',
+  selector: 'enplug-appseed',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  @ViewChild('video') videoElement: ElementRef;
+export class AppComponent implements OnInit {
 
   constructor() {
-    window.addEventListener("message", this.receiveMessage.bind(this), false);
   }
 
 
-
-  receiveMessage(event) {
-    console.log('App received message', event, this.videoElement);
+  ngOnInit() {
   }
 }
