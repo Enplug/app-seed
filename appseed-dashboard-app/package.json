@@ -1,6 +1,6 @@
 {
   "name": "enplug-appseed-dashboard-app",
-  "version": "0.0.21",
+  "version": "1.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
