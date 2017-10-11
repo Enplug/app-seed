@@ -1,0 +1,76 @@
+{
+  "name": "enplug-appseed-player-app",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve --port 50003",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "i18n": "ng-xi18n --i18nFormat=xlf",
+    "release": "enplug-release --target=dashboard",
+    "release:dev": "enplug-release --target=app --dev"
+  },
+  "config": {
+    "destination": "/enplug/appseed/player-app/",
+    "aws": {
+      "buckets": [
+        "apps.enplug.in",
+        "apps.enplug.com"
+      ],
+      "s3": {
+        "cache": false,
+        "overwrite": true,
+        "region": "us-west-2",
+        "sslEnabled": true,
+        "apiVersion": "2016-05-01",
+        "params": {
+          "ACL": "public-read"
+        }
+      }
+    }
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^4.3.1",
+    "@angular/common": "^4.3.1",
+    "@angular/compiler": "^4.3.1",
+    "@angular/core": "^4.3.1",
+    "@angular/forms": "^4.3.1",
+    "@angular/http": "^4.3.1",
+    "@angular/platform-browser": "^4.3.1",
+    "@angular/platform-browser-dynamic": "^4.3.1",
+    "@angular/router": "^4.3.1",
+    "core-js": "^2.4.1",
+    "rxjs": "^5.1.0",
+    "zone.js": "^0.8.14"
+  },
+  "devDependencies": {
+    "@angular/cli": "1.2.0",
+    "@angular/compiler-cli": "^4.3.1",
+    "@angular/language-service": "^4.3.1",
+    "@enplug/scripts": "^1.1.0",
+    "@types/jasmine": "~2.5.53",
+    "@types/jasminewd2": "~2.0.2",
+    "@types/node": "^6.0.85",
+    "codelyzer": "~3.0.1",
+    "command-line-args": "^4.0.6",
+    "jasmine-core": "~2.6.2",
+    "jasmine-spec-reporter": "~4.1.0",
+    "karma": "~1.7.0",
+    "karma-chrome-launcher": "~2.1.1",
+    "karma-cli": "~1.0.1",
+    "karma-coverage-istanbul-reporter": "^1.2.1",
+    "karma-jasmine": "~1.1.0",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "protractor": "~5.1.2",
+    "rimraf": "^2.6.1",
+    "s3": "^4.4.0",
+    "shelljs": "^0.7.8",
+    "ts-node": "~3.0.4",
+    "tslint": "~5.3.2",
+    "typescript": "~2.3.3"
+  }
+}
