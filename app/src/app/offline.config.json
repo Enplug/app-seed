@@ -1,0 +1,9 @@
+{
+  "staticResources": [
+    "./img/screenfeed-logo.png"
+  ],
+  "refreshUrls": {
+    "kitchen.screenfeed.com": 10,
+    "msecnd.net": 10
+  }
+}

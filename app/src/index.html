@@ -1,31 +1,28 @@
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
-  <title>Enplug - Appseed</title>
+  <title>AppseedApp</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="//cdn.enplug.net/brand/favicon.ico">
-  <link rel="icon" type="image/png" href="//cdn.enplug.net/brand/favicon.png" sizes="32x32">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-
 <body>
-  <enplug-appseed></enplug-appseed>
-
+  <app-root></app-root>
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(
-        function () {
-          console.log('Service worker has been successfully registered.');
-        },
-        function (error) {
-          console.warn('Unable to register service worker', error);
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./offline-app-sw.js').then(function (registration) {
+          // Registration was successful
+          console.log('[AppSeed|sw] ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          // registration failed :(
+          console.warn('[AppSeed|sw] ServiceWorker registration failed: ', err);
         });
+      });
     }
   </script>
 </body>
-
 </html>

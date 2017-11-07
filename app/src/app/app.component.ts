@@ -1,24 +1,10 @@
-/**
- *  @author Your Name (login@enplug.com)
- */
-
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'enplug-appseed',
+  selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
-
-  constructor() {
-  }
-
-
-  ngOnInit() {
-  }
+export class AppComponent {
+  title = 'app';
 }
