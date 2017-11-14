@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {} from '@enplug/sdk-player';
 
 @Injectable()
 export class EnplugService {
