@@ -9,7 +9,7 @@ import {
 
 
 @Component({
-  selector: 'enplug-appseed',
+  selector: 'ep-appseed',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
