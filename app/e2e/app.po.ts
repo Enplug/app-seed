@@ -1,6 +1,6 @@
 import { browser, by, element } from 'protractor';
 
-export class AppseedAppPage {
+export class AppseedPlayerPage {
   navigateTo() {
     return browser.get('/');
   }

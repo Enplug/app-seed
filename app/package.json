@@ -1,5 +1,5 @@
 {
-  "name": "appseed-app",
+  "name": "enplug-appseed-player-app",
   "version": "0.0.0",
   "version_dev": "0.0.0",
   "license": "MIT",
@@ -10,14 +10,15 @@
     "release": "enplug-release",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "i18n": "ng-xi18n --i18nFormat=xlf"
   },
   "config": {
     "ports": {
       "dashboard": 50020,
       "app": 50021
     },
-    "destination": "enplug/appseed-app",
+    "destination": "enplug/appseed/player-app/",
     "aws": {
       "buckets": [
         "apps.enplug.in",

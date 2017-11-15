@@ -1,10 +1,10 @@
-import { AppseedAppPage } from './app.po';
+import { AppseedPlayerPage } from './app.po';
 
 describe('appseed-app App', () => {
-  let page: AppseedAppPage;
+  let page: AppseedPlayerPage;
 
   beforeEach(() => {
-    page = new AppseedAppPage();
+    page = new AppseedPlayerPage();
   });
 
   it('should display welcome message', () => {
