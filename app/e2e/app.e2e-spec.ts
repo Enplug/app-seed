@@ -1,6 +1,6 @@
 import { AppseedPlayerPage } from './app.po';
 
-describe('appseed-app App', () => {
+describe('appseed-player App', () => {
   let page: AppseedPlayerPage;
 
   beforeEach(() => {
