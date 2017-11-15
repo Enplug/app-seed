@@ -46,6 +46,7 @@
     "@angular/platform-browser": "^5.0.0",
     "@angular/platform-browser-dynamic": "^5.0.0",
     "@angular/router": "^5.0.0",
+    "@enplug/sdk-player": "^0.6.0",
     "core-js": "^2.5.1",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.18"
@@ -54,7 +55,7 @@
     "@angular/cli": "1.5.0",
     "@angular/compiler-cli": "^5.0.0",
     "@angular/language-service": "^5.0.0",
-    "@enplug/scripts": "^1.2.0-beta-5",
+    "@enplug/scripts": "^1.2.1",
     "@types/jasmine": "~2.6.2",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.0.48",
