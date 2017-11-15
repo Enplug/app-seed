@@ -45,7 +45,6 @@
     "@angular/platform-server": "^4.3.2",
     "@angular/router": "^4.3.2",
     "@enplug/dashboard-sdk": "^4.1.2",
-    "@enplug/sdk-player": "^0.6.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.4.1",
     "intl": "^1.2.5",
