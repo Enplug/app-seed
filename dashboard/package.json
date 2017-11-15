@@ -4,14 +4,14 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 50002",
-    "build": "ng build --prod",
+    "start": "ng serve",
+    "build": "enplug-build",
+    "release": "enplug-release",
+    "release:dev": "enplug-release --dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "i18n": "ng-xi18n --i18nFormat=xlf",
-    "release": "enplug-release",
-    "release:dev": "enplug-release --dev"
+    "i18n": "ng-xi18n --i18nFormat=xlf"
   },
   "config": {
     "destination": "/enplug/appseed/dashboard-app/",
