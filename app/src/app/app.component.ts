@@ -1,11 +1,4 @@
-/**
- *  @author Your Name (login@enplug.com)
- */
-
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 
 @Component({
@@ -14,11 +7,12 @@ import {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-
   constructor() {
+
   }
 
 
   ngOnInit() {
+
   }
 }

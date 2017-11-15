@@ -1,0 +1,15 @@
+{
+  "staticResources": [
+    "./index.html",
+    "./main.bundle.js",
+    "./inline.bundle.js",
+    "./main.bundle.js",
+    "./polyfills.bundle.js",
+    "./styles.bundle.js",
+    "./vendor.bundle.js"
+  ],
+  "noCorsUrls": [
+    "google-analytics.com"
+  ],
+  "refreshUrls": {}
+}
