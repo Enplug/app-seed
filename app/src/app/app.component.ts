@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
 
 
   ngOnInit() {
+    enplug.appStatus.start();
 
   }
 }
