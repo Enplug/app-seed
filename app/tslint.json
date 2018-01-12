@@ -15,18 +15,20 @@
     "forin": true,
     "import-blacklist": [
       true,
-      "rxjs"
+      "rxjs",
+      "lodash"
     ],
     "import-spacing": true,
     "indent": [
       true,
-      "spaces"
+      "spaces",
+      2
     ],
     "interface-over-type-literal": true,
     "label-position": true,
     "max-line-length": [
       true,
-      140
+      120
     ],
     "member-access": false,
     "member-ordering": [
@@ -46,7 +48,7 @@
     ],
     "no-construct": true,
     "no-debugger": true,
-    "no-duplicate-super": true,
+    "no-duplicate-variable": true,
     "no-empty": false,
     "no-empty-interface": true,
     "no-eval": true,
@@ -98,7 +100,7 @@
     ],
     "typeof-compare": true,
     "unified-signatures": true,
-    "variable-name": false,
+    "variable-name": true,
     "whitespace": [
       true,
       "check-branch",
@@ -110,13 +112,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "app",
+      "ep",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "app",
+      "ep",
       "kebab-case"
     ],
     "use-input-property-decorator": true,
