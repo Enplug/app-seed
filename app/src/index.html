@@ -9,6 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="//cdn.enplug.net/brand/favicon.ico">
   <link rel="icon" type="image/png" href="//cdn.enplug.net/brand/favicon.png" sizes="32x32">
+  <script type="text/javascript" src="https://apps.enplug.com/sdk/v1/player.js"></script>
 </head>
 
 <body>
@@ -20,10 +21,10 @@
       window.addEventListener('load', function () {
         navigator.serviceWorker.register('./enplug-offline-worker.js').then(function (registration) {
           // Registration was successful
-          console.log('[Graphics|sw] ServiceWorker registration successful with scope: ', registration.scope);
+          console.log('[AppSeed|sw] ServiceWorker registration successful with scope: ', registration.scope);
         }, function (err) {
           // registration failed :(
-          console.warn('[Graphics|sw] ServiceWorker registration failed: ', err);
+          console.warn('[AppSeed|sw] ServiceWorker registration failed: ', err);
         });
       });
     }
