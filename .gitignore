@@ -19,4 +19,4 @@ bower_components/
 *.sublime-workspace
 
 aws.private.json
--.vscode
+.vscode
