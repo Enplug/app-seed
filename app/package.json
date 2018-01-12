@@ -1,5 +1,5 @@
 {
-  "name": "appseed-app",
+  "name": "enplug-appseed-app",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -8,7 +8,8 @@
     "start": "ng serve --port=50001",
     "build": "enplug-build",
     "release": "enplug-release",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "i18n": "ng-xi18n --i18nFormat=xlf"
   },
   "config": {
     "destination": "enplug/appseed/app/",
