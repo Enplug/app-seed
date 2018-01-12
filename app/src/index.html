@@ -17,13 +17,15 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(
-        function () {
-          console.log('Service worker has been successfully registered.');
-        },
-        function (error) {
-          console.warn('Unable to register service worker', error);
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./enplug-offline-worker.js').then(function (registration) {
+          // Registration was successful
+          console.log('[Graphics|sw] ServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          // registration failed :(
+          console.warn('[Graphics|sw] ServiceWorker registration failed: ', err);
         });
+      });
     }
   </script>
 </body>

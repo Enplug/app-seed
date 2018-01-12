@@ -4,11 +4,30 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
+    "dev": "ng serve --port=50001",
+    "start": "ng serve --port=50001",
+    "build": "enplug-build",
+    "release": "enplug-release",
     "e2e": "ng e2e"
+  },
+  "config": {
+    "destination": "enplug/appseed/app/",
+    "aws": {
+      "buckets": [
+        "apps.enplug.in",
+        "apps.enplug.com"
+      ],
+      "s3": {
+        "cache": false,
+        "overwrite": true,
+        "region": "us-west-2",
+        "sslEnabled": true,
+        "apiVersion": "2016-05-01",
+        "params": {
+          "ACL": "public-read"
+        }
+      }
+    }
   },
   "private": true,
   "dependencies": {
