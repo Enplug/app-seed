@@ -1,35 +1,14 @@
 {
-  "name": "enplug-appseed-app",
-  "version": "1.0.0",
+  "name": "appseed-app",
+  "version": "0.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 50003",
-    "build": "ng build --prod",
+    "start": "ng serve",
+    "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "i18n": "ng-xi18n --i18nFormat=xlf",
-    "release": "enplug-release"
-  },
-  "config": {
-    "destination": "/enplug/appseed/app/",
-    "aws": {
-      "buckets": [
-        "apps.enplug.in",
-        "apps.enplug.com"
-      ],
-      "s3": {
-        "cache": false,
-        "overwrite": true,
-        "region": "us-west-2",
-        "sslEnabled": true,
-        "apiVersion": "2016-05-01",
-        "params": {
-          "ACL": "public-read"
-        }
-      }
-    }
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -42,18 +21,19 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
+    "@enplug/sdk-player": "^0.7.6",
     "core-js": "^2.5.3",
     "rxjs": "^5.5.6",
     "zone.js": "^0.8.20"
   },
   "devDependencies": {
-    "@angular/cli": "^1.6.4",
+    "@angular/cli": "1.6.4",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@enplug/scripts": "^1.2.1",
     "@types/jasmine": "~2.8.3",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "^9.3.0",
+    "@types/node": "~9.3.0",
     "codelyzer": "~4.0.2",
     "command-line-args": "^4.0.7",
     "fs": "0.0.1-security",
@@ -68,7 +48,6 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "path": "^0.12.7",
     "protractor": "~5.2.2",
-    "rimraf": "^2.6.2",
     "s3": "^4.4.0",
     "shelljs": "^0.8.0",
     "ts-node": "~4.1.0",
