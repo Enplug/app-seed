@@ -3,7 +3,5 @@
  */
 
 class SharedAsset {
-  constructor() {
-
-  }
+  constructor() {}
 }

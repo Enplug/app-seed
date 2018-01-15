@@ -1,3 +1,7 @@
+/**
+ *  @author Your Name (login@enplug.com)
+ */
+
 import { Component, OnInit } from '@angular/core';
 
 
@@ -8,12 +12,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   constructor() {
-
   }
 
 
   ngOnInit() {
     enplug.appStatus.start();
-
   }
 }
