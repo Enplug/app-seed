@@ -1,5 +1,5 @@
 {
-  "name": "enplug-appseed-app",
+  "name": "enplug-appseed-player",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -12,7 +12,7 @@
     "i18n": "ng-xi18n --i18nFormat=xlf"
   },
   "config": {
-    "destination": "enplug/appseed/app/",
+    "destination": "enplug/appseed/player/",
     "aws": {
       "buckets": [
         "apps.enplug.in",
