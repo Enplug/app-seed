@@ -8,7 +8,7 @@
     "start": "ng serve --port=50000",
     "build": "enplug-build",
     "release": "enplug-release",
-    "release:dev": "enplug-release",
+    "release:dev": "enplug-release --dev",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
