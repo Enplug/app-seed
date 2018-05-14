@@ -18,7 +18,7 @@
 
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
+      if ('serviceWorker' in navigator && navigator.userAgent.indexOf('iPad') < 0 && navigator.userAgent.indexOf('iPhone') < 0) {
         navigator.serviceWorker.register('./enplug-offline-worker.js').then(function (registration) {
           // Registration was successful
           console.log('[AppSeed|sw] ServiceWorker registration successful with scope: ', registration.scope);
