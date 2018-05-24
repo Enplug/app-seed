@@ -1,7 +1,5 @@
 {
   "staticResources": [
-    "./index.html",
-    "./enplug-offline-worker.js"
   ],
   "noCorsUrls": [
     "google-analytics.com"
