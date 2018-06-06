@@ -18,7 +18,7 @@
  *     after which time (in minutes), given response should be refreshed. Time set to 0 means that
  *     a given response should never be cached.
  */
-var config = {"staticResources":["index.html","enplug-offline-worker.js","https://apps.enplug.com/sdk/v1/player.js","runtime.6afe30102d8fe7337431.js","polyfills.554984d749dfa8368473.js","main.d5bff784e124748df2b1.js"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"cacheVersion":"player-app-0-0-0","noCacheUrls":[]};
+var config = {"staticResources":[".","./","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.6afe30102d8fe7337431.js","polyfills.554984d749dfa8368473.js","main.d5bff784e124748df2b1.js","styles.34c57ab7888ec1573f9c.css"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app","cacheVersion":"player-app-0-0-0","noCacheUrls":[]};
 
 // End of config. There shouldn't be any need to edit code below.
 
@@ -37,11 +37,11 @@ self.addEventListener('install', function (event) {
   event.waitUntil(caches.open(config.cacheVersion).then((cache) => {
     return cache.addAll(config.staticResources)
       .then(() => {
-        console.log(`[player-app|enplug-offline-worker] Offline support service worker v${config.cacheVersion} installed.`);
+        console.log(`[player-app|offline] Offline support service worker v${config.cacheVersion} installed.`);
         self.skipWaiting();
       })
       .catch((error) => {
-        console.warn(`[player-app|enplug-offline-worker] Error adding static resources to cache ${config.cacheVersion}.`, error);
+        console.warn(`[player-app|offline] Error adding static resources to cache ${config.cacheVersion}.`, error);
       })
       .then(() => cache.match('refreshTime'))
       .then((cachedData) => cachedData && cachedData.text())
@@ -66,8 +66,8 @@ self.addEventListener('activate', (event) => {
     caches.keys().then(function (cacheNames) {
       return Promise.all(
         cacheNames.map(function (cacheName) {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            console.log(`[player-app|enplug-offline-worker] Deleting cache ${cacheName}`);
+          if (cacheName.indexOf(config.appName) === 0 && cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log(`[player-app|offline] Deleting cache ${cacheName}`);
             return caches.delete(cacheName);
           }
         })
@@ -96,7 +96,7 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  console.log(`[player-app|enplug-offline-worker] URL to cache: ${cacheUrl}`);
+  console.log(`[player-app|offline] URL to cache: ${cacheUrl}`);
   var cacheRequest = new Request(cacheUrl, {
     mode: 'cors'
   });
@@ -106,8 +106,12 @@ self.addEventListener('fetch', (event) => {
   var fetchRequest = new Request(event.request.url, {
     mode: 'cors'
   });
+  var noCorsFetchRequest = new Request(event.request.url, {
+    mode: 'no-cors'
+  });
 
-  event.respondWith(caches.match(cacheRequest).then((cachedResponse) => {
+
+  var response = caches.match(cacheRequest).then((cachedResponse) => {
     // IMPORTANT: Clone the request.
     // A request is a stream and can only be consumed once. Since we are consuming it once by
     // the cache and once by the browser for fetch, we need to clone.
@@ -118,62 +122,60 @@ self.addEventListener('fetch', (event) => {
     }
 
     // URL can be refreshed. Fetch and cache new data.
-    return fetch(fetchRequest).then(
-      // Fetching new data resulted in invalid response.
-      (response) => {
-        if (!response || response.status !== 200 ||
-          (response.type !== 'basic' && response.type !== 'cors')) {
-          if (cachedResponse) {
-            // Check if we have a valid cached response. If so, return it.
-            return cachedResponse;
-          } else {
-            // No valid cached data. Simply return response. This will ensure we don't
-            // cache an invalid response
-            return response;
+    return new Promise((resolve, reject) => {
+      fetch(fetchRequest)
+        .then((response) => {
+          if (!response || response.status !== 200 ||
+            // Fetching new data resulted in invalid response.
+            (response.type !== 'basic' && response.type !== 'cors')) {
+            if (cachedResponse) {
+              // Check if we have a valid cached response. If so, return it.
+              return cachedResponse;
+            } else {
+              // No valid cached data. Simply return response. This will ensure we don't
+              // cache an invalid response
+              return response;
+            }
           }
+          return response;
+        })
+        .catch((err) => {
+          console.log(`[player-app|offline] CORS request failed. Attempting fetch with no-cors set.`);
+          return fetch(noCorsFetchRequest);
+        })
+        .then((response) => {
+          // Fetching new data resulted in a valid response.
+          // IMPORTANT: Clone the response, for the same reason as we cloned the request.
+          var responseToCache = response.clone();
+          caches.open(config.cacheVersion).then(
+            // Cache response and update the time of caching this particular request.
+            (cache) => {
+              console.log(`[player-app|offline] Caching ${cacheUrl}.`);
+              cache.put(cacheRequest, responseToCache);
+              setCachedTime(cacheUrl);
+            },
+            (error) => console.warn(`[player-app|offline] Unable to cache ${cacheUrl}`, error)
+          );
+          resolve(response);
+        },
+        // In case we're offline but we have a cached version of the response, return response.
+        (error) => {
+          console.warn('[player-app|offline] CORS fetch failed with error.', error, cachedResponse);
+          if (cachedResponse) {
+            resolve(cachedResponse);
+          }
+          return null;
         }
+      )
+    });
+  });
 
-        // Fetching new data resulted in a valid response.
-        // IMPORTANT: Clone the response, for the same reason as we cloned the request.
-        var responseToCache = response.clone();
-        caches.open(config.cacheVersion).then(
-          // Cache response and update the time of caching this particular request.
-          (cache) => {
-            console.log(`[player-app|enplug-offline-worker] Caching ${cacheUrl}.`);
-            cache.put(cacheRequest, responseToCache);
-            setCachedTime(cacheUrl);
-          },
-          (error) => console.warn(`[player-app|enplug-offline-worker] Unable to cache ${cacheUrl}`, error)
-        );
-
-        return response;
-      },
-      // In case we're offline but we have a cached version of the response, return response.
-      (error) => {
-        console.error('[player-app|enplug-offline-worker] Fetched failed.', error, cachedResponse);
-        if (cachedResponse) {
-          return cachedResponse;
-        }
-      });
-  }));
-});
-
-
-/**
- * Checks whether specified URL is listed as no-CORS URL. If so, set mode to 'no-cors'. Otherwise,
- * set mode to 'cors'.
- * @param  {string} url - URL to check.
- * @return {string} - 'cors' or no-cors'.
- */
-function getRequestMode(url) {
-  let isCorsUrl = true;
-
-  if (config.noCorsUrls) {
-    isCorsUrl = !config.noCorsUrls.find((noCorsUrl) => url.indexOf(noCorsUrl) >= 0);
+  if (response) {
+    event.respondWith(response);
+  } else {
+    return false;
   }
-
-  return isCorsUrl ? 'cors' : 'no-cors';
-}
+});
 
 
 /**
