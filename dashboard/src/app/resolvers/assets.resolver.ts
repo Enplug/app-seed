@@ -1,13 +1,13 @@
-import '@enplug/dashboard-sdk';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-
-
-const enplug = window['enplug'];
+import { EnplugService } from '../services/enplug.service';
 
 @Injectable()
 export class AssetsResolver implements Resolve<any[]> {
+
+  constructor(private enplug: EnplugService) { }
+
   resolve(route: ActivatedRouteSnapshot) {
-    return enplug.account.getAssets();
+    return this.enplug.account.getAssets();
   }
 }
