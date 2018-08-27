@@ -1,13 +1,14 @@
 {
   "name": "player-app",
-  "version": "0.0.0",
+  "version": "1.1.0",
   "engines": {
     "node": ">=9.0.0 <10.0"
   },
   "scripts": {
+    "postinstall": "node translation-libs-patch.js",
     "ng": "ng",
-    "dev": "ng serve --port=50023",
-    "start": "ng serve --port=50023",
+    "dev": "ng serve --port=50000",
+    "start": "ng serve --port=50000 --ssl",
     "build": "enplug-build",
     "release": "enplug-release",
     "release:dev": "enplug-release --dev",
@@ -46,7 +47,9 @@
     "@angular/platform-browser": "6.0.3",
     "@angular/platform-browser-dynamic": "6.0.3",
     "@angular/router": "6.0.3",
+    "@biesbjerg/ngx-translate-po-http-loader": "^3.1.0",
     "@enplug/sdk-player": "^0.9.19",
+    "@ngx-translate/core": "^10.0.2",
     "core-js": "^2.5.7",
     "rxjs": "6.2.0",
     "zone.js": "^0.8.26"
@@ -64,12 +67,12 @@
     "jasmine": "^3.1.0",
     "jasmine-core": "^3.1.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "^2.0.2",
+    "karma": "^3.0.0",
     "karma-chrome-launcher": "~2.2.0",
     "karma-coverage-istanbul-reporter": "^2.0.1",
     "karma-jasmine": "^1.1.2",
     "karma-jasmine-html-reporter": "^1.1.0",
-    "protractor": "^5.3.2",
+    "protractor": "^5.4.0",
     "s3": "^4.4.0",
     "ts-node": "^6.1.0",
     "tslint": "^5.10.0",
