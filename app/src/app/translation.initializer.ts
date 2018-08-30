@@ -3,11 +3,13 @@ import { empty, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { EnplugService } from './enplug.service';
 
+const TAG = 'AppSeed';
+
 export function translationInitializer(enplug: EnplugService, translate: TranslateService) {
   return () => new Promise<void>(async (resolve, reject) => {
     const settings = await enplug.settings.all as any;
-    const locale = settings.locale || 'en';
-    console.log(`Setting locale: ${locale}, awaiting translations...`);
+    const locale = settings.locale;
+    console.log(`[${TAG}] Setting locale: ${locale}, awaiting translations...`);
     translate.getTranslation(locale).pipe(catchError((e, x) => {
       return EMPTY;
     })).subscribe(translations => {
