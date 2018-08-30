@@ -3,6 +3,7 @@
  */
 
 import { Component, OnInit } from '@angular/core';
+import { EnplugService } from './enplug.service';
 
 
 @Component({
@@ -11,11 +12,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor() {
+  constructor(private enplug: EnplugService) {
   }
 
 
   ngOnInit() {
-    enplug.appStatus.start();
+    this.enplug.appStatus.start();
   }
 }

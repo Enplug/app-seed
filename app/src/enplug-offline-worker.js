@@ -18,7 +18,7 @@
  *     after which time (in minutes), given response should be refreshed. Time set to 0 means that
  *     a given response should never be cached.
  */
-var config = {"staticResources":[".","./","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.6afe30102d8fe7337431.js","polyfills.554984d749dfa8368473.js","main.d5bff784e124748df2b1.js","styles.34c57ab7888ec1573f9c.css"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app","cacheVersion":"player-app-0-0-0","noCacheUrls":[]};
+var config = {"staticResources":["./","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.6afe30102d8fe7337431.js","polyfills.b4a8dbdd923d69a735b8.js","main.66b9e518b4fd17f5606c.js","styles.34c57ab7888ec1573f9c.css"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app","cacheVersion":"player-app-1-1-0","noCacheUrls":[]};
 
 // End of config. There shouldn't be any need to edit code below.
 
@@ -88,7 +88,7 @@ self.addEventListener('fetch', (event) => {
 
   // Get rid of the app token to generalize URL for caching. Having unique URLs for each request
   // will only make the cache get bigger over time.
-  var cacheUrl = event.request.url.replace(/\?apptoken=[^&]*/g, '');
+  var cacheUrl = event.request.url.replace(/\?.*/g, '')
 
   for (const noCacheUrl of config.noCacheUrls) {
     if (event.request.url.indexOf(noCacheUrl) >= 0) {
@@ -96,7 +96,6 @@ self.addEventListener('fetch', (event) => {
     }
   }
 
-  console.log(`[player-app|offline] URL to cache: ${cacheUrl}`);
   var cacheRequest = new Request(cacheUrl, {
     mode: 'cors'
   });
