@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 
 
-const enplug = window['enplug'];
+const enplug = window.enplug;
 
 @Component({
   selector: 'ep-asset',
@@ -27,7 +27,7 @@ export class AssetComponent implements OnInit {
 
   // Initialization of Dashboard items localted outside of the App
   ngOnInit() {
-    this.asset = this.route.snapshot.data['asset'];
+    this.asset = this.route.snapshot.data.asset;
     this.zone.run(() => {
       this.setHeader();
     });
@@ -57,5 +57,7 @@ export class AssetComponent implements OnInit {
   /**
    * Saves current Asset.
    */
-  saveAsset() { }
+  saveAsset() {
+    // implement
+  }
 }

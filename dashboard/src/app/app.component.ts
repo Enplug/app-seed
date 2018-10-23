@@ -6,10 +6,10 @@ import {
 } from '@angular/core';
 
 
-const enplug = window['enplug'];
+const enplug = window.enplug;
 
 @Component({
-  selector: 'enplug-appseed',
+  selector: 'ep-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
