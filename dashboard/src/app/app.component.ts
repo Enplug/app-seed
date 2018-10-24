@@ -1,10 +1,5 @@
+import { Component, OnInit, } from '@angular/core';
 import '@enplug/dashboard-sdk';
-
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-
 
 const enplug = window.enplug;
 

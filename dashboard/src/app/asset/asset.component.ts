@@ -4,14 +4,9 @@
  */
 
 
-import '@enplug/dashboard-sdk';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Component,
-  OnInit,
-  NgZone,
-} from '@angular/core';
-
+import { Component, OnInit, NgZone, } from '@angular/core';
+import '@enplug/dashboard-sdk';
 
 const enplug = window.enplug;
 

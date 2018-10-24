@@ -3,9 +3,11 @@
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
     "module": "commonjs",
+    "baseUrl": "",
     "types": [
       "jasmine",
-      "node"
+      "node",
+      "@enplug/sdk-player"
     ]
   },
   "files": [

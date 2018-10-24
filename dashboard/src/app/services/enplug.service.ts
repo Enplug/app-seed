@@ -1,4 +1,3 @@
-import '@enplug/dashboard-sdk';
 import {
   Account,
   Asset,
@@ -15,7 +14,7 @@ import {
 import { Injectable } from '@angular/core';
 
 /*tslint:disable:no-string-literal*/
-const enplug = window['enplug'];
+const enplug = window.enplug;
 
 /**
  * An angular service wrapper on Enplug Dashboard SDK.

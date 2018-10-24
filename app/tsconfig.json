@@ -10,8 +10,10 @@
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "node_modules"
     ],
+    "types": ["@enplug/sdk-player"],
     "lib": [
       "es2017",
       "dom"

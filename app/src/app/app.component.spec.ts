@@ -1,32 +1,40 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
+import { EnplugService } from './enplug.service';
 import { AppComponent } from './app.component';
 
+let enplugServiceMock: any;
+let fixture: ComponentFixture<AppComponent>;
+
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  beforeEach(() => {
+    enplugServiceMock = {
+      appStatus: jasmine.createSpyObj('appStatus', ['start']),
+      on: jasmine.createSpy('on')
+    };
+
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      providers: [{ provide: EnplugService, useValue: enplugServiceMock }],
+      declarations: [AppComponent],
     }).compileComponents();
-  }));
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+  });
 
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(app).toBeDefined();
   }));
 
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
+  it('calls Player\'s start function on init', async(() => {
+    fixture.componentInstance.ngOnInit();
+    expect(enplugServiceMock.appStatus.start.calls.count()).toBe(1);
   }));
 
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!!');
+  it('sets up Player\'s destroy listener on init', async(() => {
+    fixture.componentInstance.ngOnInit();
+    expect(enplugServiceMock.on.calls.count()).toBe(1);
   }));
 });

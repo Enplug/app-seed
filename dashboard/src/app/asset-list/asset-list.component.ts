@@ -3,15 +3,9 @@
  * @author Your Name (username@enplug.com)
  */
 
-
-import '@enplug/dashboard-sdk';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Component,
-  OnInit,
-  NgZone
-} from '@angular/core';
-
+import '@enplug/dashboard-sdk';
 
 const enplug = window.enplug;
 
@@ -25,7 +19,6 @@ export class AssetListComponent implements OnInit {
 
   constructor(private zone: NgZone, private router: Router, private route: ActivatedRoute) { }
 
-
   ngOnInit() {
     this.assets = this.route.snapshot.data.assets;
 
@@ -34,7 +27,6 @@ export class AssetListComponent implements OnInit {
       this.setHeader();
     });
   }
-
 
   setHeader() {
     enplug.dashboard.setHeaderTitle('Assets');

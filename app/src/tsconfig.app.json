@@ -5,11 +5,6 @@
     "outDir": "../out-tsc/app",
     "module": "es2015",
     "baseUrl": "",
-    "typeRoots": [
-      "node_modules/@types",
-      "node_modules"
-    ],
-    "types": ["@enplug/sdk-player"],
     "noImplicitAny": false
   },
   "exclude": [
