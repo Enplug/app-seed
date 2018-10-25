@@ -13,7 +13,11 @@
       "node_modules/@types",
       "node_modules"
     ],
-    "types": ["@enplug/dashboard-sdk"],
+    "types": [
+      "jasmine",
+      "node",
+      "@enplug/dashboard-sdk"
+    ],
     "lib": [
       "es2016",
       "dom"

@@ -3,14 +3,16 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { EnplugService } from './enplug.service';
 import { AppComponent } from './app.component';
 
-let enplugServiceMock: any;
-let fixture: ComponentFixture<AppComponent>;
-
 describe('AppComponent', () => {
+  let enplugService: EnplugService;
+  let fixture: ComponentFixture<AppComponent>;
+
   beforeEach(() => {
-    enplugServiceMock = {
-      appStatus: jasmine.createSpyObj('appStatus', ['start']),
-      on: jasmine.createSpy('on')
+    const enplugServiceMock = {
+      appStatus: {
+        start: () => { }
+      },
+      on: () => { }
     };
 
     TestBed.configureTestingModule({
@@ -21,20 +23,34 @@ describe('AppComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
+    enplugService = TestBed.get(EnplugService);
   });
 
-  it('should create the app', async(() => {
+  it('creates the app', async(() => {
     const app = fixture.debugElement.componentInstance;
-    expect(app).toBeDefined();
+    expect(app).toBeTruthy();
   }));
 
-  it('calls Player\'s start function on init', async(() => {
+  it('calls Player\'s start function', async(() => {
+    const enplugServiceStartSpy = spyOn(enplugService.appStatus, 'start');
     fixture.componentInstance.ngOnInit();
-    expect(enplugServiceMock.appStatus.start.calls.count()).toBe(1);
+    expect(enplugServiceStartSpy.calls.count()).toBe(1);
   }));
 
   it('sets up Player\'s destroy listener on init', async(() => {
+    const destroyDoneSpy = jasmine.createSpy('destroyDone');
+
+    const enplugServiceOnSpy = spyOn(enplugService, 'on').and.callFake(
+      function (eventName, callback) {
+        if (eventName === 'destroy') {
+          return callback(destroyDoneSpy);
+        }
+      }
+    );
+
     fixture.componentInstance.ngOnInit();
-    expect(enplugServiceMock.on.calls.count()).toBe(1);
+
+    expect(enplugServiceOnSpy).toHaveBeenCalledWith('destroy', jasmine.any(Function));
+    expect(destroyDoneSpy).toHaveBeenCalled();
   }));
 });

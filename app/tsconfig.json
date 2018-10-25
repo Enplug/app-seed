@@ -13,7 +13,11 @@
       "node_modules/@types",
       "node_modules"
     ],
-    "types": ["@enplug/sdk-player"],
+    "types": [
+      "jasmine",
+      "node",
+      "@enplug/sdk-player"
+    ],
     "lib": [
       "es2017",
       "dom"
