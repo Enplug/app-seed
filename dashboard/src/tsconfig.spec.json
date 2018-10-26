@@ -4,10 +4,10 @@
     "outDir": "../out-tsc/spec",
     "module": "commonjs",
     "target": "es5",
-    "baseUrl": "",
     "types": [
       "jasmine",
-      "node"
+      "node",
+      "@enplug/dashboard-sdk"
     ]
   },
   "files": [

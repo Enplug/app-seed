@@ -1,32 +1,56 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 
+import { EnplugService } from './enplug.service';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
-  }));
+  let enplugService: EnplugService;
+  let fixture: ComponentFixture<AppComponent>;
 
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+  beforeEach(() => {
+    const enplugServiceMock = {
+      appStatus: {
+        start: () => { }
+      },
+      on: () => { }
+    };
+
+    TestBed.configureTestingModule({
+      providers: [{ provide: EnplugService, useValue: enplugServiceMock }],
+      declarations: [AppComponent],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(AppComponent);
+    enplugService = TestBed.get(EnplugService);
+  });
+
+  it('creates the app', async(() => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'app'`, async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app');
+  it('calls Player\'s start function', async(() => {
+    const enplugServiceStartSpy = spyOn(enplugService.appStatus, 'start');
+    fixture.componentInstance.ngOnInit();
+    expect(enplugServiceStartSpy.calls.count()).toBe(1);
   }));
 
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to app!!');
+  it('sets up Player\'s destroy listener on init', async(() => {
+    const destroyDoneSpy = jasmine.createSpy('destroyDone');
+
+    const enplugServiceOnSpy = spyOn(enplugService, 'on').and.callFake(
+      function (eventName, callback) {
+        if (eventName === 'destroy') {
+          return callback(destroyDoneSpy);
+        }
+      }
+    );
+
+    fixture.componentInstance.ngOnInit();
+
+    expect(enplugServiceOnSpy).toHaveBeenCalledWith('destroy', jasmine.any(Function));
+    expect(destroyDoneSpy).toHaveBeenCalled();
   }));
 });

@@ -10,7 +10,13 @@
     "experimentalDecorators": true,
     "target": "es5",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "node_modules"
+    ],
+    "types": [
+      "jasmine",
+      "node",
+      "@enplug/sdk-player"
     ],
     "lib": [
       "es2017",
