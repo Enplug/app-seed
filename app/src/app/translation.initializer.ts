@@ -9,15 +9,17 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
   return () => new Promise<void>(async (resolve, reject) => {
     const settings = await enplug.settings.all as any;
     const locale = settings.locale;
-    console.log(`[${TAG}] Setting locale: ${locale}, awaiting translations...`);
-    translate.getTranslation(locale).pipe(catchError((e, x) => {
-      return EMPTY;
-    })).subscribe(translations => {
-      translate.setTranslation(locale, translations);
-      translate.use(locale);
-      resolve();
-    }, null, () => {
-      resolve();
-    });
+    if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
+      console.log(`[${TAG}] Setting locale: ${locale}, awaiting translations...`);
+      translate.getTranslation(locale).pipe(catchError((e, x) => {
+        return EMPTY;
+      })).subscribe(translations => {
+        translate.setTranslation(locale, translations);
+        translate.use(locale);
+        resolve();
+      }, null, () => {
+        resolve();
+      });
+    }
   });
 }
