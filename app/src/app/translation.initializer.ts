@@ -9,7 +9,7 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
   return () => new Promise<void>(async (resolve, reject) => {
     const settings = await enplug.settings.all as any;
     const locale = settings.locale;
-    if (locale !== 'en') {
+    if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
       console.log(`[${TAG}] Setting locale: ${locale}, awaiting translations...`);
       translate.getTranslation(locale).pipe(catchError((e, x) => {
         return EMPTY;
