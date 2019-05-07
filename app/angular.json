@@ -28,6 +28,20 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "aot": true,
+              "sourceMap": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "aot": true,
+              "sourceMap": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -53,6 +67,12 @@
             "browserTarget": "appseed:build"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "appseed:build"
+            },
+            "staging": {
+              "browserTarget": "appseed:build:staging"
+            },
             "production": {
               "browserTarget": "appseed:build:production"
             }

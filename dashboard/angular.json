@@ -26,7 +26,27 @@
             "scripts": []
           },
           "configurations": {
+            "development": {
+              "aot": true,
+              "sourceMap": true
+            },
+            "staging": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.staging.ts"
+                }
+              ],
+              "aot": true,
+              "sourceMap": true
+            },
             "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -35,13 +55,7 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ]
+              "buildOptimizer": true
             }
           }
         },
@@ -51,6 +65,12 @@
             "browserTarget": "appseed-dashboard:build"
           },
           "configurations": {
+            "development": {
+              "browserTarget": "appseed-dashboard:build"
+            },
+            "staging": {
+              "browserTarget": "appseed-dashboard:build:staging"
+            },
             "production": {
               "browserTarget": "appseed-dashboard:build:production"
             }

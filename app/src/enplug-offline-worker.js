@@ -3,44 +3,71 @@
  * @author Michal Drewniak (michal@enplug.com)
  */
 
+// CRITICAL ISSUE:
+// It is extremely important to not perform cache.match() and cache.put() on the same URL/request in the the same
+// promise chain or even a short period of time. Doing so, results in the browser creating additional file descriptors
+// which are marked as deleted by the system but continue to exist. Please keep in mind that caches.match suffers from
+// the same issue. Said file descriptors are found in the com.enplug.player process folder /proc/PID/fd/ and are only
+// removed when the device is rebooted. Since the devices allow for relatively small amount of descriptors, this quickly
+// leads to devices crashing.
+//
+// Sample code which MUST NOT be added at any place within a service worker:
+//
+//
+// const cacheRequest = new Request('https://apps.enplug.com/myapp.js');
+// const fetchRequest = new Request('https://apps.enplug.com/myapp.js');
+// caches.open('my-cache').then((cache) => {
+//   return cache.match(cacheRequest).then((cacheResposne) => {      // Can't have this .match(), and...
+//     if (!cacheResposne) {
+//       return fetch((fetchRequest)).then((fetchResponse) => {
+//         cache.put(fetchResponse.clone());                         // ... this .put()
+//         return fetchResponse;
+//       });
+//     }
+//   });
+// });
+
+
+
 'use strict';
 
 /**
  * Offline support configuration.
  * @type {Object}
- * @property {string} cacheVersion - Version of the cache. This should be updated any time we want
- *     the previous version of the cache removed.
  * @property {string} cacheName - Name of the cache. This is usually the same as the application
  *     name or ID.
- * @property {Array.<string>} = A list of static URLs which should be cached.
- * @property {Object.<string, number>} - A mapping of URLs (or their parts) to time in minutes.
- *     The URL denotes for which locations cached responses should be refreshed. Time denotes
- *     after which time (in minutes), given response should be refreshed. Time set to 0 means that
- *     a given response should never be cached.
+ * @property {string} cacheVersion - Version of the cache. This should be updated any time we want
+ *     the previous version of the cache removed.
+ * @property {number} cacheTime - Time in minutes. After the given time, any URL in cache which hasn't been used for
+ *     that long or longer, will be removed from cache.
+ * @property {Array.<string>} staticResources - A list of static URLs which should be cached.
+ * @property {Object.<string, number>} refreshUrls- A mapping of URLs (or their parts) to time in minutes.
+ *     The URL denotes for which URL responses should be re-fetched and its response re-cached. Time denotes
+ *     after what amount of time (in minutes), given response should be re-fetched and its response re-cached.
+ *     Time set to 0 means that a given response should never be cached.
  */
-var config = {"staticResources":["./","./enplug-offline-worker.js","./index.html"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app","cacheVersion":"player-app-1-1-0","noCacheUrls":[]};
+var config = {"staticResources":["./","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.js","polyfills.js","styles.js","vendor.js","main.js"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app","cacheVersion":"player-app-1-1-0","noCacheUrls":[]};
+
 const TAG = '[player-app|offline]';
-
-// End of config. There shouldn't be any need to edit code below.
-
-
-
 const LAST_USED_TIME_CACHE = 'last-used-time-cache';
 const REFRESH_TIME_CACHE = 'refresh-time';
+
 const CACHE_PRUNE_CHECK_INTERVAL = 60;                      // in minutes
 const META_DATA_STORE_INTERVAL = 20;                        // in minutes
 const MAX_CACHE_TIME = config.cacheTime || 60 * 24;         // in minutes (default to 1 day)
 
 
-/**
- * Time which ellapsed since last refresh. Used to determine whether a refresh should take place.
- * @type {Object}
- */
+// An object used to keep track of when was the last time a given URL has been re-fetched and its response re-cached.
 let refreshTime = {};
+// An object used to keep track of when whas a given URL last fetched. This helps us determine which URLs should
+// be removed from cache (when they're not used for more than the  time specified in config.cacheTime)
 let lastUsedTime = {};
-
+// Last time cache was pruned from stale entries (see config.cacheTime)
 let cachePruneTime = Date.now();
-let writeTime = Date.now();
+// Last time we've written lastUsedTime object to cache. We want to avoid writing to cache every time 'fetch' listener
+// fires. To accomplish this, we keep track of when we did the last write and write to cache again only wn
+// META_DATA_STORE_INTERVAL minutes have passed.
+let lastUsedTimeWriteTimestamp = Date.now();
 
 
 /**
@@ -49,8 +76,8 @@ let writeTime = Date.now();
 self.addEventListener('install', function (event) {
   event.waitUntil(caches.open(config.cacheVersion).then((cache) => {
     return cache.addAll(config.staticResources)
-      .then((response) => {
-        console.log(`${TAG} Offline support service worker v${config.cacheVersion} installed.`);
+      .then(() => {
+        console.log(`${TAG} Offline support service worker v. ${config.cacheVersion} installed.`);
         self.skipWaiting();
       })
       .catch((error) => {
@@ -73,7 +100,7 @@ self.addEventListener('install', function (event) {
       .then((text) => {
         try {
           lastUsedTime = text ? JSON.parse(text) : {};
-          removeLeastUsedCacheEntries();
+          return removeLeastUsedCacheEntries();
         } catch (e) {
           lastUsedTime = {};
         }
@@ -106,116 +133,152 @@ self.addEventListener('activate', (event) => {
 
 
 /**
- * Captures requests and either exectures request to the server or returns a cached version.
+ * Captures requests and either exectures request to the server or returns a cached version. This is captures all URL
+ * requests comping from an App.
+ * IMPORTANT: See critical issue description at the top of this file.
  */
 self.addEventListener('fetch', (event) => {
-  // Ignore POST requests
+  // There following requests should not be cached: POST, .mp4 files, URLs specified in config.noCacheUrls array.
+  // For any of those requests, a fetch is executed without any cache operations.
   if (event.request.method === 'POST') {
-    return false;
+    return event.respondWith(fetch(event.request));
+  }
+  if (event.request.url.startsWith('blob:') || event.request.url.endsWith('.mp4')) {
+    return event.respondWith(fetch(event.request));
+  }
+  for (const noCacheUrl of config.noCacheUrls) {
+    if (event.request.url.indexOf(noCacheUrl) >= 0) {
+      return event.respondWith(fetch(event.request));
+    }
   }
 
-  // Get rid of the app token to generalize URL for caching. Having unique URLs for each request
-  // will only make the cache get bigger over time.
-  var cacheUrl = event.request.url.replace(/\?apptoken.*/g, '');
+  // Get rid of the app token to generalize URL for caching. Having unique URLs (unique appToken) for each request
+  // will only make the cache get bigger over time. We use 2 types of URLs.
+  // fetchUrl - original request URL. Used to fetch the data which will then be cached.
+  // cacheUrl - URL without the unique appToken. Used to cache the data in service worker cache.
+  const fetchUrl = event.request.url;
+  const cacheUrl = fetchUrl.replace(/\?apptoken.*/g, '');
 
+  // Remove least used cache entries and update used time for the current URL.
   if (shouldPruneCache()) {
     removeLeastUsedCacheEntries();
   }
-
-  // Keep track as to when a particular URL was called last. We need this to be able to prune from cache
-  // least used URLs.
   updateLastUsedTime(cacheUrl);
 
-  if (cacheUrl.startsWith('blob:') || cacheUrl.endsWith('.mp4')) {
-    console.log(`${TAG} Caching prevented: URL starts with blob:// or ends with .mp4.`);
-    return false;
-  }
-
-  for (const noCacheUrl of config.noCacheUrls) {
-    if (event.request.url.indexOf(noCacheUrl) >= 0) {
-      return false;
-    }
-  }
-
-  var cacheRequest = new Request(cacheUrl, {
-    mode: 'cors'
-  });
-
-  // We need to explicitly change the reqest to CORS request so that cross-domain resources
-  // get properly cached.
-  var fetchRequest = new Request(event.request.url, {
-    mode: 'cors'
-  });
-  var noCorsFetchRequest = new Request(event.request.url, {
-    mode: 'no-cors'
-  });
-
-
-  var response = caches.match(cacheRequest).then((cachedResponse) => {
-    // IMPORTANT: Clone the request.
-    // A request is a stream and can only be consumed once. Since we are consuming it once by
-    // the cache and once by the browser for fetch, we need to clone.
-
-    // Request data can't be refreshed. Return cached version of the request response.
-    if (cachedResponse && !canUrlBeRefreshed(cacheUrl)) {
-      return cachedResponse;
-    }
-
-    // URL can be refreshed. Fetch and cache new data.
-    return new Promise((resolve, reject) => {
-      fetch(fetchRequest)
-        .then((response) => {
-          if (!response || response.status !== 200 ||
-            // Fetching new data resulted in invalid response.
-            (response.type !== 'basic' && response.type !== 'cors')) {
+  // URL does not have to be refreshed. Return cached version or fetch and store new version if possible.
+  if (!shouldUrlBeRefreshed(cacheUrl)) {
+    return event.respondWith(caches.open(config.cacheVersion).then((cache) => {
+        const cacheRequest = new Request(cacheUrl);
+        return cache.match(cacheRequest)
+          .then((cachedResponse) => {
             if (cachedResponse) {
-              // Check if we have a valid cached response. If so, return it.
-              return cachedResponse;
-            } else {
-              // No valid cached data. Simply return response. This will ensure we don't
-              // cache an invalid response
-              return response;
-            }
-          }
-          return response;
-        })
-        .catch((err) => {
-          console.log(`${TAG} CORS request failed. Attempting fetch with no-cors set.`);
-          return fetch(noCorsFetchRequest);
-        })
-        .then((response) => {
-          // Fetching new data resulted in a valid response.
-          // IMPORTANT: Clone the response, for the same reason as we cloned the request.
-          var responseToCache = response.clone();
-          caches.open(config.cacheVersion).then(
-            // Cache response and update the time of caching this particular request.
-            (cache) => {
-              console.log(`${TAG} Caching ${cacheUrl}.`);
-              cache.put(cacheRequest, responseToCache);
-              storeCachedTime(cacheUrl);
-            },
-            (error) => console.warn(`${TAG} Unable to cache ${cacheUrl}`, error)
-          );
-          resolve(response);
-        },
-        // In case we're offline but we have a cached version of the response, return response.
-        (error) => {
-          console.warn('${TAG} CORS fetch failed with error.', error, cachedResponse);
-          if (cachedResponse) {
-            resolve(cachedResponse);
-          }
-          return null;
-        }
-      )
-    });
-  });
-
-  if (response) {
-    event.respondWith(response);
-  } else {
-    return false;
+                return cachedResponse;
+              } else {
+                // Cached data not found. Throw an error so that it's caught below and a fetch is attempted.
+                cachedResponse = null;
+                throw new Error('Cached data not found');
+              }
+          })
+          .catch(() => {
+            return fetchFileAndCache(event.request, cache, fetchUrl, cacheUrl);
+          });
+    }));
   }
-});
+
+  // URL has to be refreshed. Fetch new file and store it in cache. It's possible that this will get called while
+  // the device is offline. In order to ensure the apps work, fetchFileAndCache implements a catch which will attempt
+  // to return a cached version if the normal fetch fails.
+  return event.respondWith(caches.open(config.cacheVersion).then((cache) => {
+    return fetchFileAndCache(event.request, cache, fetchUrl, cacheUrl);
+  }));
+
+})  // End of fetch listener.
+
+
+
+/**
+ * Fetches specified file (fetchUrl) and caches it.
+ * @param {*} cache - Opened Cache.
+ * @param {*} fetchUrl - Original request URL. Used to fetch new response.
+ * @param {*} cacheUrl - Modified URL (removed appToken). Used to cache fetched response.
+ */
+function fetchFileAndCache(originalRequest, cache, fetchUrl, cacheUrl) {
+  // TripAdvisor API requires the headers and the rest of the options to be set in this specific way. If this needs
+  // to be changed at any point in time, make sure the TripAdvisor pulls all the posts and works offline.
+  const fetchRequest = new Request(fetchUrl, {
+    headers: originalRequest.headers,
+    mode: 'cors',
+    credentials: 'omit',
+    referrer: 'no-referrer',
+  });
+  return fetch(fetchRequest)
+    // Initial error handling for requests which resolved but have incorrect status or null response. Returns
+    // either cached response if available, or failed response if cached response is not available. Returning
+    // invalid response will ensure we do not cache it.
+    .then((fetchResponse) => {
+      if (!fetchResponse || fetchResponse.status !== 200) {
+        throw Error('CORS request failed.');
+      }
+      // Propagate correct response down the Promise chain.
+      return fetchResponse;
+    })
+
+    // CORS request has failed. We need attempt to refetch the request as no-cors (which is still preferable)
+    // then a failed response. We want to propagate down the Promise chain the response to our no-CORS request.
+    .catch((err) => {
+      console.log(`${TAG} CORS request failed. Attempting fetch with no-cors set.`);
+      if (originalRequest.mode === 'no-cors') {
+        return fetch(originalRequest);
+      } else {
+        const noCorsFetchRequest = new Request(fetchUrl, {
+          credentials: 'omit',
+          mode: 'no-cors',
+          referrer: 'no-referrer',
+        });
+        return fetch(noCorsFetchRequest);
+      }
+    })
+
+    // The response from either successful CORS or successful or successful no-CORS request. If there is no response,
+    // throw an error so that service worker attempts to return a cached version of the response.
+    .then((response) => {
+      if (!response) {
+        // We don't check whether response.ok is set to true because if the final request was a no-cors request,
+        // we would get a false-positive (no-cors doesn't set the ok flag).
+        return fetch(originalRequest);
+      }
+      const cacheRequest = new Request(cacheUrl);
+      // A request is a stream and can only be consumed once. Since we are consuming it once by the cache and once
+      // by the browser for fetch, we need to clone it.
+      return cache.put(cacheRequest, response.clone())
+        .then(() => storeCachedTime(cacheUrl))
+        .then(() => {
+          return response;
+        });
+    })
+
+    // This usually happens when a player starts while being offline. In such a case,  the fetch will fail. In order
+    // to be able to show the app, we must return a cached response here.
+    .catch(() => {
+      console.log(`${TAG} No-CORS request has failed. Attempting to return cached response.`);
+      const cacheRequest = new Request(cacheUrl);
+      return cache.match(cacheRequest);
+    });
+}
+
+
+/**
+ * Determines whether enough time has passed since last cache prune check to allow for another round of pruning.
+ * @returns {boolean} true if cache should be pruned again.
+ */
+function shouldPruneCache() {
+  const timeDiff = (Date.now() - cachePruneTime) / 1000 / 60;   // in minutes
+  if (timeDiff >= CACHE_PRUNE_CHECK_INTERVAL) {
+    cachePruneTime = Date.now();
+    return true;
+  }
+  return false;
+}
 
 
 /**
@@ -223,11 +286,11 @@ self.addEventListener('fetch', (event) => {
  * @param  {string} url
  * @return {boolean} - If true, the cached value associated with the URL should be refreshed.
  */
-function canUrlBeRefreshed(url) {
+function shouldUrlBeRefreshed(url) {
   // Number of seconds that need to elapse since last refresh before the URL can be refreshed
-  var refreshInterval = null;
-  var isWhitelisted = false;
-  var hasRequiredTimePassed = false;
+  let refreshInterval = null;
+  let isWhitelisted = false;
+  let hasRequiredTimePassed = false;
 
   // Check whether the url is whitelisted
   if (config.refreshUrls) {
@@ -254,20 +317,6 @@ function canUrlBeRefreshed(url) {
 
 
 /**
- * Determines whether enough time has passed since last cache prune check to allow for another round of pruning.
- * @returns {boolean} true if cache should be pruned again.
- */
-function shouldPruneCache() {
-  const timeDiff = (Date.now() - cachePruneTime) / 1000 / 60;   // in minutes
-  if (timeDiff >= CACHE_PRUNE_CHECK_INTERVAL) {
-    cachePruneTime = Date.now();
-    return true;
-  }
-  return false;
-}
-
-
-/**
  * Sets the time a request with the given URL was last cached. Service workers have no access to localStorage.
  * However, we need some way of persisting some data across reloads of the worker. To do so, we utilize CacheStorage.
  * The function constructs and returns name of the cache used for storage purposes.
@@ -275,22 +324,17 @@ function shouldPruneCache() {
  */
 function storeCachedTime(url) {
   refreshTime[url] = Date.now();
-  var response = new Response(JSON.stringify(refreshTime));
-  caches.open(config.cacheVersion).then((cache) => {
-    return cache.put(REFRESH_TIME_CACHE, response);
-  });
+  const response = new Response(JSON.stringify(refreshTime));
+  return caches.open(config.cacheVersion).then((cache) => cache.put(REFRESH_TIME_CACHE, response));
 }
 
 
 /**
  * Stores lastUsedTime object in cache.
  */
-function storeLastUsedTimeInCache() {
-  var response = new Response(JSON.stringify(lastUsedTime));
-  caches.open(config.cacheVersion).then((cache) => {
-    writeTime = Date.now();
-    return cache.put(LAST_USED_TIME_CACHE, response);
-  });
+function storeLastUsedTimeInCache(cache) {
+  const response = new Response(JSON.stringify(lastUsedTime));
+  return cache.put(LAST_USED_TIME_CACHE, response);
 }
 
 
@@ -299,7 +343,7 @@ function storeLastUsedTimeInCache() {
  * MAX_CACHE_TIME.
  */
 function removeLeastUsedCacheEntries() {
-  caches.open(config.cacheVersion).then((cache) => {
+  return caches.open(config.cacheVersion).then((cache) => {
     for (const url in lastUsedTime) {
       if (lastUsedTime.hasOwnProperty(url)) {
         let timeDiff = (Date.now() - lastUsedTime[url]) / 1000 / 60;   // in minutes
@@ -310,7 +354,7 @@ function removeLeastUsedCacheEntries() {
         }
       }
     }
-    storeLastUsedTimeInCache();
+    return storeLastUsedTimeInCache(cache);
   });
 }
 
@@ -323,20 +367,9 @@ function removeLeastUsedCacheEntries() {
  * @param {string} url - URL of a reasourse which is currently being accessed.
  */
 function updateLastUsedTime(url) {
-  const writeTimeDiff = (Date.now() - writeTime) / 1000 / 60;
+  const writeTimeDiff = (Date.now() - lastUsedTimeWriteTimestamp) / 1000 / 60;
   lastUsedTime[url] = Date.now();
-
   if (writeTimeDiff >= META_DATA_STORE_INTERVAL) {
-    caches.match(LAST_USED_TIME_CACHE)
-      .then((cachedData) => cachedData && cachedData.text())
-      .then((text) => {
-        try {
-          const storedLastUsedTime = text ? JSON.parse(text) : {};
-          lastUsedTime = Object.assign(lastUsedTime, storedLastUsedTime);
-        } catch (e) {
-          // noop
-        }
-        storeLastUsedTimeInCache();
-      });
+    caches.open(config.cacheVersion).then((cache) => storeLastUsedTimeInCache(cache));
   }
 }

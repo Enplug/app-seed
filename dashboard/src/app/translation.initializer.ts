@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { EnplugService } from './services/enplug.service';
 
 export function translationInitializer(enplug: EnplugService, translate: TranslateService) {
-  return () => new Promise<void>(resolve => {
+  return () => new Promise<void>((resolve) => {
     enplug.account.getUser().then(({ data: { locale } }) => {
       if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
         translate.getTranslation(locale).pipe(catchError(() => EMPTY))
@@ -15,6 +15,8 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
             },
             null,
             resolve);
+      } else {
+        resolve();
       }
     });
   });
