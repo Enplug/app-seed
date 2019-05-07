@@ -5,11 +5,15 @@
   "scripts": {
     "postinstall": "node translation-libs-patch.js",
     "ng": "ng",
-    "dev": "ng serve --port=50000",
-    "start": "ng serve --port=50000",
-    "build": "enplug-build",
-    "release": "enplug-release",
-    "release:dev": "enplug-release --dev",
+    "build": "enplug-build --configuration=development --nooffline",
+    "build:staging": "enplug-build --configuration=staging --nooffline",
+    "build:prod": "enplug-build --configuration=production --nooffline",
+    "release": "enplug-release --configuration=development --nooffline",
+    "release:staging": "enplug-release --configuration=staging --nooffline",
+    "release:prod": "enplug-release --configuration=production --nooffline",
+    "start": "ng serve --configuration=development --port=50000",
+    "start:staging": "ng serve --configuration=staging --port=50000",
+    "start:prod": "ng serve --configuration=production --port=50000",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -19,6 +23,7 @@
     "destination": "/enplug/appseed/dashboard/",
     "aws": {
       "buckets": [
+        "dev-apps.enplug.in",
         "apps.enplug.in",
         "apps.enplug.com"
       ],
@@ -62,7 +67,7 @@
     "@angular/cli": "^7.0.2",
     "@angular/compiler-cli": "^7.0.0",
     "@angular/language-service": "^7.0.0",
-    "@enplug/scripts": "^1.6.0",
+    "@enplug/scripts": "^1.8.3",
     "@types/jasmine": "~2.8.6",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^10.12.0",
@@ -74,11 +79,11 @@
     "karma-cli": "~1.0.1",
     "karma-coverage-istanbul-reporter": "^2.0.4",
     "karma-jasmine": "~1.1.1",
-    "karma-mocha-reporter": "^2.2.5",
     "karma-jasmine-html-reporter": "^1.3.1",
+    "karma-mocha-reporter": "^2.2.5",
     "protractor": "^5.4.0",
     "ts-node": "^7.0.1",
     "tslint": "~5.11.0",
-    "typescript": "~3.1.3"
+    "typescript": "~3.2.4"
   }
 }
