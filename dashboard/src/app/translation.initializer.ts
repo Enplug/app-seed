@@ -1,6 +1,7 @@
-import { catchError } from 'rxjs/operators';
-import { EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
 import { EnplugService } from './services/enplug.service';
 
 export function translationInitializer(enplug: EnplugService, translate: TranslateService) {

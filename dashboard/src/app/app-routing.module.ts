@@ -1,6 +1,6 @@
-import { AssetComponent } from './asset/asset.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AssetComponent } from './asset/asset.component';
 
 import { AppComponent } from './app.component';
 import { AssetListComponent } from './asset-list/asset-list.component';

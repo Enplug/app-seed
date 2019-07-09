@@ -1,15 +1,15 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http'
-import { AppComponent } from './app.component';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { AppRoutingModule } from './app-routing.module';
-import { AssetComponent } from './asset/asset.component';
+import { AppComponent } from './app.component';
 import { AssetListComponent } from './asset-list/asset-list.component';
+import { AssetComponent } from './asset/asset.component';
 import { AssetResolver } from './resolvers/asset.resolver';
 import { AssetsResolver } from './resolvers/assets.resolver';
-import { BrowserModule } from '@angular/platform-browser';
-import { translationInitializer } from './translation.initializer';
 import { EnplugService } from './services/enplug.service';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { translationInitializer } from './translation.initializer';
 
 @NgModule({
   imports: [

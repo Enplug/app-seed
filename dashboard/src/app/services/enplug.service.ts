@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import {
   Account,
   Asset,
@@ -11,7 +12,6 @@ import {
   ThemeAsset,
   User
   } from '@enplug/dashboard-sdk';
-import { Injectable } from '@angular/core';
 
 /*tslint:disable:no-string-literal*/
 const enplug = window.enplug;
@@ -84,11 +84,11 @@ export class EnplugService {
     },
 
     editTheme: <T>(themeDef: {},
-                    theme: Theme,
-                    previewUrl: string,
-                    previewAsset?: Asset<T>[],
-                    layout?: any,
-                    fonts?: any) => {
+                   theme: Theme,
+                   previewUrl: string,
+                   previewAsset?: Asset<T>[],
+                   layout?: any,
+                   fonts?: any) => {
       return new Promise<any>((resolve, reject) => {
         enplug.account.editTheme(themeDef, theme, previewUrl, layout, fonts,
           response => { resolve(response); }, error => { reject(error); });
