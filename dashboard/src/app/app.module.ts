@@ -36,7 +36,9 @@ import { translationInitializer } from './translation.initializer';
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }

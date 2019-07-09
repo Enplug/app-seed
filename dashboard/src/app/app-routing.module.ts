@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AssetComponent } from './asset/asset.component';
 import { AssetListComponent } from './asset-list/asset-list.component';
+import { AssetComponent } from './asset/asset.component';
 import { AssetResolver } from './resolvers/asset.resolver';
 import { AssetsResolver } from './resolvers/assets.resolver';
 
