@@ -1,7 +1,10 @@
 {
   "name": "dashboard-seed",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.0.0 <12.0"
+  },
   "scripts": {
     "ng": "ng",
     "build": "enplug-build --configuration=development --nooffline",
@@ -13,6 +16,7 @@
     "start": "ng serve --configuration=development --port=50000",
     "start:staging": "ng serve --configuration=staging --port=50000",
     "start:prod": "ng serve --configuration=production --port=50000",
+    "start:ssl": "enplug-serve --port=50000",
     "test": "ng test",
     "lint": "ng lint && npm run lint:stylelint",
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
@@ -87,6 +91,6 @@
     "stylelint-scss": "^3.9.0",
     "ts-node": "^8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "~3.5.3"
+    "typescript": "3.4.5"
   }
 }

@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { EnplugService } from './services/enplug.service';
 
 export function translationInitializer(enplug: EnplugService, translate: TranslateService) {
-  return () => new Promise<void>((resolve) => {
+  return () => new Promise<void>((resolve, reject) => {
     enplug.account.getUser().then(({ data: { locale } }) => {
       if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
         translate.getTranslation(locale).pipe(catchError(() => EMPTY))
@@ -14,7 +14,7 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
               translate.setTranslation('locale', translations);
               translate.use(locale);
             },
-            () => {},
+            (err) => reject(err),
             resolve);
       } else {
         resolve();
