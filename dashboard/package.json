@@ -49,7 +49,6 @@
     "@angular/platform-browser-dynamic": "^7.0.0",
     "@angular/platform-server": "^7.0.0",
     "@angular/router": "^7.0.0",
-    "@biesbjerg/ngx-translate-po-http-loader": "^3.1.0",
     "@enplug/dashboard-sdk": "^4.7.2",
     "@ngx-translate/core": "^10.0.2",
     "classlist.js": "^1.1.20150312",
