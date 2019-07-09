@@ -16,7 +16,9 @@
     "start:staging": "ng serve --configuration=staging --port=50000 --ssl",
     "start:prod": "ng serve --configuration=production --port=50000 --ssl",
     "test": "ng test",
-    "lint": "ng lint",
+    "lint": "ng lint && npm run lint:stylelint",
+    "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
+    "lint:stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
   },
   "config": {
@@ -63,7 +65,7 @@
     "@enplug/scripts": "^1.9.1",
     "@types/jasmine": "^3.3.13",
     "@types/jasminewd2": "^2.0.6",
-    "@types/node": "^12.6.0",
+    "@types/node": "^12.6.1",
     "codelyzer": "~5.1.0",
     "jasmine": "^3.4.0",
     "jasmine-core": "^3.4.0",
@@ -74,9 +76,13 @@
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "karma-mocha-reporter": "^2.2.5",
+    "stylelint": "^10.1.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-standard": "^18.3.0",
+    "stylelint-scss": "^3.9.0",
     "protractor": "^5.4.2",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
-    "typescript": "3.4.5"
+    "typescript": "3.5.3"
   }
 }

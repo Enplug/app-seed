@@ -18,6 +18,7 @@ Depending on the environment one wants to release to, one of the versions may be
 
 This project aims at providing basic info and codebase to get started with writing own Enplug Apps. Most of the code resides in `src/app`:
 
+- `index.html` content
 - `app.component.*` files contain basic component code. It triggers `start()` command of the Player
 - `app.module.ts` is the main module entry
 - `enplug.service.ts` consists of simple service that proxies Enplug Player methods. It's recommended to separate Player calls and component code that way.

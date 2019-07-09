@@ -1,7 +1,7 @@
-import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EnplugService } from './enplug.service';
 import { AppComponent } from './app.component';
+import { EnplugService } from './enplug.service';
 
 describe('AppComponent', () => {
   let enplugService: EnplugService;
@@ -41,7 +41,7 @@ describe('AppComponent', () => {
     const destroyDoneSpy = jasmine.createSpy('destroyDone');
 
     const enplugServiceOnSpy = spyOn(enplugService, 'on').and.callFake(
-      function (eventName, callback) {
+      (eventName, callback) => {
         if (eventName === 'destroy') {
           return callback(destroyDoneSpy);
         }

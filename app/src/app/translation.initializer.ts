@@ -1,6 +1,6 @@
-import { catchError } from 'rxjs/operators';
-import { empty, EMPTY } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { empty, EMPTY } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { EnplugService } from './enplug.service';
 
 const TAG = 'AppSeed';

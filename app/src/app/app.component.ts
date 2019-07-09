@@ -1,10 +1,9 @@
 /**
  *  @author Your Name (login@enplug.com)
  */
-
 import { Component, OnInit } from '@angular/core';
-import { EnplugService } from './enplug.service';
 
+import { EnplugService } from './enplug.service';
 
 @Component({
   selector: 'ep-appseed',
@@ -17,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.enplug.appStatus.start();
 
-    this.enplug.on('destroy', function (done) {
+    this.enplug.on('destroy', (done) => {
       done();
     });
   }

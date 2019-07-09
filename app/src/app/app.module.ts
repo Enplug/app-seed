@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { AppComponent } from './app.component';
 import { EnplugService } from './enplug.service';
