@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -23,13 +23,14 @@ import { translationInitializer } from './translation.initializer';
       useFactory: translationInitializer,
       deps: [
         EnplugService,
-        TranslateService,
-        HttpClient
+        TranslateService
       ],
       multi: true,
     },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule {
 }

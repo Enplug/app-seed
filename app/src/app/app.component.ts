@@ -1,6 +1,3 @@
-/**
- *  @author Your Name (login@enplug.com)
- */
 import { Component, OnInit } from '@angular/core';
 
 import { EnplugService } from './enplug.service';
@@ -11,7 +8,9 @@ import { EnplugService } from './enplug.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private enplug: EnplugService) { }
+  constructor(
+    private enplug: EnplugService
+  ) {}
 
   ngOnInit() {
     this.enplug.appStatus.start();

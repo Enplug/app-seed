@@ -26,6 +26,16 @@ This project aims at providing basic info and codebase to get started with writi
 
 As with any other standard `Angular` app, `environments` directory may be used to provide environment-specific variables to the code.
 
+## Linting
+
+This repository uses extended set of lint rules, including ordering imports, standard SCSS linter and more. 
+
+If one decides to follow practices included in the repository, we recommend installing proper extensions to IDE of choice (`stylelint` + `tslint`). 
+
+Another way of running checks is to run either `npm run lint` or `npm run lint:fix` (linting with safe auto-fixers).
+
+## Running the app
+
 ## Further help - Angular CLI
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).

@@ -12,9 +12,10 @@
     "release": "enplug-release --configuration=development",
     "release:staging": "enplug-release --configuration=staging",
     "release:prod": "enplug-release --configuration=production",
-    "start": "ng serve --configuration=development --port=50000 --ssl",
-    "start:staging": "ng serve --configuration=staging --port=50000 --ssl",
-    "start:prod": "ng serve --configuration=production --port=50000 --ssl",
+    "start": "ng serve --configuration=development --port=50000",
+    "start:staging": "ng serve --configuration=staging --port=50000",
+    "start:prod": "ng serve --configuration=production --port=50000",
+    "start:ssl": "enplug-serve --port=50000",
     "test": "ng test",
     "lint": "ng lint && npm run lint:stylelint",
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
@@ -83,6 +84,6 @@
     "protractor": "^5.4.2",
     "ts-node": "^8.3.0",
     "tslint": "^5.18.0",
-    "typescript": "3.5.3"
+    "typescript": "3.4.5"
   }
 }
