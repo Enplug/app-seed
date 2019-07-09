@@ -1,28 +1,30 @@
-# AppseedDashboard
+# AppSeed - Dashboard part
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
+This is a sub-repository that consists of base code for building Enplug Player applications.
 
-## Development server
+## Running, building and testing
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Please refer to `package.json` `scripts` section for info on running the repository.
 
-## Code scaffolding
+It consists of all the needed scripts, running in multiple configurations.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+Depending on the environment one wants to release to, one of the versions may be used:
 
-## Build
+- `scriptname:prod`
+- `scriptname:staging`
+- `scriptname` without suffix for `development` environment
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Project structure
 
-## Running unit tests
+This project aims at providing basic info and codebase to get started with writing own Enplug Apps. Most of the code resides in `src/app`:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- `app.component.*` files contain basic component code. It triggers `start()` command of the Player
+- `app.module.ts` is the main module entry
+- `enplug.service.ts` consists of simple service that proxies Enplug Player methods. It's recommended to separate Player calls and component code that way.
+- `translation.initializer.ts` consists of code used to bootstrap translation engine for the App
 
-## Running end-to-end tests
+As with any other standard `Angular` app, `environments` directory may be used to provide environment-specific variables to the code.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
-
-## Further help
+## Further help - Angular CLI
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
