@@ -6,6 +6,10 @@
   height: 100%;
 
   &__title {
-    color: white;
+    $title-color: darken(white, 20%);
+
+    color: $title-color;
+    padding: 12px;
+    border: 1px solid $title-color;
   }
 }

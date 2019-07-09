@@ -7,22 +7,29 @@ const TAG = 'AppSeed';
 
 export function translationInitializer(enplug: EnplugService, translate: TranslateService) {
   return () => new Promise<void>(async (resolve, reject) => {
-    const settings = await enplug.settings.all as any;
-    const locale = settings.locale;
+    let settings;
+    try {
+      settings = await enplug.settings.all as any;
+    } catch (err) {
+      console.log('Cannot obtain settings, skipping translation initializer', err);
+    }
 
+    const locale = settings && settings.locale;
     if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
       console.log(`[${TAG}] Setting locale: ${locale}, awaiting translations...`);
-      translate.getTranslation(locale).pipe(catchError(() => {
+
+      return translate.getTranslation(locale).pipe(catchError(() => {
         return EMPTY;
       })).subscribe(translations => {
-        translate.setTranslation(locale, translations);
-        translate.use(locale);
-        resolve();
-      }, (err) => reject(err), () => {
-        resolve();
-      });
-    } else {
-      resolve();
+          translate.setTranslation(locale, translations);
+          translate.use(locale);
+          resolve();
+        }, (err) => reject(err),
+        () => {
+          resolve();
+        });
     }
+
+    return resolve();
   });
 }
