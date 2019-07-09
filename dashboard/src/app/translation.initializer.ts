@@ -14,7 +14,7 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
               translate.setTranslation('locale', translations);
               translate.use(locale);
             },
-            null,
+            () => {},
             resolve);
       } else {
         resolve();
