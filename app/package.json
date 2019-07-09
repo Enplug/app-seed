@@ -15,7 +15,6 @@
     "start": "ng serve --configuration=development --port=50000 --ssl",
     "start:staging": "ng serve --configuration=staging --port=50000 --ssl",
     "start:prod": "ng serve --configuration=production --port=50000 --ssl",
-    "i18n": "ng-xi18n --i18nFormat=xlf",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

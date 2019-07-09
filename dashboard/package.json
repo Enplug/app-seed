@@ -1,9 +1,8 @@
 {
-  "name": "enplug-appseed-dashboard",
+  "name": "dashboard-seed",
   "version": "1.1.0",
   "license": "MIT",
   "scripts": {
-    "postinstall": "node ../fix-node-modules.js",
     "ng": "ng",
     "build": "enplug-build --configuration=development --nooffline",
     "build:staging": "enplug-build --configuration=staging --nooffline",
@@ -16,8 +15,7 @@
     "start:prod": "ng serve --configuration=production --port=50000",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "i18n": "ng-xi18n --i18nFormat=xlf"
+    "e2e": "ng e2e"
   },
   "config": {
     "destination": "/enplug/appseed/dashboard/",
