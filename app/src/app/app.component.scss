@@ -8,8 +8,8 @@
   &__title {
     $title-color: darken(white, 20%);
 
-    color: $title-color;
     padding: 12px;
+    color: $title-color;
     border: 1px solid $title-color;
   }
 }
