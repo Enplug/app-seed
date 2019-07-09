@@ -9,5 +9,5 @@ if (environment.production) {
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)
-  .then(() => console.log('Successfully ootstrapped the App Seed'))
+  .then(() => console.log('Successfully bootstrapped the App Seed'))
   .catch(err => console.log('Cannot bootstrapp the App: ', err));

@@ -6,6 +6,6 @@ export class AppseedDashboardPage {
   }
 
   getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+    return element(by.css('ep-app h1.ep-app__header')).getText();
   }
 }

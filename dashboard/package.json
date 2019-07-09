@@ -57,12 +57,7 @@
     "@angular/router": "^8.1.0",
     "@enplug/dashboard-sdk": "^4.7.19",
     "@ngx-translate/core": "^11.0.1",
-    "classlist.js": "^1.1.20150312",
-    "core-js": "^3.1.4",
-    "intl": "^1.2.5",
     "rxjs": "^6.5.2",
-    "rxjs-compat": "^6.5.2",
-    "web-animations-js": "^2.3.2",
     "zone.js": "^0.9.1"
   },
   "devDependencies": {

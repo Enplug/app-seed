@@ -1,3 +1,11 @@
-.appseed {
+:host {
   display: block;
+}
+
+.ep-app {
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
