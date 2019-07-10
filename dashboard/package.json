@@ -22,7 +22,8 @@
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
     "lint:stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e",
-    "extract:po": "ngx-translate-extract --input ./src --format pot --marker _ --output ./src/assets/i18n/extracted.pot"
+    "extract:po": "ngx-translate-extract --input ./src --format pot --marker _ --output ./src/assets/i18n/extracted.pot",
+    "postinstall": "node ../postinstall.js"
   },
   "config": {
     "destination": "/enplug/appseed/dashboard/",
@@ -80,6 +81,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
     "karma-mocha-reporter": "^2.2.5",
+    "ngx-translate-extract": "^1.0.0",
     "protractor": "^5.4.2",
     "stylelint": "^10.1.0",
     "stylelint-config-rational-order": "^0.1.2",
