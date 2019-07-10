@@ -13,7 +13,7 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
     }
 
     return enplug.account.getUser().then(({ data: { locale } }) => {
-      if (locale && typeof locale === 'string') {
+      if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
         translate.getTranslation(locale).pipe(catchError(() => EMPTY)).subscribe(
           translations => {
             translate.setTranslation('locale', translations);
