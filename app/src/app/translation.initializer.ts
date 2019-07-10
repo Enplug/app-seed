@@ -15,7 +15,7 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
     }
 
     const locale = settings && settings.locale;
-    if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
+    if (locale && typeof locale === 'string') {
       console.log(`[${TAG}] Setting locale: ${locale}, awaiting translations...`);
 
       return translate.getTranslation(locale).pipe(catchError(() => {
