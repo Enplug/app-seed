@@ -1,11 +1,5 @@
-/**
- * Description of the component.
- * @author Your Name (username@enplug.com)
- */
-
-
+import { Component, NgZone, OnInit, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, NgZone, } from '@angular/core';
 import '@enplug/dashboard-sdk';
 
 const enplug = window.enplug;
@@ -28,7 +22,6 @@ export class AssetComponent implements OnInit {
     });
   }
 
-
   /**
    * Sets Dashboard header breadcrumbs and buttons.
    */
@@ -47,7 +40,6 @@ export class AssetComponent implements OnInit {
       }
     ]);
   }
-
 
   /**
    * Saves current Asset.

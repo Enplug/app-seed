@@ -1,9 +1,4 @@
-/**
- * Description of the component.
- * @author Your Name (username@enplug.com)
- */
-
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import '@enplug/dashboard-sdk';
 

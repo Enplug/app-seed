@@ -1,13 +1,12 @@
-import { AssetComponent } from './asset/asset.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AppComponent } from './app.component';
 import { AssetListComponent } from './asset-list/asset-list.component';
+import { AssetComponent } from './asset/asset.component';
 import { AssetResolver } from './resolvers/asset.resolver';
 import { AssetsResolver } from './resolvers/assets.resolver';
 
-const appRoutes: Routes = [
+export const appRoutes: Routes = [
   {
     path: '',
     redirectTo: '/assets',
@@ -31,7 +30,7 @@ const appRoutes: Routes = [
       assets: AssetResolver
     }
   }
-]
+];
 
 @NgModule({
   imports: [
@@ -41,4 +40,5 @@ const appRoutes: Routes = [
     RouterModule
   ]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}

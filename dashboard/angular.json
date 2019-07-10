@@ -56,6 +56,16 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "test": {
+              "aot": true,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
             }
           }
         },
@@ -73,6 +83,9 @@
             },
             "production": {
               "browserTarget": "appseed-dashboard:build:production"
+            },
+            "test": {
+              "browserTarget": "appseed-dashboard:build:test"
             }
           }
         },
@@ -86,7 +99,7 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "main": "src/test.ts",
-            "karmaConfig": "./karma.conf.js",
+            "karmaConfig": "src/karma.conf.js",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
@@ -119,8 +132,8 @@
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
-            "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "appseed-dashboard:serve"
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "appseed-dashboard:serve:test"
           }
         },
         "lint": {

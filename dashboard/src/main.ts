@@ -8,4 +8,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule);
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .then(() => console.log('Successfully bootstrapped the Dashboard Seed'))
+  .catch(err => console.log('Cannot bootstrapp the App: ', err));

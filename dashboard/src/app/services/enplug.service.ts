@@ -1,7 +1,7 @@
+import { Injectable } from '@angular/core';
 import {
   Account,
   Asset,
-  Button,
   DeployDialogOptions,
   DisplayGroup,
   FilepickerOptions,
@@ -10,8 +10,8 @@ import {
   Theme,
   ThemeAsset,
   User
-  } from '@enplug/dashboard-sdk';
-import { Injectable } from '@angular/core';
+} from '@enplug/dashboard-sdk';
+import { promisify } from '../utils/promisify';
 
 /*tslint:disable:no-string-literal*/
 const enplug = window.enplug;
@@ -25,184 +25,120 @@ const enplug = window.enplug;
   providedIn: 'root'
 })
 export class EnplugService {
-
   account = {
     getAccount: () => {
-      return new Promise<Account>((resolve, reject) => {
-        enplug.account.getAccount(account => { resolve(account); }, error => { reject(error); });
-      });
+      return promisify<Account>(enplug.account.getAccount, enplug.account)();
     },
 
     getUser: () => {
-      return new Promise<User>((resolve, reject) => {
-      enplug.account.getUser(user => { resolve(user); }, error => { reject(error); });
-      });
+      return promisify<User>(enplug.account.getUser, enplug.account)();
     },
 
     getDisplayGroups: () => {
-      return new Promise<DisplayGroup[]>((resolve, reject) => {
-        enplug.account.getDisplayGroups(groups => { resolve(groups); }, error => { reject(error); });
-      });
+      return promisify<DisplayGroup[]>(enplug.account.getDisplayGroups, enplug.account)();
     },
 
     getSelectedDisplayId: () => {
-      return new Promise<string|null>((resolve, reject) => {
-        enplug.account.getSelectedDisplayId(selectedDisplay => { resolve(selectedDisplay); },
-          error => { reject(error); });
-      });
+      return promisify<string|null>(enplug.account.getSelectedDisplayId, enplug.account)();
     },
 
     getAssets: <T>() => {
-      return new Promise<Asset<T>[]>((resolve, reject) => {
-        enplug.account.getAssets(assets => { resolve(assets); }, error => { reject(error); });
-      });
+      return promisify<Asset<T>[]>(enplug.account.getAssets, enplug.account)();
     },
 
     saveAsset: <T>(asset: Asset<T>, dialogOptions?: DeployDialogOptions) => {
-      return new Promise<Asset<T>>((resolve, reject) => {
-        enplug.account.saveAsset(asset, dialogOptions, response => { resolve(response); }, error => { reject(error); });
-      });
-
+      return promisify<Asset<T>>(enplug.account.saveAsset, enplug.account)(asset, dialogOptions);
     },
 
     deleteAsset: (id: string | string[]) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.account.deleteAsset(id, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.account.deleteAsset, enplug.account)(id);
     },
 
     getThemes: (appId: string) => {
-      return new Promise<Theme[]>((resolve, reject) => {
-        enplug.account.getThemes(appId, themes => { resolve(themes); }, error => { reject(error); });
-      });
+      return promisify<Theme[]>(enplug.account.getThemes, enplug.account)(appId);
     },
 
     getTheme: (themeId: string) => {
-      return new Promise<Theme>((resolve, reject) => {
-        enplug.account.getTheme(themeId, theme => { resolve(theme); }, error => { reject(error); });
-      });
+      return promisify<Theme>(enplug.account.getTheme, enplug.account)(themeId);
     },
 
     editTheme: <T>(themeDef: {},
-                    theme: Theme,
-                    previewUrl: string,
-                    previewAsset?: Asset<T>[],
-                    layout?: any,
-                    fonts?: any) => {
-      return new Promise<any>((resolve, reject) => {
-        enplug.account.editTheme(themeDef, theme, previewUrl, layout, fonts,
-          response => { resolve(response); }, error => { reject(error); });
-      });
+                   theme: Theme,
+                   previewUrl: string,
+                   previewAsset?: Asset<T>[],
+                   layout?: any,
+                   fonts?: any) => {
+      return promisify<any>(enplug.account.editTheme, enplug.account)(themeDef, theme, previewUrl, layout, fonts);
     },
 
     saveTheme: (theme: Theme) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.account.saveTheme(theme, response => { resolve(response); }, error => { reject(error) });
-      });
-
+      return promisify<void>(enplug.account.saveTheme, enplug.account)(theme);
     },
 
     deleteTheme: (themeId: string) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.account.deleteTheme(themeId, response => { resolve(response); }, error => { reject(error) });
-      });
+      return promisify<void>(enplug.account.deleteTheme, enplug.account)(themeId);
     }
   };
 
   dashboard = {
     confirmUnsavedChanges: () => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.confirmUnsavedChanges(response => { resolve(response); }, error => { reject(error); } );
-      });
+      return promisify<void>(enplug.dashboard.confirmUnsavedChanges, enplug.dashboard)();
     },
 
-
     errorIndicator: (message: string) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.errorIndicator(message, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.errorIndicator, enplug.dashboard)(message);
     },
 
     isLoading: enplug.dashboard.isLoading,
 
     loadingIndicator: (message: string) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.loadingIndicator(message, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.loadingIndicator, enplug.dashboard)(message);
     },
 
     navigate: (url: string) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.navigate(url, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.navigate, enplug.dashboard)(url);
     },
 
     openConfirm: (options: OpenConfirmOptions) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.openConfirm(options, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.openConfirm, enplug.dashboard)(options);
     },
 
     pageError: () => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.pageError(response => { resolve(response); }, error => { reject(error); } );
-      });
+      return promisify<void>(enplug.dashboard.pageError, enplug.dashboard)();
     },
 
     pageLoading: (bool: boolean) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.pageLoading(bool, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.pageLoading, enplug.dashboard)(bool);
     },
 
     pageNotFound: () => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.pageNotFound(response => { resolve(response); }, error => { reject(error); } );
-      });
+      return promisify<void>(enplug.dashboard.pageNotFound, enplug.dashboard)();
     },
 
-    preview: (url: string, asset: Asset<any>, theme: ThemeAsset<any>) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.preview(url, asset, theme, /*layout, fonts,*/
-          response => { resolve(response); }, error => { reject(error); });
-      });
+    preview: (url: string, asset: Asset<any>, theme: ThemeAsset<any>, layout) => {
+      return promisify<Theme>(enplug.dashboard.preview, enplug.dashboard)(url, asset, theme, layout);
     },
 
-    setDisplaySelectorCallback: enplug.dashboard.setDisplaySelectorCallback,
+    setDisplaySelectorCallback: enplug.dashboard.setDisplaySelectorCallback.bind(enplug.dashboard),
 
     setDisplaySelectorVisibility: (show: boolean) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.setDisplaySelectorVisibility(show, response => { resolve(response); },
-          error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.setDisplaySelectorVisibility, enplug.dashboard)(show);
     },
 
     setHeaderButtons: (buttons: any) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.setHeaderButtons(buttons, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<Theme>(enplug.dashboard.setHeaderButtons, enplug.dashboard)(buttons);
     },
 
     setHeaderTitle: (title: string) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.setHeaderTitle(title, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<void>(enplug.dashboard.setHeaderTitle, enplug.dashboard)(title);
     },
 
     successIndicator: (message: string) => {
-      return new Promise<void>((resolve, reject) => {
-        enplug.dashboard.successIndicator(message, response => { resolve(response); }, error => { reject(error); });
-      });
+      return promisify<Theme>(enplug.dashboard.successIndicator, enplug.dashboard)(message);
     },
 
     upload: (options: FilepickerOptions) => {
-      return new Promise<FilepickerUploadedFile[]>((resolve, reject) => {
-        enplug.dashboard.upload(options, (files: FilepickerUploadedFile[]) => {
-          resolve(files);
-        }, error => {
-          reject(error);
-        });
-     });
+      return promisify<FilepickerUploadedFile[]>(enplug.dashboard.upload, enplug.dashboard)(options);
     }
-  }
+  };
 }

@@ -1,28 +1,38 @@
-# AppseedDashboard
+# AppSeed - Dashboard part
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.2.0.
+This is a sub-repository that consists of base code for building Dashboard configuration interfaces for apps.
 
-## Development server
+## Running, building and testing
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Please refer to `package.json` `scripts` section for info on running the repository.
 
-## Code scaffolding
+It consists of all the needed scripts, running in multiple configurations.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|module`.
+## Project structure
 
-## Build
+This project aims at providing basic info and codebase to get started with writing own Enplug Apps. Most of the code resides in `src/app`:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- `index.html` content
+- `app/*.component.*` files contain basic components code. Main component file triggers `start()` command of the Player
+- `app.module.ts` is the main module entry
+- `app.routing.module.ts` consists of basic routing. This may be useful for implementing different app configuration interfaces (e.g. having one app handling multiple different use cases).
+- `enplug.service.ts` consists of simple service that proxies Enplug Player methods. It's recommended to separate Player calls and component code that way.
+- `translation.initializer.ts` consists of code used to bootstrap translation engine for the App
 
-## Running unit tests
+As with any other standard `Angular` app, `environments` directory may be used to provide environment-specific variables to the code.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Linting
 
-## Running end-to-end tests
+This repository uses extended set of lint rules, including ordering imports, standard SCSS linter and more. 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-Before running the tests make sure you are serving the app via `ng serve`.
+If one decides to follow practices included in the repository, we recommend installing proper extensions to IDE of choice (`stylelint` + `tslint`). 
 
-## Further help
+Another way of running checks is to run either `npm run lint` or `npm run lint:fix` (linting with safe auto-fixers).
+
+## Running the app
+
+In order to run app normally, just run proper `start` script. If you want to run the app in SSL mode, follow guidelines from main README.md first and then use `start:ssl` script.
+
+## Further help - Angular CLI
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
