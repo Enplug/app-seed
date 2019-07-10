@@ -85,7 +85,6 @@ export class EnplugService {
       return promisify<void>(enplug.dashboard.confirmUnsavedChanges, enplug.dashboard)();
     },
 
-
     errorIndicator: (message: string) => {
       return promisify<void>(enplug.dashboard.errorIndicator, enplug.dashboard)(message);
     },

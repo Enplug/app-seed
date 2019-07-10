@@ -33,7 +33,7 @@ describe('Service promisifier', () => {
   });
 
   it('should keep the context', async () => {
-    const testFn = function (successCb) {
+    const testFn = function(successCb) {
       return successCb(this);
     };
 

@@ -16,4 +16,3 @@ export function promisify<T>(method: (...methodArgs: any[]) => any, thisContext?
     });
   };
 }
-

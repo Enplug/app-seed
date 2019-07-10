@@ -3,7 +3,6 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Asset } from '@enplug/dashboard-sdk';
 import { EnplugService } from '../services/enplug.service';
 
-
 @Injectable()
 export class AssetResolver implements Resolve<Asset<any>> {
   constructor(private enplug: EnplugService) { }

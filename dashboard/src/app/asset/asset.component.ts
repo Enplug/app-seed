@@ -22,7 +22,6 @@ export class AssetComponent implements OnInit {
     });
   }
 
-
   /**
    * Sets Dashboard header breadcrumbs and buttons.
    */
@@ -41,7 +40,6 @@ export class AssetComponent implements OnInit {
       }
     ]);
   }
-
 
   /**
    * Saves current Asset.

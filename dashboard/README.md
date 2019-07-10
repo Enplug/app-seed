@@ -8,12 +8,6 @@ Please refer to `package.json` `scripts` section for info on running the reposit
 
 It consists of all the needed scripts, running in multiple configurations.
 
-Depending on the environment one wants to release to, one of the versions may be used:
-
-- `scriptname:prod`
-- `scriptname:staging`
-- `scriptname` without suffix for `development` environment
-
 ## Project structure
 
 This project aims at providing basic info and codebase to get started with writing own Enplug Apps. Most of the code resides in `src/app`:

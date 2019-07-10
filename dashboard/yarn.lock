@@ -179,13 +179,6 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/http@^7.2.15":
-  version "7.2.15"
-  resolved "https://registry.npmjs.org/@angular/http/-/http-7.2.15.tgz#a32bea9e67e99eef88150085aeebbe7aeecd39eb"
-  integrity sha512-TR7PEdmLWNIre3Zn8lvyb4lSrvPUJhKLystLnp4hBMcWsJqq5iK8S3bnlR4viZ9HMlf7bW7+Hm4SI6aB3tdUtw==
-  dependencies:
-    tslib "^1.9.0"
-
 "@angular/language-service@^8.1.0":
   version "8.1.0"
   resolved "https://registry.npmjs.org/@angular/language-service/-/language-service-8.1.0.tgz#6f7701ac81cfd51f7f9678d9952af0672c8f7d7d"
@@ -446,10 +439,15 @@
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
   integrity sha512-tHq6qdbT9U1IRSGf14CL0pUlULksvY9OZ+5eEgl1N7t+OA3tGvNpxJCzuKQlsNgCVwbAs670L1vcVQi8j9HjnA==
 
-"@types/node@*", "@types/node@^12.6.1":
+"@types/node@*":
   version "12.6.1"
   resolved "https://registry.npmjs.org/@types/node/-/node-12.6.1.tgz#d5544f6de0aae03eefbb63d5120f6c8be0691946"
   integrity sha512-rp7La3m845mSESCgsJePNL/JQyhkOJA6G4vcwvVgkDAwHhGdq5GCumxmPjEk1MZf+8p5ZQAUE7tqgQRQTXN7uQ==
+
+"@types/node@^12.6.2":
+  version "12.6.2"
+  resolved "https://registry.npmjs.org/@types/node/-/node-12.6.2.tgz#a5ccec6abb6060d5f20d256fb03ed743e9774999"
+  integrity sha512-gojym4tX0FWeV2gsW4Xmzo5wxGjXGm550oVUII7f7G5o4BV6c7DBdiG1RRQd+y1bvqRyYtPfMK85UM95vsapqQ==
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -7425,10 +7423,10 @@ stylelint-order@^2.2.1:
     postcss "^7.0.2"
     postcss-sorting "^4.1.0"
 
-stylelint-scss@^3.9.0:
-  version "3.9.0"
-  resolved "https://registry.npmjs.org/stylelint-scss/-/stylelint-scss-3.9.0.tgz#45e5e42c28c180ec410ac95ab70fb0b49688cbb6"
-  integrity sha512-6uB2TPfIA/HybB7gERPFaBWHDBWhoLSjKoG0rQtsQ4LNOvWzJ205Q8JA2x9zZSXOJXatonlT9aGA1tyNBJrmcg==
+stylelint-scss@^3.9.1:
+  version "3.9.1"
+  resolved "https://registry.npmjs.org/stylelint-scss/-/stylelint-scss-3.9.1.tgz#c34a41f2587cce85e0769b025377ece44db13724"
+  integrity sha512-Z+q3z12QpkWEJsoWm/QLGvu3VJXpZbZYaEXdU4EIo3o6lVgXIwMj+ntW81Jj2bk9f6+aMVmtzfJVhdS7Sz5orA==
   dependencies:
     lodash "^4.17.11"
     postcss-media-query-parser "^0.2.3"

@@ -58,7 +58,6 @@
       "static-before-instance",
       "variables-before-functions",
       true,
-      true,
       {
         "order": [
           "instance-field",
@@ -70,7 +69,7 @@
     ],
     "no-arg": true,
     "no-bitwise": true,
-    "no-consecutive-blank-lines": false,
+    "no-consecutive-blank-lines": true,
     "no-console": [
       "debug",
       "info",
@@ -103,7 +102,7 @@
     "no-switch-case-fall-through": true,
     "no-trailing-whitespace": true,
     "no-unused-expression": true,
-    "no-unused-variable": false,
+    "no-unused-variable": true,
     "no-var-keyword": true,
     "no-var-requires": false,
     "object-literal-key-quotes": [
