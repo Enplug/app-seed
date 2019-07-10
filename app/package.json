@@ -21,7 +21,8 @@
     "lint": "ng lint && npm run lint:stylelint",
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
     "lint:stylelint": "stylelint \"src/**/*.scss\"",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "extract:po": "ngx-translate-extract --input ./src --format pot --marker _ --output ./src/assets/i18n/extracted.pot"
   },
   "config": {
     "destination": "enplug/appseed/app/",
@@ -52,6 +53,7 @@
     "@angular/platform-browser": "8.1.0",
     "@angular/platform-browser-dynamic": "8.1.0",
     "@angular/router": "8.1.0",
+    "@biesbjerg/ngx-translate-po-http-loader": "^3.1.0",
     "@enplug/sdk-player": "^0.10.3",
     "@ngx-translate/core": "^11.0.1",
     "rxjs": "6.5.2",
