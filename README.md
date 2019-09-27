@@ -1,4 +1,6 @@
-# App Seed
+# App Seed - Internal Enplug branch
+
+This is a special version of App Seed targeted for Enplug's apps. It includes a preconfigured translation initialization and extraction setup.
 
 This is a seed project for Enplug Apps. It consists of two subprojects:
 
