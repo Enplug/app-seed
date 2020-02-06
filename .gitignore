@@ -20,3 +20,4 @@ bower_components/
 
 aws.private.json
 .vscode
+.angulardoc.json

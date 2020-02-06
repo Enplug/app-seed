@@ -14,19 +14,5 @@
 
 <body>
   <ep-appseed></ep-appseed>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      if ('serviceWorker' in navigator && navigator.userAgent.indexOf('iPad') < 0 && navigator.userAgent.indexOf('iPhone') < 0) {
-        navigator.serviceWorker.register('./enplug-offline-worker.js').then(function (registration) {
-          // Registration was successful
-          console.log('[AppSeed|sw] ServiceWorker registration successful with scope: ', registration.scope);
-        }, function (err) {
-          // registration failed :(
-          console.warn('[AppSeed|sw] ServiceWorker registration failed: ', err);
-        });
-      }
-    }
-  </script>
 </body>
 </html>
