@@ -10,11 +10,21 @@ import { EnplugService } from './enplug.service';
 export class AppComponent implements OnInit {
   constructor(
     private enplug: EnplugService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.enplug.appStatus.start();
 
+    this.enplug.appStatus.registerServiceWorker('App Seed').then(() => {
+      this.initApp();
+    }).catch((err: string) => {
+      console.error(err);
+      this.initApp();
+    });
+  }
+
+
+  private initApp() {
+    this.enplug.appStatus.start();
     this.enplug.on('destroy', (done) => {
       done();
     });
