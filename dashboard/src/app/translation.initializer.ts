@@ -16,7 +16,7 @@ export function translationInitializer(enplug: EnplugService, translate: Transla
       if (locale && typeof locale === 'string' && locale.substr(0, 2) !== 'en') {
         translate.getTranslation(locale).pipe(catchError(() => EMPTY)).subscribe(
           translations => {
-            translate.setTranslation('locale', translations);
+            translate.setTranslation(locale, translations);
             translate.use(locale);
           },
           reject,
