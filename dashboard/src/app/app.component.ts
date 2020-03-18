@@ -1,7 +1,4 @@
 import { Component, OnInit, } from '@angular/core';
-import '@enplug/dashboard-sdk';
-
-const enplug = window.enplug;
 
 @Component({
   selector: 'ep-app',

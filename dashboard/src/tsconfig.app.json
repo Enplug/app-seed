@@ -1,13 +1,16 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
+    "alwaysStrict": true,
     "outDir": "../out-tsc/app",
-    "module": "es2015",
     "baseUrl": "",
     "noImplicitAny": false
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
   ]
 }
