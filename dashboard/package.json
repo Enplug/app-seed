@@ -1,6 +1,6 @@
 {
   "name": "dashboard-seed",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0 <12.0"
@@ -54,7 +54,7 @@
     "@angular/platform-browser-dynamic": "^8.1.0",
     "@angular/platform-server": "^8.1.0",
     "@angular/router": "^8.1.0",
-    "@enplug/dashboard-sdk": "^4.7.19",
+    "@enplug/sdk-dashboard": "^5.1.0",
     "@ngx-translate/core": "^11.0.1",
     "rxjs": "^6.5.2",
     "zone.js": "^0.9.1"
@@ -64,7 +64,7 @@
     "@angular/cli": "^8.1.0",
     "@angular/compiler-cli": "^8.1.0",
     "@angular/language-service": "^8.1.0",
-    "@enplug/scripts": "^1.9.1",
+    "@enplug/scripts": "^1.9.17",
     "@types/jasmine": "~3.3.13",
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "^12.6.2",

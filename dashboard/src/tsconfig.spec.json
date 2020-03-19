@@ -7,7 +7,7 @@
     "types": [
       "jasmine",
       "node",
-      "@enplug/dashboard-sdk"
+      "@enplug/sdk-dashboard"
     ]
   },
   "files": [
