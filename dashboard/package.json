@@ -57,7 +57,7 @@
     "@angular/platform-server": "^9.0.6",
     "@angular/router": "^9.0.6",
     "@biesbjerg/ngx-translate-po-http-loader": "^3.1.0",
-    "@enplug/components": "^5.3.25-ivy.3",
+    "@enplug/components": "^6.0.0",
     "@enplug/sdk-dashboard": "^5.1.0",
     "@ngrx/store": "^9.0.0",
     "@ngx-translate/core": "^11.0.1",
