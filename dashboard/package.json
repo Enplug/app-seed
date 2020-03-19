@@ -1,6 +1,6 @@
 {
   "name": "dashboard-seed",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "license": "MIT",
   "engines": {
     "node": ">=10.0.0 <12.0"
@@ -47,31 +47,34 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^8.1.0",
-    "@angular/common": "^8.1.0",
-    "@angular/compiler": "^8.1.0",
-    "@angular/core": "^8.1.0",
-    "@angular/forms": "^8.1.0",
-    "@angular/platform-browser": "^8.1.0",
-    "@angular/platform-browser-dynamic": "^8.1.0",
-    "@angular/platform-server": "^8.1.0",
-    "@angular/router": "^8.1.0",
+    "@angular/animations": "^9.0.6",
+    "@angular/common": "^9.0.6",
+    "@angular/compiler": "^9.0.6",
+    "@angular/core": "^9.0.6",
+    "@angular/forms": "^9.0.6",
+    "@angular/platform-browser": "^9.0.6",
+    "@angular/platform-browser-dynamic": "^9.0.6",
+    "@angular/platform-server": "^9.0.6",
+    "@angular/router": "^9.0.6",
     "@biesbjerg/ngx-translate-po-http-loader": "^3.1.0",
-    "@enplug/dashboard-sdk": "^4.7.19",
+    "@enplug/components": "^5.3.25-ivy.3",
+    "@enplug/sdk-dashboard": "^5.1.0",
+    "@ngrx/store": "^9.0.0",
     "@ngx-translate/core": "^11.0.1",
-    "rxjs": "^6.5.2",
-    "zone.js": "^0.9.1"
+    "rxjs": "^6.5.4",
+    "tslib": "^1.10.0",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.801.0",
-    "@angular/cli": "^8.1.0",
-    "@angular/compiler-cli": "^8.1.0",
-    "@angular/language-service": "^8.1.0",
-    "@enplug/scripts": "^1.9.1",
+    "@angular-devkit/build-angular": "~0.900.6",
+    "@angular/cli": "^9.0.6",
+    "@angular/compiler-cli": "^9.0.6",
+    "@angular/language-service": "^9.0.6",
+    "@enplug/scripts": "^1.9.17",
     "@types/jasmine": "~3.3.13",
     "@types/jasminewd2": "~2.0.6",
-    "@types/node": "^12.6.2",
-    "codelyzer": "~5.1.0",
+    "@types/node": "^12.11.1",
+    "codelyzer": "^5.1.2",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
@@ -89,6 +92,6 @@
     "stylelint-scss": "^3.9.1",
     "ts-node": "^8.3.0",
     "tslint": "~5.18.0",
-    "typescript": "3.4.5"
+    "typescript": "3.7.5"
   }
 }

@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./src",
+    "module": "esnext",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -16,11 +17,14 @@
     "types": [
       "jasmine",
       "node",
-      "@enplug/dashboard-sdk"
+      "@enplug/sdk-dashboard"
     ],
     "lib": [
       "es2016",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "enableIvy": false
   }
 }

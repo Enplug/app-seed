@@ -2,12 +2,11 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
-    "module": "commonjs",
     "target": "es5",
     "types": [
       "jasmine",
       "node",
-      "@enplug/dashboard-sdk"
+      "@enplug/sdk-dashboard"
     ]
   },
   "files": [
