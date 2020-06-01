@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { getEnplugServiceMock } from 'app/mocks/enplug.service.mock.spec';
 import { AssetComponent } from './asset.component';
 
 describe('AssetComponent', () => {
@@ -9,8 +10,15 @@ describe('AssetComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AssetComponent]
+      imports: [
+        RouterTestingModule
+      ],
+      declarations: [
+        AssetComponent
+      ],
+      providers: [
+        getEnplugServiceMock()
+      ]
     })
       .compileComponents();
   }));

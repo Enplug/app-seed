@@ -1,6 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
+import { AssetItemListModule } from '@enplug/components/asset-item-list';
+import { getEnplugServiceMock } from 'app/mocks/enplug.service.mock.spec';
+import { TranslationTestingModule } from 'app/translation-testing.module.spec';
 import { AssetListComponent } from './asset-list.component';
 
 describe('AssetListComponent', () => {
@@ -9,8 +12,17 @@ describe('AssetListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AssetListComponent]
+      imports: [
+        RouterTestingModule,
+        AssetItemListModule,
+        TranslationTestingModule
+      ],
+      declarations: [
+        AssetListComponent
+      ],
+      providers: [
+        getEnplugServiceMock()
+      ]
     })
     .compileComponents();
   }));

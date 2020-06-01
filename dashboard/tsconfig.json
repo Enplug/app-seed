@@ -7,6 +7,8 @@
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
@@ -23,8 +25,5 @@
       "es2016",
       "dom"
     ]
-  },
-  "angularCompilerOptions": {
-    "enableIvy": false
   }
 }

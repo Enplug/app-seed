@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
     });
   }
 
-
   private initApp() {
     this.enplug.appStatus.start();
     this.enplug.on('destroy', (done) => {
