@@ -1,5 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EnplugService } from 'app/services/enplug.service';
 
 @Component({
   selector: 'ep-asset-list',
@@ -9,20 +10,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class AssetListComponent implements OnInit {
   public assets: Array<any>;
 
-  constructor(private zone: NgZone, private router: Router, private route: ActivatedRoute) { }
+  constructor(private zone: NgZone,
+              private router: Router,
+              private route: ActivatedRoute,
+              private enplug: EnplugService) { }
 
   ngOnInit() {
     this.assets = this.route.snapshot.data.assets;
-
-    // Initialization of Dashboard items localted outside of the App
-    this.zone.run(() => {
-      this.setHeader();
-    });
+    this.setHeader();
   }
 
   setHeader() {
-    enplug.dashboard.setHeaderTitle('Assets');
-    enplug.dashboard.setHeaderButtons([
+    this.enplug.dashboard.setHeaderTitle('Assets');
+    this.enplug.dashboard.setHeaderButtons([
       {
         text: 'Add',
         action: () => this.zone.run(() => this.router.navigateByUrl('assets/add')),

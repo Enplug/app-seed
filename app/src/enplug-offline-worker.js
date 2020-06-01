@@ -46,9 +46,9 @@
  *     after what amount of time (in minutes), given response should be re-fetched and its response re-cached.
  *     Time set to 0 means that a given response should never be cached.
  */
-var config = {"staticResources":["./","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.js","polyfills.js","styles.js","vendor.js","main.js"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app","cacheVersion":"player-app-1-1-0","noCacheUrls":[]};
+var config = {"staticResources":[".","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.js","polyfills-es5.js","polyfills.js","styles.js","vendor.js","main.js"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app-seed","cacheVersion":"player-app-seed-2-0-0","noCacheUrls":[]};
 
-const TAG = '[player-app|offline]';
+const TAG = '[player-app-seed|offline]';
 const LAST_USED_TIME_CACHE = 'last-used-time-cache';
 const REFRESH_TIME_CACHE = 'refresh-time';
 
@@ -82,6 +82,7 @@ self.addEventListener('install', function (event) {
       })
       .catch((error) => {
         console.warn(`${TAG} Error adding static resources to cache ${config.cacheVersion}.`, error);
+        console.warn(`[player-app-seed] Static resources: ${JSON.stringify(config.staticResources)}`, config.staticResources);
       })
       // Read Refresh Time object from cache
       .then(() => cache.match(REFRESH_TIME_CACHE))
@@ -210,6 +211,7 @@ function fetchFileAndCache(originalRequest, cache, fetchUrl, cacheUrl) {
     mode: 'cors',
     credentials: 'omit',
     referrer: 'no-referrer',
+    cache: config.cache ? config.cache : 'default'
   });
   return fetch(fetchRequest)
     // Initial error handling for requests which resolved but have incorrect status or null response. Returns
@@ -234,6 +236,7 @@ function fetchFileAndCache(originalRequest, cache, fetchUrl, cacheUrl) {
           credentials: 'omit',
           mode: 'no-cors',
           referrer: 'no-referrer',
+          cache: config.cache ? config.cache : 'default'
         });
         return fetch(noCorsFetchRequest);
       }

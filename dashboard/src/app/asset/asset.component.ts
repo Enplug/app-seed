@@ -1,7 +1,6 @@
 import { Component, NgZone, OnInit, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-const enplug = window.enplug;
+import { EnplugService } from 'app/services/enplug.service';
 
 @Component({
   selector: 'ep-asset',
@@ -11,22 +10,23 @@ const enplug = window.enplug;
 export class AssetComponent implements OnInit {
   public asset: any;
 
-  constructor(private zone: NgZone, private router: Router, private route: ActivatedRoute) { }
+  constructor(private zone: NgZone,
+              private router: Router,
+              private route: ActivatedRoute,
+              private enplug: EnplugService) { }
 
   // Initialization of Dashboard items localted outside of the App
   ngOnInit() {
     this.asset = this.route.snapshot.data.asset;
-    this.zone.run(() => {
-      this.setHeader();
-    });
+    this.setHeader();
   }
 
   /**
    * Sets Dashboard header breadcrumbs and buttons.
    */
   setHeader() {
-    enplug.dashboard.setHeaderTitle('Asset');
-    enplug.dashboard.setHeaderButtons([
+    this.enplug.dashboard.setHeaderTitle('Asset');
+    this.enplug.dashboard.setHeaderButtons([
       {
         text: 'Cancel',
         action: () => this.zone.run(() => this.router.navigateByUrl('/assets')),

@@ -1,22 +1,16 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { TranslatePoHttpLoader } from '@biesbjerg/ngx-translate-po-http-loader';
 import { AssetItemListModule } from '@enplug/components/asset-item-list';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
+import { getEnvironmentByHostName, provideDashboardLanguagePreload, provideTranslationConfig, TranslocoRootModule } from '@enplug/components/transloco';
+
+import { environment } from 'environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AssetListComponent } from './asset-list/asset-list.component';
 import { AssetComponent } from './asset/asset.component';
 import { AssetResolver } from './resolvers/asset.resolver';
 import { AssetsResolver } from './resolvers/assets.resolver';
-import { EnplugService } from './services/enplug.service';
-import { translationInitializer } from './translation.initializer';
-
-export function HttpLoaderFactory(http: HttpClient) {
-  console.error('[APPSEED] PLEASE SET DASHBOARD TRANSLATION URL HERE');
-  return new TranslatePoHttpLoader(http, '/i18n/apps/APPID/dashboard');
-}
 
 @NgModule({
   declarations: [
@@ -28,27 +22,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (HttpLoaderFactory),
-        deps: [HttpClient]
-      }
-    }),
     AssetItemListModule,
+    TranslocoRootModule
   ],
   providers: [
     AssetResolver,
     AssetsResolver,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: translationInitializer,
-      deps: [
-        EnplugService,
-        TranslateService
-      ],
-      multi: true,
-    },
+    provideTranslationConfig({
+      // TODO: fill the APP_ID
+      translationPath: 'apps/APP_ID/dashboard',
+      pathOverride: environment.local ? '/assets/i18n' : undefined,
+      environment: getEnvironmentByHostName(location?.hostname)
+    }),
+    provideDashboardLanguagePreload()
   ],
   bootstrap: [
     AppComponent
