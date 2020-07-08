@@ -331,17 +331,13 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@enplug/dashboard-sdk@^4.7.19":
-  version "4.7.19"
-  resolved "https://registry.npmjs.org/@enplug/dashboard-sdk/-/dashboard-sdk-4.7.19.tgz#4cbec51ef5f5328f015932fef9d378e2e5caad08"
-  integrity sha512-BB+mXd8qAmB60S8mK7SE1G/IOsGVxHVqk2g+vorvcFdGbWxbNJNFtekqMStsSCQklmPybBGJMqDkZ+eIdASeNA==
-
-"@enplug/scripts@^1.9.1":
-  version "1.9.1"
-  resolved "https://registry.npmjs.org/@enplug/scripts/-/scripts-1.9.1.tgz#b83ce9d3797c2bded112c63632efb6d3e898b91b"
-  integrity sha512-VCbjYHfnUGBfdJuSmLOmWDclzSmonmp77dmNFmHkiB+lKQaRFfUWUSonR4v83KIz4+oQ9FWzDs2+kLa1EWjy7g==
+"@enplug/scripts@^1.9.17":
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/@enplug/scripts/-/scripts-1.11.2.tgz#c819fb6aaf3c7b1ecfdfe4eb942df502c7550b6a"
+  integrity sha512-chGQmJ7BXZIr4MSFKRIoPa4aWUfvDeiXhXVOOu2DlgwcAiraHdMBaa+3P5AQM/bH/Bd6+yK677/kzLCgbxGDvQ==
   dependencies:
     aws-sdk "^2.474.0"
+    axios "^0.19.2"
     chalk "2.4.1"
     command-line-args "5.0.2"
     fs "0.0.1-security"
@@ -350,10 +346,17 @@
     ncp "^2.0.0"
     path "0.12.7"
     po2json "^1.0.0-alpha"
+    request "^2.88.0"
     rimraf "2.6.2"
+    rxjs "^6.5.5"
     shelljs "0.8.2"
     util.promisify "1.0.0"
     uuid "^3.3.2"
+
+"@enplug/sdk-dashboard@^5.1.0":
+  version "5.1.15"
+  resolved "https://registry.yarnpkg.com/@enplug/sdk-dashboard/-/sdk-dashboard-5.1.15.tgz#b260fb7ddcdbd039b94658edfbf518b1c94e3d4c"
+  integrity sha512-0zhwC4oUnRmvwAZ/7KK61JqjWQdoCZPfArrxH4NfG3baCpnxelugehfURxVzsiXXZbhox2O3EtDOjchjhzRvCw==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -373,13 +376,6 @@
     rxjs "6.4.0"
     tree-kill "1.2.1"
     webpack-sources "1.3.0"
-
-"@ngx-translate/core@^11.0.1":
-  version "11.0.1"
-  resolved "https://registry.npmjs.org/@ngx-translate/core/-/core-11.0.1.tgz#cecefad41f06368f5859dac48fec8fcc4485615f"
-  integrity sha512-nBCa1ZD9fAUY/3eskP3Lql2fNg8OMrYIej1/5GRsfcutx9tG/5fZLCv9m6UCw1aS+u4uK/vXjv1ctG/FdMvaWg==
-  dependencies:
-    tslib "^1.9.0"
 
 "@nodelib/fs.stat@^1.1.2":
   version "1.1.3"
@@ -1069,6 +1065,13 @@ aws4@^1.8.0:
   version "1.8.0"
   resolved "https://registry.npmjs.org/aws4/-/aws4-1.8.0.tgz#f0e003d9ca9e7f59c7a508945d7b2ef9a04a542f"
   integrity sha512-ReZxvNHIOv88FlT7rxcXIIC0fPt4KZqZbOlivyWtXLt8ESx84zd3kMC6iK5jVeS2qt+g7ftS7ye4fi06X5rtRQ==
+
+axios@^0.19.2:
+  version "0.19.2"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.19.2.tgz#3ea36c5d8818d0d5f8a8a97a6d36b86cdc00cb27"
+  integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
+  dependencies:
+    follow-redirects "1.5.10"
 
 axobject-query@^2.0.2:
   version "2.0.2"
@@ -2181,7 +2184,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0, debug@~3.1.0:
+debug@3.1.0, debug@=3.1.0, debug@~3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   integrity sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
@@ -3036,6 +3039,13 @@ flush-write-stream@^1.0.0:
   dependencies:
     inherits "^2.0.3"
     readable-stream "^2.3.6"
+
+follow-redirects@1.5.10:
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.5.10.tgz#7b7a9f9aea2fdff36786a94ff643ed07f4ff5e2a"
+  integrity sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
+  dependencies:
+    debug "=3.1.0"
 
 follow-redirects@^1.0.0:
   version "1.7.0"
@@ -6612,6 +6622,13 @@ rxjs@^6.4.0, rxjs@^6.5.2:
   version "6.5.2"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-6.5.2.tgz#2e35ce815cd46d84d02a209fb4e5921e051dbec7"
   integrity sha512-HUb7j3kvb7p7eCUHE3FqjoDsC1xfZQ4AHFWfTKSpZ+sAhhz5X1WX0ZuUqWbzB2QhSLp3DoLUG+hMdEDKqWo2Zg==
+  dependencies:
+    tslib "^1.9.0"
+
+rxjs@^6.5.5:
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.0.tgz#af2901eedf02e3a83ffa7f886240ff9018bbec84"
+  integrity sha512-3HMA8z/Oz61DUHe+SdOiQyzIf4tOx5oQHmMir7IZEu6TMqCLHT4LRcmNaUS0NwOz8VLvmmBduMsoaUvMaIiqzg==
   dependencies:
     tslib "^1.9.0"
 
