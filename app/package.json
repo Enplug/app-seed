@@ -1,6 +1,6 @@
 {
   "name": "player-app-seed",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -13,7 +13,7 @@
     "start": "ng serve --configuration=development --port=50001",
     "start:staging": "ng serve --configuration=staging --port=50001",
     "start:prod": "ng serve --configuration=production --port=50001",
-    "start:ssl": "enplug-serve --port=50001",
+    "start:ssl": "enplug-serve --port=50001 --host=localhost.enplug.com",
     "test": "ng test",
     "lint": "ng lint && npm run lint:stylelint",
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
@@ -60,7 +60,7 @@
     "@angular/cli": "8.3.25",
     "@angular/compiler-cli": "8.2.14",
     "@angular/language-service": "8.2.14",
-    "@enplug/scripts": "^1.9.15",
+    "@enplug/scripts": "1.11.3",
     "@types/jasmine": "~3.3.13",
     "@types/jasminewd2": "~2.0.6",
     "@types/node": "^12.6.2",
