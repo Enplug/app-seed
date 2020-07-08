@@ -1,18 +1,15 @@
 {
   "name": "dashboard-seed",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "license": "MIT",
-  "engines": {
-    "node": ">=10.0.0 <12.0"
-  },
   "scripts": {
     "ng": "ng",
     "build": "enplug-build --configuration=development --nooffline",
     "build:staging": "enplug-build --configuration=staging --nooffline",
     "build:prod": "enplug-build --configuration=production --nooffline",
-    "release": "enplug-release --configuration=development --nooffline",
-    "release:staging": "enplug-release --configuration=staging --nooffline",
-    "release:prod": "enplug-release --configuration=production --nooffline",
+    "release": "enplug-release --configuration=development --nooffline --notranslations",
+    "release:staging": "enplug-release --configuration=staging --nooffline --notranslations",
+    "release:prod": "enplug-release --configuration=production --nooffline --notranslations",
     "start": "ng serve --configuration=development --port=50000",
     "start:staging": "ng serve --configuration=staging --port=50000",
     "start:prod": "ng serve --configuration=production --port=50000",
@@ -55,7 +52,6 @@
     "@angular/platform-server": "^8.1.0",
     "@angular/router": "^8.1.0",
     "@enplug/sdk-dashboard": "^5.1.0",
-    "@ngx-translate/core": "^11.0.1",
     "rxjs": "^6.5.2",
     "zone.js": "^0.9.1"
   },

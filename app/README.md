@@ -16,7 +16,6 @@ This project aims at providing basic info and codebase to get started with writi
 - `app.component.*` files contain basic component code. It triggers `start()` command of the Player
 - `app.module.ts` is the main module entry
 - `enplug.service.ts` consists of simple service that proxies Enplug Player methods. It's recommended to separate Player calls and component code that way.
-- `translation.initializer.ts` consists of code used to bootstrap translation engine for the App
 
 As with any other standard `Angular` app, `environments` directory may be used to provide environment-specific variables to the code.
 
