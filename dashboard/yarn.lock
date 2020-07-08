@@ -331,10 +331,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@enplug/scripts@^1.9.17":
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/@enplug/scripts/-/scripts-1.11.2.tgz#c819fb6aaf3c7b1ecfdfe4eb942df502c7550b6a"
-  integrity sha512-chGQmJ7BXZIr4MSFKRIoPa4aWUfvDeiXhXVOOu2DlgwcAiraHdMBaa+3P5AQM/bH/Bd6+yK677/kzLCgbxGDvQ==
+"@enplug/scripts@1.11.3":
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/@enplug/scripts/-/scripts-1.11.3.tgz#ebc0d8b086c9fee6bdbc2b75d5f45fc0ece975b0"
+  integrity sha512-SYf934CJEt6sOn79X24HvZXqYW3/L5hGdqvuzV5Yjt/6Uo4S6K3obUFcHJxqKeqSawk5izEoXaGVGzqIYIFJxg==
   dependencies:
     aws-sdk "^2.474.0"
     axios "^0.19.2"
