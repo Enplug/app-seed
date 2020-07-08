@@ -24,7 +24,7 @@ If you need to share some resources between `app` and `dashboard`, it's recommen
 
 If App needs to be run in an SSL mode, one needs to create proper certificates for using it with Enplug Dashboard.
 
-Instructions below provide basic steps to create one and use locally with `enplug.com` domain (staging).
+Instructions below provide basic steps to create one and use locally with `enplug.com` domain.
 
 ### Creating the certificate
 
