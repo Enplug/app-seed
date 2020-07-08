@@ -24,7 +24,7 @@ If you need to share some resources between `app` and `dashboard`, it's recommen
 
 If App needs to be run in an SSL mode, one needs to create proper certificates for using it with Enplug Dashboard.
 
-Instructions below provide basic steps to create one and use locally with `enplug.in` domain (staging).
+Instructions below provide basic steps to create one and use locally with `enplug.com` domain (staging).
 
 ### Creating the certificate
 
@@ -48,7 +48,7 @@ C = US
 ST = LA
 L = LA
 O  = Enplug
-CN = *.enplug.in
+CN = *.enplug.com
 
 [v3_req]
 keyUsage = critical, digitalSignature, keyAgreement, keyEncipherment, dataEncipherment
@@ -56,8 +56,8 @@ extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 
 [alt_names]
-DNS.1 = *.enplug.in
-DNS.2 = *.enplug.in
+DNS.1 = *.enplug.com
+DNS.2 = *.enplug.com
 ```
 
 Go to your `openssl.conf` file directory and run these commands:
@@ -90,8 +90,17 @@ In the project root directory (separately for each `App Seed` and `Dashboard See
 }
 ```
 
+### Adding localhost.enplug.com to hosts
+
+Edit the `C:\Windows\System32\drivers\etc\hosts` file (Windows), `/private/etc/hosts` (macOS) and add the following line:
+```
+127.0.0.1	localhost.enplug.com
+```
+
 ### Running the seed with SSL
 
-After following steps above (remember to put `*.private.json` files in respective folders!) just run `npm run start:ssl`. 
+After following steps above (remember to put `*.private.json` files in respective folders!) just run `npm run start:ssl`.
 
 This will use `@enplug/scripts` script called `enplug-serve` that will interpret entries in `*.private.json` file and use them for securely serving the content.
+
+The app will run on `https://localhost.enplug.com:50000/` (dashboard) or `https://localhost.enplug.com:50001/` (app).
