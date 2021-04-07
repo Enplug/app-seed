@@ -22,7 +22,7 @@ import { EnplugService } from './enplug.service';
       // TODO: fill the APP_ID
       translationPath: 'apps/APP_ID/app',
       pathOverride: environment.local ? '/assets/i18n' : undefined,
-      // environment: getEnvironmentByHostName(location?.hostname)
+      environment: getEnvironmentByHostName(location?.hostname)
     }),
     providePlayerLanguagePreload()
   ],
