@@ -32,7 +32,6 @@ import { AssetsResolver } from './resolvers/assets.resolver';
       // TODO: fill the APP_ID
       translationPath: 'apps/APP_ID/dashboard',
       pathOverride: environment.local ? '/assets/i18n' : undefined,
-      environment: getEnvironmentByHostName(location?.hostname)
     }),
     provideDashboardLanguagePreload()
   ],
