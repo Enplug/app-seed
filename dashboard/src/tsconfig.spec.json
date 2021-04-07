@@ -5,8 +5,7 @@
     "target": "es5",
     "types": [
       "jasmine",
-      "node",
-      "@enplug/sdk-dashboard"
+      "node"
     ]
   },
   "files": [

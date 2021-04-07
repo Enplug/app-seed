@@ -1500,10 +1500,10 @@
     safe-pipe "^1.0.3"
     tslib "^2.0.0"
 
-"@enplug/scripts@1.11.1":
-  version "1.11.1"
-  resolved "https://registry.yarnpkg.com/@enplug/scripts/-/scripts-1.11.1.tgz#3839040489970c69be8856ab5495ded20e3347ff"
-  integrity sha512-TRW1U+rxQefSGTz31xYj9CUTwAcfwrn7IwciR0SNmjPJFqMploe83uSYl7eiyDSS2yk5OIExvk40q4xhiCn57w==
+"@enplug/scripts@^1.11.3":
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/@enplug/scripts/-/scripts-1.11.3.tgz#ebc0d8b086c9fee6bdbc2b75d5f45fc0ece975b0"
+  integrity sha512-SYf934CJEt6sOn79X24HvZXqYW3/L5hGdqvuzV5Yjt/6Uo4S6K3obUFcHJxqKeqSawk5izEoXaGVGzqIYIFJxg==
   dependencies:
     aws-sdk "^2.474.0"
     axios "^0.19.2"

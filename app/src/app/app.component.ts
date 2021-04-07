@@ -8,12 +8,11 @@ import { EnplugService } from './enplug.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(
-    private enplug: EnplugService
-  ) { }
+  asset: any;
+
+  constructor(private enplug: EnplugService) {}
 
   ngOnInit() {
-
     this.enplug.appStatus.registerServiceWorker('App Seed').then(() => {
       this.initApp();
     }).catch((err: string) => {
@@ -22,8 +21,10 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private initApp() {
+  private async initApp() {
+    this.asset = await this.enplug.assets.getNext();
     this.enplug.appStatus.start();
+
     this.enplug.on('destroy', (done) => {
       done();
     });

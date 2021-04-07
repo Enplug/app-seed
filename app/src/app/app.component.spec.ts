@@ -26,6 +26,8 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     enplugService = TestBed.inject(EnplugService);
+    
+    spyOn(enplugService.assets, 'getNext').and.returnValue(Promise.resolve({}));
   });
 
   it('creates the app', waitForAsync(() => {
@@ -33,16 +35,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it('calls Player\'s start function', fakeAsync(() => {
-    const enplugServiceStartSpy = spyOn(enplugService.appStatus, 'start');
+  it(`calls Player's start function`, fakeAsync(() => {
+    const enplugServiceStartSpy = spyOn(enplugService.appStatus, 'start').and.stub();
     fixture.componentInstance.ngOnInit();
 
     tick();
 
-    expect(enplugServiceStartSpy.calls.count()).toBe(1);
+    expect(enplugServiceStartSpy).toHaveBeenCalled();
   }));
 
-  it('sets up Player\'s destroy listener on init', fakeAsync(() => {
+  it(`sets up Player's destroy listener on init`, fakeAsync(() => {
     const destroyDoneSpy = jasmine.createSpy('destroyDone');
 
     const enplugServiceOnSpy = spyOn(enplugService, 'on').and.callFake(

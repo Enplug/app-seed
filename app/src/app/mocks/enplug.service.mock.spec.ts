@@ -7,6 +7,9 @@ const enplugServiceMock = {
     error: () => { },
     registerServiceWorker: async () => {}
   },
+  assets: {
+    getNext: () => { }
+  },
   on: () => { }
 };
 

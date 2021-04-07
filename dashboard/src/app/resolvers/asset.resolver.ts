@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Asset } from '@enplug/sdk-dashboard';
+import { Asset } from '@enplug/sdk-dashboard/types';
 import { EnplugService } from '../services/enplug.service';
 
 @Injectable()
