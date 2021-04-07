@@ -1,4 +1,4 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
 
 import { AppComponent } from './app.component';
 import { EnplugService } from './enplug.service';
@@ -28,7 +28,7 @@ describe('AppComponent', () => {
     enplugService = TestBed.inject(EnplugService);
   });
 
-  it('creates the app', async(() => {
+  it('creates the app', waitForAsync(() => {
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));
