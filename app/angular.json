@@ -30,13 +30,18 @@
           },
           "configurations": {
             "local": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [{
                 "replace": "src/environments/environment.ts",
                 "with": "src/environments/environment.local.ts"
               }]
             },
             "development": {
-              "aot": true,
               "budgets": [
                 {
                   "type": "anyComponentStyle",
@@ -58,7 +63,6 @@
                   "with": "src/environments/environment.staging.ts"
                 }
               ],
-              "aot": true,
               "sourceMap": true
             },
             "production": {
@@ -79,13 +83,11 @@
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
-              "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
             },
             "test": {
-              "aot": true,
               "budgets": [
                 {
                   "type": "anyComponentStyle",
