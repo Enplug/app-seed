@@ -1,6 +1,6 @@
 import { Component, NgZone, OnInit, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Asset, DeployDialogOptions } from '@enplug/sdk-dashboard/types';
+import { Asset, Button, DeployDialogOptions } from '@enplug/sdk-dashboard/types';
 import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EnplugService } from 'app/services/enplug.service';
@@ -65,19 +65,25 @@ export class AssetComponent implements OnInit {
    */
   setHeader(isSaveActive = true) {
     this.enplug.dashboard.setHeaderTitle(this.transloco.translate('asset.header.setup'));
-    this.enplug.dashboard.setHeaderButtons([
-      {
-        text: this.transloco.translate('asset.header.cancelButton'),
+
+    const buttons: Button[] = [];
+
+    if (this.route.snapshot.data.hasAssets === true) {
+      buttons.push({
+        text: this.transloco.translate('asset.header.myAssetsButton'),
         action: () => this.zone.run(() => this.router.navigateByUrl('/assets')),
         class: 'btn-default'
-      },
-      {
-        text: this.transloco.translate('asset.header.saveButton'),
-        action: () => this.zone.run(() => this.saveAsset()),
-        class: 'btn-primary',
-        disabled: !isSaveActive
-      }
-    ]);
+      });
+    }
+
+    buttons.push({
+      text: this.transloco.translate('asset.header.saveButton'),
+      action: () => this.zone.run(() => this.saveAsset()),
+      class: 'btn-primary',
+      disabled: !isSaveActive
+    });
+
+    this.enplug.dashboard.setHeaderButtons(buttons);
   }
 
   /**
@@ -94,8 +100,12 @@ export class AssetComponent implements OnInit {
 
     try {
       const savedAsset = await this.enplug.account.saveAsset(this.asset.value, deployOptions);
-      this.asset.next(savedAsset);
-      this.originalAsset.next(savedAsset);
+      if (!this.asset.value.Id) { // missing Id means initial save
+        this.router.navigateByUrl('/assets');
+      } else {
+        this.asset.next(savedAsset);
+        this.originalAsset.next(savedAsset);
+      }
     } catch {}
   }
 

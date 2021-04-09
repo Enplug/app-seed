@@ -5,6 +5,7 @@ import { AssetListComponent } from './asset-list/asset-list.component';
 import { AssetComponent } from './asset/asset.component';
 import { AssetResolver } from './resolvers/asset.resolver';
 import { AssetsResolver } from './resolvers/assets.resolver';
+import { HasAssetsResolver } from './resolvers/has-assets.resolver';
 
 export const appRoutes: Routes = [
   {
@@ -22,12 +23,16 @@ export const appRoutes: Routes = [
   {
     path: 'assets/add',
     component: AssetComponent,
+    resolve: {
+      hasAssets: HasAssetsResolver
+    }
   },
   {
     path: 'assets/:id',
     component: AssetComponent,
     resolve: {
-      asset: AssetResolver
+      asset: AssetResolver,
+      hasAssets: HasAssetsResolver
     }
   }
 ];

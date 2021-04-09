@@ -28,7 +28,7 @@
   "assetList.saveReorder.success": "Order saved",
   "assetList.saveReorder.fail": "Could not save reordered assets",
   "asset.header.setup": "Setup",
-  "asset.header.cancelButton": "Cancel",
+  "asset.header.myAssetsButton": "My Assets",
   "asset.header.saveButton": "Save",
   "asset.initialAssetName": "New Asset"
 }

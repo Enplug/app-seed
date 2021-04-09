@@ -16,6 +16,7 @@ import enTranslation from '../assets/i18n/en.json';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
+import { HasAssetsResolver } from './resolvers/has-assets.resolver';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { FormsModule } from '@angular/forms';
   providers: [
     AssetResolver,
     AssetsResolver,
+    HasAssetsResolver,
     provideTranslationConfig({
       translationPath: 'apps/APP_ID/dashboard', // TODO: fill the APP_ID
       pathOverride: environment.local ? '/assets/i18n' : undefined,
