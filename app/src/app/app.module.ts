@@ -7,6 +7,8 @@ import { environment } from 'environments/environment';
 import { AppComponent } from './app.component';
 import { EnplugService } from './enplug.service';
 
+import enTranslation from '../assets/i18n/en.json';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -18,10 +20,11 @@ import { EnplugService } from './enplug.service';
   ],
   providers: [
     EnplugService,
+    // TODO: remove if translations not needed in this project
     provideTranslationConfig({
-      // TODO: fill the APP_ID
-      translationPath: 'apps/APP_ID/app',
+      translationPath: 'apps/APP_ID/app', // TODO: fill the APP_ID
       pathOverride: environment.local ? '/assets/i18n' : undefined,
+      defaultTranslation: enTranslation,
       environment: getEnvironmentByHostName(location?.hostname)
     }),
     providePlayerLanguagePreload()

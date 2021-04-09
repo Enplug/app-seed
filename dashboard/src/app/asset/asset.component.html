@@ -1,3 +1,31 @@
-<div class="ep-asset">
-  <div>Asset</div>
-</div>
+<section class="container" *transloco="let t; read: 'asset.nameSection'">
+  <div class="col-sm-3 section-summary">
+    <h3>{{ t('summary.header') }}</h3>
+    <p>{{ t('summary.description') }}</p>
+  </div>
+  <div class="col-sm-9">
+    <div class="card">
+      <div class="card-content">
+        <mat-form-field>
+          <input matInput type="text" [placeholder]="t('nameInputPlaceholder')" [ngModel]="(asset | async)?.Value?.name" (ngModelChange)="setAssetName($event)">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container" *transloco="let t; read: 'asset.someSettingSection'">
+  <div class="col-sm-3 section-summary">
+    <h3>{{ t('summary.header') }}</h3>
+    <p>{{ t('summary.description') }}</p>
+  </div>
+  <div class="col-sm-9">
+    <div class="card">
+      <div class="card-content">
+        <mat-form-field>
+          <input matInput type="text" [placeholder]="t('someSettingInputPlaceholder')" [ngModel]="(asset | async)?.Value?.someSetting" (ngModelChange)="setSomeSetting($event)">
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</section>

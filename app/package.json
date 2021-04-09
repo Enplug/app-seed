@@ -25,9 +25,10 @@
     "i18n:find": "transloco-keys-manager find"
   },
   "config": {
-    "destination": "enplug/appseed/app/",
+    "destination": "/enplug/appseed/app/",
     "aws": {
       "buckets": [
+        "dev-apps.enplug.in",
         "apps.enplug.in",
         "apps.enplug.com"
       ],
@@ -41,6 +42,10 @@
           "ACL": "public-read"
         }
       }
+    },
+    "crowdin": {
+      "crowdinPath": "TODO: UPDATE APP_ID: /apps/APP_ID/app/en.json",
+      "localPath": "src/assets/i18n/en.json"
     }
   },
   "private": true,

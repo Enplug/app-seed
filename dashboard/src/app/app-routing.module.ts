@@ -27,7 +27,7 @@ export const appRoutes: Routes = [
     path: 'assets/:id',
     component: AssetComponent,
     resolve: {
-      assets: AssetResolver
+      asset: AssetResolver
     }
   }
 ];
