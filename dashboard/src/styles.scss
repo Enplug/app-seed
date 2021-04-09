@@ -1,4 +1,12 @@
+@import '@enplug/components/styles/bootstrap/bootstrap.scss';
+@import '@enplug/components/styles/elements/buttons.scss';
+@import '@enplug/components/styles/page/card.scss';
+@import '@enplug/components/styles/page/layout.scss';
+@import '@enplug/components/styles/typography.scss';
+
+@import '~styles/material-theme';
+
 * {
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'proximanova', sans-serif;
 }

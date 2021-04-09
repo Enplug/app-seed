@@ -1,12 +1,8 @@
-import { Component, OnInit, } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ep-app',
+  selector: 'ep-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  ngOnInit() {
-    enplug.dashboard.pageLoading(false);
-  }
-}
+export class AppComponent {}

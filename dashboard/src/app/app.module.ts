@@ -12,6 +12,12 @@ import { AssetComponent } from './asset/asset.component';
 import { AssetResolver } from './resolvers/asset.resolver';
 import { AssetsResolver } from './resolvers/assets.resolver';
 
+import enTranslation from '../assets/i18n/en.json';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule } from '@angular/forms';
+import { HasAssetsResolver } from './resolvers/has-assets.resolver';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,18 +26,22 @@ import { AssetsResolver } from './resolvers/assets.resolver';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
+    FormsModule,
     AppRoutingModule,
     HttpClientModule,
     AssetItemListModule,
+    MatInputModule,
     TranslocoRootModule
   ],
   providers: [
     AssetResolver,
     AssetsResolver,
+    HasAssetsResolver,
     provideTranslationConfig({
-      // TODO: fill the APP_ID
-      translationPath: 'apps/APP_ID/dashboard',
+      translationPath: 'apps/APP_ID/dashboard', // TODO: fill the APP_ID
       pathOverride: environment.local ? '/assets/i18n' : undefined,
+      defaultTranslation: enTranslation,
       environment: getEnvironmentByHostName(location?.hostname)
     }),
     provideDashboardLanguagePreload()

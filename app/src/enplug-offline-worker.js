@@ -46,7 +46,7 @@
  *     after what amount of time (in minutes), given response should be re-fetched and its response re-cached.
  *     Time set to 0 means that a given response should never be cached.
  */
-var config = {"staticResources":[".","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.js","polyfills-es5.js","polyfills.js","styles.js","vendor.js","main.js"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app-seed","cacheVersion":"player-app-seed-2-0-0","noCacheUrls":[]};
+var config = {"staticResources":[".","./enplug-offline-worker.js","./index.html","https://apps.enplug.com/sdk/v1/player.js","runtime.js","polyfills-es5.js","polyfills.js","vendor.js","main.js","styles.css"],"noCorsUrls":["google-analytics.com"],"refreshUrls":{},"appName":"player-app-seed","cacheVersion":"player-app-seed-2-0-0","noCacheUrls":[]};
 
 const TAG = '[player-app-seed|offline]';
 const LAST_USED_TIME_CACHE = 'last-used-time-cache';

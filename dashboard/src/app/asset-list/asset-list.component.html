@@ -1,7 +1,19 @@
-<div class="ep-asset-list">
+<div class="container container--responsive">
   <div class="card">
-    <div>Asset List</div>
-    <ep-asset-item-list [assets]="assets">
+    <ep-asset-item-list [assets]="assets | async"
+                        [showAddTag]="true"
+                        [columnsToDisplay]="['drag', 'select', 'order', 'editable-name', 'tags', 'preview', 'displays', 'delete']"
+                        [isLimitedUser]="isLimitedUser$ | async"
+                        [selectedDisplayId]="selectedVenueId$ | async"
+                        (edit)="onEditAsset($event)"
+                        (nameEdit)="onAssetNameEdit($event)"
+                        (tagClick)="onTagClick($event)"
+                        (preview)="onPreviewAsset($event)"
+                        (deploy)="onDeployAsset($event)"
+                        (remove)="onRemoveAsset($event)"
+                        (saveReorder)="onSaveReorder($event)"
+                        (removeSelectedAssets)="onRemoveSelectedAssets($event)"
+                        (hasUnsavedChanges)="onHasUnsavedAssetListChanges($event)">
     </ep-asset-item-list>
   </div>
 </div>
