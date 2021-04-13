@@ -84,6 +84,7 @@ export class AssetComponent implements OnInit {
     });
 
     this.enplug.dashboard.setHeaderButtons(buttons);
+    this.enplug.dashboard.setDisplaySelectorVisibility(false);
   }
 
   /**

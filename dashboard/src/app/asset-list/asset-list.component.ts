@@ -17,14 +17,10 @@ import { AssetValue } from '../../../../shared/asset-value';
   styleUrls: ['./asset-list.component.scss']
 })
 export class AssetListComponent implements OnInit {
-  assets = new BehaviorSubject<Asset<AssetValue>[]>(undefined);
-
-  hasUnsavedAssetListChanges$: Observable<boolean>;
+  assets$ = new BehaviorSubject<Asset<AssetValue>[]>(undefined);
   isLimitedUser$: Observable<boolean>;
-  selectedVenueId$: Observable<string>;
-
-  private selectedVenueId = new BehaviorSubject<string>(undefined);
-  private hasUnsavedAssetListChanges = new BehaviorSubject<boolean>(false);
+  selectedDisplayId$ = new BehaviorSubject<string>(undefined);
+  hasUnsavedAssetListChanges$ = new BehaviorSubject<boolean>(false);
 
   constructor(private zone: NgZone,
               private router: Router,
@@ -34,16 +30,13 @@ export class AssetListComponent implements OnInit {
 
   ngOnInit() {
     // Navigate to adding new asset if no assets in the list
-    this.assets.pipe(
+    this.assets$.pipe(
       untilDestroyed(this),
       filter(assets => assets !== undefined && assets.length === 0) // Assets list loaded and no items in the list
     ).subscribe(() => this.addNewAsset());
 
-    this.assets.next(this.route.snapshot.data.assets || undefined);
-    
-    this.hasUnsavedAssetListChanges$ = this.hasUnsavedAssetListChanges.asObservable();
+    this.assets$.next(this.route.snapshot.data.assets || undefined);
     this.isLimitedUser$ = from(this.enplug.account.getUser()).pipe(map(user => user.has.limitedAccess));
-    this.selectedVenueId$ = this.selectedVenueId.asObservable();
 
     // Keep informing the dashboard about the state of unsaved changes made to the asset list
     this.hasUnsavedAssetListChanges$.pipe(
@@ -68,13 +61,39 @@ export class AssetListComponent implements OnInit {
     this.openDeployDialog(asset, 'displays');
   }
 
+  async onDuplicateAsset(asset: Asset<AssetValue>) {
+    const data = {
+      ...asset,
+      Id: null,
+      Value: {
+        ...asset.Value,
+        name: this.transloco.translate('assetList.duplicateAsset.defaultCopyName', { assetName: asset.Value.name }),
+      }
+    };
+
+    const deployOptions: DeployDialogOptions = {
+      showSchedule: true,
+      scheduleOptions: {
+        showDuration: true,
+        showPriorityPlay: true,
+      }
+    };
+
+    const newAsset = { ...asset, ...data };
+
+    try {
+      await this.enplug.account.saveAsset(newAsset, deployOptions);
+      this.reloadAssets();
+    } catch {}
+  }
+
   async onEditAsset(asset: Asset<AssetValue>) {
     await this.enplug.dashboard.pageLoading(true);
     this.router.navigate([`/assets/${asset.Id}`]);
   }
 
   onHasUnsavedAssetListChanges(hasUnsavedChanges: boolean) {
-    this.hasUnsavedAssetListChanges.next(hasUnsavedChanges);
+    this.hasUnsavedAssetListChanges$.next(hasUnsavedChanges);
   }
 
   onPreviewAsset(asset: Asset<AssetValue>) {
@@ -165,6 +184,14 @@ export class AssetListComponent implements OnInit {
         class: 'btn-primary'
       },
     ]);
+
+    this.enplug.dashboard.setDisplaySelectorCallback(displayId => {
+      this.zone.run(() => {
+        this.hasUnsavedAssetListChanges$.next(false);
+        this.selectedDisplayId$.next(displayId);
+        this.reloadAssets();
+      });
+    });
   }
 
   private addNewAsset() {
@@ -204,7 +231,7 @@ export class AssetListComponent implements OnInit {
   }
 
   private replaceAsset(asset: Asset<AssetValue>, newAsset: Asset<AssetValue>) {
-    this.assets.next(produce(this.assets.value, draft => {
+    this.assets$.next(produce(this.assets$.value, draft => {
       const assetIndex = draft.findIndex(({Id}) => Id === asset.Id);
       if (assetIndex >= 0) {
         draft[assetIndex] = newAsset; 
@@ -215,7 +242,7 @@ export class AssetListComponent implements OnInit {
   private async reloadAssets() {
     try {
       const assets = await this.enplug.account.getAssets<AssetValue>();
-      this.assets.next(assets);
+      this.assets$.next(assets);
     } catch {}
   }
 }

@@ -5,6 +5,7 @@
   "asset.someSettingSection.summary.header": "Some setting",
   "asset.someSettingSection.summary.description": "Use this section to configure some setting",
   "asset.someSettingSection.someSettingInputPlaceholder": "Some setting",
+  "assetList.duplicateAsset.defaultCopyName": "{{assetName}} copy",
   "assetList.remove.confirm.title": "Delete asset?",
   "assetList.remove.confirm.text": "Are you sure you want to delete {{assetName}} from your assets? This action cannot be undone.",
   "assetList.remove.confirm.cancel": "Cancel",
