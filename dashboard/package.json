@@ -1,6 +1,6 @@
 {
   "name": "dashboard-seed",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -19,26 +19,6 @@
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
     "lint:stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
-  },
-  "config": {
-    "destination": "/enplug/appseed/dashboard/",
-    "aws": {
-      "buckets": [
-        "dev-apps.enplug.in",
-        "apps.enplug.in",
-        "apps.enplug.com"
-      ],
-      "s3": {
-        "cache": false,
-        "overwrite": true,
-        "region": "us-west-2",
-        "sslEnabled": true,
-        "apiVersion": "2016-05-01",
-        "params": {
-          "ACL": "public-read"
-        }
-      }
-    }
   },
   "private": true,
   "dependencies": {
