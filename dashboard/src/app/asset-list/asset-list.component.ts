@@ -1,8 +1,6 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-const enplug = window.enplug;
-
 @Component({
   selector: 'ep-asset-list',
   templateUrl: './asset-list.component.html',

@@ -16,8 +16,7 @@
     ],
     "types": [
       "jasmine",
-      "node",
-      "@enplug/sdk-dashboard"
+      "node"
     ],
     "lib": [
       "es2016",
