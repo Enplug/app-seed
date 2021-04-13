@@ -1,4 +1,12 @@
-* {
+@import '~styles/bootstrap';
+@import '~styles/brand';
+@import '~styles/card';
+@import '~styles/fonts';
+@import '~styles/input';
+@import '~styles/layout';
+@import '~styles/typography';
+
+html, body {
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: 'proximanova', sans-serif;
 }

@@ -22,6 +22,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/ionicons/dist/css/ionicons.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -128,6 +129,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "node_modules/ionicons/dist/css/ionicons.min.css",
               "src/styles.scss"
             ],
             "assets": [

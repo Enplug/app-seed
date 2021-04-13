@@ -32,6 +32,7 @@
     "@angular/platform-server": "^11.2.9",
     "@angular/router": "^11.2.9",
     "@enplug/sdk-dashboard": "^5.3.9",
+    "ionicons": "3",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

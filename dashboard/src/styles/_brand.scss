@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Brand variables
+   ========================================================================== */
+
+$border-radius:         2px;
+$transition-speed:      0.15s; // global transition speed for consistent animations
+$transition-timing:     ease-out;
+$box-shadow:            0 0 0 1px rgba(39,44,48,0.05), 0 2px 7px 1px rgba(39,44,48,0.16);
+
+/* Colors
+========================================================================== */
+$brand-primary:         #4078C0 ; // we need a rich blue
+$brand-secondary:       #798c9c ;
+$brand-primary-dark:    darken($brand-primary, 5);
+$brand-success:         #6CC644 ;
+$brand-info:            #23b7e5 ;
+$brand-warning:         #ff902b ;
+$brand-danger:          #ff5d5d ;
+$brand-inverse:         #1D242C ;
+$brand-selected:        #FFFBE9 ;
+
+$gray:                  #798c9c;
+$gray-dark:             #31373D;
+$gray-darker:           darken($gray, 35);
+$gray-light:            lighten($gray, 10);
+$gray-light-medium:     lighten($gray, 25);
+$gray-lighter:          lighten($gray, 40);
+$border-color:          #ebeef0;
+$border-color-dark:     darken($border-color, 5);
+$gray-bg:               lighten($gray-lighter, 3);
+
+$brand-secondary-dark:  $gray-dark;
+$brand-secondary-darker: $gray-darker;
+$brand-secondary-light:  $gray-light;
+$brand-secondary-lighter: $gray-lighter;
+$brand-secondary-light-medium: $gray-light-medium;
+/* Text
+========================================================================== */
+$text-size:             13px;
+$text-color:            $gray-darker;
+$alt-text-color:        $gray-light;
+$text-sm:               11px;
+$text-md:               16px;
+$text-lg:               24px;
+$line-height:           1.42857143; // bootstrap
+
+/* Card Colors
+========================================================================== */
+$card-primary:          #fff;

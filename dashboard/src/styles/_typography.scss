@@ -1,0 +1,151 @@
+@import 'brand';
+
+/* ==========================================================================
+   Typography
+   ========================================================================== */
+
+/* Body text
+========================================================================== */
+body {
+  font-family: 'proximanova', Helvetica, Arial, sans-serif;
+  color: $text-color;
+  font-size: $text-size;
+  text-rendering: optimizeLegibility;
+}
+
+p { margin: 0; }
+
+label { margin: 0; }
+
+/* Headers
+========================================================================== */
+h1 {
+  font-size: 32px;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+h1,
+h2 {
+  font-family: 'proximanova', 'Helvetica Neue', Helvetica, sans-serif;
+  font-weight: 300;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+/* Links
+========================================================================== */
+a {
+  font-weight: 500; // semibold links to add weight
+  outline: none;
+  transition: all $transition-speed $transition-timing;
+  color: $brand-primary;
+
+  // External links
+  &:not(.btn) {
+    &[target="_blank"]:after {
+      opacity: 0.5;
+      content: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAMAAAC67D+PAAAAY1BMVEV5jJz///95jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx5jJx1iJd1iJh2iJh2iZl3iZl4i5p4i5t5jJxsFGGdAAAAGXRSTlMAAAIDBAUHCAoPEhUWIyw2OGZoaW5xc3R75NUa1QAAAE1JREFUeAEtxkUShFAAQ8GXP+4+OMn9T0kV0KtG0lHqRpskrfT4eSAg3V95BwP7b+rb0k/+zy0YKdW5AEEHToXMBdjlsvaKN/RubMdhAjG6BXX5hbgrAAAAAElFTkSuQmCC);
+      margin: 0 3px 0 5px;
+    }
+  }
+
+  &.no-external:after {
+    display: none;
+  }
+
+  &:hover, &:active, &:focus {
+    outline: 0;
+    color: $brand-primary;
+  }
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  &:active, &:focus {
+    text-decoration: none;
+  }
+
+  // Reset
+  &.link-reset {
+    font-size: $text-size !important;
+    color: $brand-primary;
+  }
+}
+
+// Pointer cursor for all AngularJS clickable elements
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+  cursor: pointer;
+}
+
+/* Text transformations
+========================================================================== */
+.text-sm            { font-size: $text-sm; }
+.text-base          { font-size: $text-size; }
+.text-md            { font-size: $text-md; }
+.text-lg            { font-size: $text-lg; }
+
+.text-thin          { font-weight: 100 !important; }
+.text-normal        { font-weight: normal !important; }
+.text-semibold      { font-weight: 500 !important; }
+.text-bold          { font-weight: bold !important; }
+
+.uppercase          { text-transform: uppercase }
+.lowercase          { text-transform: lowercase }
+.underline          { text-decoration: underline }
+.italic             { font-style: italic }
+
+.text-nowrap        { white-space: nowrap; }
+.tr                 { text-align: right!important; }
+.tl                 { text-align: left!important; }
+.tc                 { text-align: center!important; }
+
+.text-white         { color: #fff !important; }
+.text-success       { color: $brand-success !important; }
+.text-primary       { color: $brand-primary; }
+.text-danger        { color: $brand-danger !important; }
+
+.text-gray-darker   { color: $gray-darker; }
+.text-gray-dark     { color: $gray-dark; }
+.text-gray          { color: $gray; }
+.text-gray-light    { color: $gray-light; }
+.text-gray-lighter  { color: $gray-lighter; }
+
+// Shorthand
+.text-gdr           { color: $gray-darker; }
+.text-gd            { color: $gray-dark; }
+.text-g             { color: $gray; }
+.text-gl            { color: $gray-light; }
+.text-glr           { color: $gray-lighter; }
+.text-p             { color: $brand-primary; }
+
+.hover-gdr:hover    { color: $gray-darker; }
+.hover-gd:hover     { color: $gray-dark; }
+.hover-g:hover      { color: $gray; }
+.hover-gl:hover     { color: $gray-light; }
+.hover-glr:hover    { color: $gray-lighter; }
+.hover-p:hover      { color: $brand-primary; }
+
+.text-reset         { font-size: $text-size !important; color: $gray-darker !important; }

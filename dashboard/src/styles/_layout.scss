@@ -1,0 +1,63 @@
+/* ==========================================================================
+   HTML doc layout - inherits from Bootstrap
+   ========================================================================== */
+
+html,
+body {
+  box-sizing: border-box;
+}
+
+html {
+  // Hide overflow X in tandem with body: 100vw below
+  overflow-x: hidden;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: #ebeef0;
+  width: calc(100vw); // Fix for body content jumping with scrollbars
+}
+
+.container {
+  width: 1000px;
+  padding: 0;
+  display: block;
+
+  &--responsive {
+    $padding: 30px;
+    --table-width: 100%;
+
+    width: auto;
+    padding: 0 $padding;
+    min-width: 2 * $padding + 1000px;
+  }
+}
+
+[ng-view] {
+  overflow: auto; // causes it to take child margin into account, for SDK apps that need shadow around card
+}
+
+// Fix for weird cut-off on ionicon
+.ion-checkmark-circled:before {
+  padding-left: 1px;
+}
+
+/* Universal selectors
+ * https://css-tricks.com/things-it-might-be-funuseful-to-try-the-universal-selector-on/
+========================================================================== */
+* {
+  background-repeat: no-repeat;
+  &:before,
+  &:after {
+    box-sizing: inherit;
+  }
+}
+
+iframe {
+  transition-property: none;
+}
+
+hr {
+  margin: 15px 0;
+  border-color: #d3dbe2;
+}

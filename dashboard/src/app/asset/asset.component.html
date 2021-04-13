@@ -1,3 +1,27 @@
-<div class="ep-asset">
-  <div>Asset</div>
-</div>
+<section class="container">
+  <div class="col-sm-3 section-summary">
+    <h3>Name</h3>
+    <p>You can change the asset's name in this section. Use the provided input field to adjust it.</p>
+  </div>
+  <div class="col-sm-9">
+    <div class="card">
+      <div class="card-content">
+        <input type="text" placeholder="Asset's name" [(ngModel)]="asset.Value.name">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="col-sm-3 section-summary">
+    <h3>Some setting</h3>
+    <p>Use this section to configure some setting</p>
+  </div>
+  <div class="col-sm-9">
+    <div class="card">
+      <div class="card-content">
+        <input type="text" placeholder="Some setting" [(ngModel)]="asset.Value.someSetting">
+      </div>
+    </div>
+  </div>
+</section>

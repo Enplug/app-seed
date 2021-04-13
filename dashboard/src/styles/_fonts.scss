@@ -1,0 +1,23 @@
+/* stylelint-disable */
+
+$enplug-fonts-url: 'https://cdn.enplug.net/fonts/proxima-nova-enplug/';
+
+/**
+ * Points to Enplug variant of Proxima Nova, which was generated to unify the appearance across all platforms.
+ */
+@mixin enplug-proxima-font($weight, $style, $file) {
+    @font-face {
+        font-weight: $weight;
+        font-family: 'proximanova';
+        font-style: $style;
+        src:
+            url(#{$enplug-fonts-url}#{$file}.woff2) format("woff2"),
+            url(#{$enplug-fonts-url}#{$file}.woff) format("woff");
+    }
+}
+
+/* stylelint-enable */
+@include enplug-proxima-font(300, normal, 'proximanova-light-webfont');
+@include enplug-proxima-font(normal, normal, 'proximanova-regular-webfont');
+@include enplug-proxima-font(600, normal, 'proximanova-semibold-webfont');
+@include enplug-proxima-font(bold, normal, 'proximanova-bold-webfont');

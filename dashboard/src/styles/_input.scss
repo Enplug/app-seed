@@ -1,0 +1,16 @@
+@import 'brand';
+
+input[type="text"] {
+  height: 18px;
+  padding: 0;
+  font-size: 15px;
+  border: none;
+  border-bottom: solid 1px #d3dbe2;
+  box-sizing: border-box;
+  outline: none;
+
+  &:focus {
+      border-top: solid 1px transparent;
+      border-bottom: solid 2px $brand-primary;
+  }
+}

@@ -1,3 +1,132 @@
-.ep-asset-list {
-  display: block;
+$main-color: #356bba;
+$border-light-color: #d4dbe2;
+$border-lightest-color: #ebeef0;
+$title-color: rgba(0, 0, 0, 0.54);
+$hoverBg: rgba($main-color, .03);
+$priority-play-accent: #ff5d5d;
+$light-text-color: #aaaaaa;
+
+.asset-list-table {
+  padding-bottom: 30px;
+
+  table {
+    width: 100%;
+    border-spacing: 0;
+  }
+  
+  th {
+    height: 56px;
+    padding: 0 6px 10px 6px;
+    vertical-align: bottom;
+    color: $title-color;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+  
+    &:first-of-type {
+      width: auto;
+      text-align: left;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  
+    &.preview-column {
+      width: 55px;
+    }
+  
+    &.duplicate-column {
+      width: 55px;
+    }
+  
+    &.displays-column {
+      width: 100px;
+    }
+  
+    &.delete-column {
+      width: 75px;
+    }
+  }
+  
+  td {
+    height: 48px;
+    box-sizing: border-box;
+    font-size: 14px;
+    color: $main-color;
+    border-top: solid 1px $border-light-color;
+  
+    &:first-of-type {
+      padding: 0 10px;
+    }
+  
+    &:not(:first-of-type) {
+      text-align: center;
+    }
+  
+    &[ep-asset-list-table-editable-name] {
+      max-width: 0;
+    }
+  
+    i {
+      font-size: 29px;
+      line-height: 1;
+    }
+  }
+  
+  td,
+  th {
+    &:first-of-type {
+      padding-left: 30px;
+    }
+    
+    &:last-of-type {
+      padding-right: 30px;
+    }
+  }
+  
+  tbody {
+    tr, td {
+      transition: background-color .2s;
+    }
+  
+    tr:hover td {
+      background-color: $hoverBg;
+    }
+  }
+  
+  .icon-button {
+    cursor: pointer;
+  }
+  
+  .display-counter {
+    position: relative;
+    display: inline-block;
+    height: 20px;
+    width: 34px;
+    box-sizing: content-box;
+    font-size: 12px;
+    line-height: 20px;
+    border: solid 1px $main-color;
+    cursor: pointer;
+  
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      width: 16px;
+      height: 1px;
+      margin: 0 auto;
+      background: $main-color;
+    }
+  
+    &.priority-play {
+      border:1px $priority-play-accent solid;
+      background-color: $priority-play-accent;
+      color: white;
+      &:after {
+        background-color: $priority-play-accent;
+      }
+    }
+  }  
 }
