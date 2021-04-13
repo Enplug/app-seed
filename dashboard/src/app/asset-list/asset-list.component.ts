@@ -165,7 +165,7 @@ export class AssetListComponent implements OnInit {
       confirmText: this.transloco.translate('assetList.saveReorder.confirm.confirmReorderButton')
     };
 
-    enplug.dashboard.openConfirm(options).then(
+    this.enplug.dashboard.openConfirm(options).then(
       () => { this.reorderAssets(reorderedAssets); },
       () => { /* canceled */ }
     );
