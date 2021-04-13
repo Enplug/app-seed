@@ -42,9 +42,9 @@ export class AssetComponent implements OnInit {
     this.asset.next(loadedAsset);
     this.originalAsset.next(loadedAsset);
 
-    if (loadedAsset?.Value?.Id) {
+    if (loadedAsset?.Id) {
       // If not a new asset - mark as recently viewed
-      this.enplug.account.touchAsset(loadedAsset.Value?.Id);
+      this.enplug.account.touchAsset(loadedAsset?.Id);
     }
   }
 
