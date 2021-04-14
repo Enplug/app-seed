@@ -13,7 +13,7 @@
     "start": "ng serve --configuration=development --port=50001",
     "start:staging": "ng serve --configuration=staging --port=50001",
     "start:prod": "ng serve --configuration=production --port=50001",
-    "start:ssl": "enplug-serve --port=50001 --host=localhost.enplug.in",
+    "start:ssl": "enplug-serve --port=50001 --host=localhost.enplug.com",
     "test": "ng test",
     "lint": "ng lint && npm run lint:stylelint",
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
