@@ -1,16 +1,22 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Asset, DeployDialogOptions } from '@enplug/sdk-dashboard/types';
-import { EnplugService } from 'app/services/enplug.service';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 import { AssetValue } from '../../../../shared/asset-value';
+import { EnplugService } from 'app/services/enplug.service';
+import { produce } from 'immer';
 
+@UntilDestroy()
 @Component({
   selector: 'ep-asset-list',
   templateUrl: './asset-list.component.html',
   styleUrls: ['./asset-list.component.scss']
 })
 export class AssetListComponent implements OnInit {
-  assets: Asset<AssetValue>[];
+  assets$ = new BehaviorSubject<Asset<AssetValue>[]>(undefined);
+  selectedDisplayId$ = new BehaviorSubject<string>(undefined);
 
   constructor(private enplug: EnplugService,
               private router: Router,
@@ -18,18 +24,21 @@ export class AssetListComponent implements OnInit {
               private zone: NgZone) { }
 
   ngOnInit() {
-    this.assets = this.route.snapshot.data.assets;
+    // Navigate to adding new asset if no assets in the list
+    combineLatest([this.assets$, this.selectedDisplayId$]).pipe(
+      untilDestroyed(this),
+      debounceTime(500), // Wait for dashboard refresh after display group filtering change
+      filter(([assets, displayId]) => !displayId && assets !== undefined && assets.length === 0) // No display group filtering, assets list loaded and no items in the list
+    ).subscribe(() => this.addNewAsset());
 
-    if (this.assets?.length === 0) {
-      this.addNewAsset();
-    } else {
-      this.enplug.dashboard.pageLoading(false);
-      this.setHeader();
-    }
+    this.assets$.next(this.route.snapshot.data.assets || undefined);
+
+    this.setHeader();
+    this.enplug.dashboard.pageLoading(false);
   }
 
   hasPriorityPlay(asset: Asset<AssetValue>): boolean {
-    return asset.Schedule?.IsPriority && asset.VenueIds.length > 0;
+    return asset?.Schedule?.IsPriority && asset?.VenueIds?.length > 0;
   }
 
   async onEditAsset(asset: Asset<AssetValue>) {
@@ -48,8 +57,11 @@ export class AssetListComponent implements OnInit {
     };
 
     try {
-      await this.enplug.account.saveAsset(asset, options);
-      this.reloadAssets();
+      const savedAsset = await this.enplug.account.saveAsset(asset, options);
+      if (savedAsset) {
+        this.replaceAsset(asset, savedAsset);
+        this.reloadAssets();
+      }
     } catch {}
   }
 
@@ -93,8 +105,11 @@ export class AssetListComponent implements OnInit {
       },
     ]);
 
-    this.enplug.dashboard.setDisplaySelectorCallback(() => {
-      this.zone.run(() => this.reloadAssets());
+    this.enplug.dashboard.setDisplaySelectorCallback(displayId => {
+      this.zone.run(() => {
+        this.selectedDisplayId$.next(displayId);
+        this.reloadAssets();
+      });
     });
   }
 
@@ -103,12 +118,19 @@ export class AssetListComponent implements OnInit {
     this.router.navigateByUrl('assets/add');
   }
 
+  private replaceAsset(asset: Asset<AssetValue>, newAsset: Asset<AssetValue>) {
+    this.assets$.next(produce(this.assets$.value, draft => {
+      const assetIndex = draft.findIndex(({Id}) => Id === asset.Id);
+      if (assetIndex >= 0) {
+        draft[assetIndex] = newAsset; 
+      }
+    }));
+  }
+  
   private async reloadAssets() {
     try {
-      this.assets = await this.enplug.account.getAssets<AssetValue>();
-      if (this.assets.length) {
-        this.addNewAsset();
-      }
+      const assets = await this.enplug.account.getAssets<AssetValue>();
+      this.assets$.next(assets);
     } catch {}
   }
 }

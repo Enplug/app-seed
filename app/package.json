@@ -13,12 +13,30 @@
     "start": "ng serve --configuration=development --port=50001",
     "start:staging": "ng serve --configuration=staging --port=50001",
     "start:prod": "ng serve --configuration=production --port=50001",
-    "start:ssl": "enplug-serve --port=50001 --host=localhost.enplug.com",
+    "start:ssl": "enplug-serve --port=50001 --host=localhost.enplug.in",
     "test": "ng test",
     "lint": "ng lint && npm run lint:stylelint",
     "lint:fix": "ng lint --fix && npm run lint:stylelint -- --fix",
     "lint:stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
+  },
+  "config": {
+    "destination": "/path/to/the/app/",
+    "aws": {
+      "buckets": [
+        "your.s3-bucket.com"
+      ],
+      "s3": {
+        "cache": false,
+        "overwrite": true,
+        "region": "us-west-2",
+        "sslEnabled": true,
+        "apiVersion": "2016-05-01",
+        "params": {
+          "ACL": "public-read"
+        }
+      }
+    }
   },
   "private": true,
   "dependencies": {
