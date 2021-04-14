@@ -1,0 +1,111 @@
+@import "brand";
+
+/* ==========================================================================
+   Card - standard content module
+   ========================================================================== */
+
+.section-summary {
+  margin-top: 30px;
+
+  h3 {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: $gray;
+    margin-bottom: 15px;
+  }
+}
+
+.card {
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 15px 0; // matches y offset for shadow, for apps in iFrame
+  background-color: $card-primary;
+
+  > header {
+    padding: 20px 20px 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      font-size: 18px;
+      font-weight: normal;
+      color: $gray-dark;
+      -webkit-font-smoothing: subpixel-antialiased;
+    }
+
+    .header-links {
+      flex-grow: 1;
+      text-align: right;
+    }
+  }
+
+  /* Content
+    ========================================================================== */
+  .card-content,
+  > section {
+    position: relative;
+    padding: 30px;
+
+    hr {
+      border-color: $border-color;
+    }
+
+    .card-description {
+      width: 200px;
+      flex-grow: 0;
+      flex-shrink: 0;
+      margin-right: 30px;
+
+      h3 {
+        margin-top: 0;
+        margin-bottom: 20px;
+        font-size: 15px;
+        color: $gray-dark;
+      }
+
+      p {
+        margin-bottom: 20px;
+        color: $gray;
+      }
+    }
+
+    .card-body {
+      margin-left: 60px;
+      flex-grow: 1;
+    }
+  }
+
+  .card-notice {
+    font-size: 12px;
+    padding: 10px;
+    position: relative;
+    background-color: #f5f6f7;
+    border-top: 1px solid #d3dbe2;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.025);
+  }
+
+  /* Sidebar content
+    ========================================================================== */
+  &.card-aside {
+    background-color: #f5f6f7;
+
+    h4 {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 20px 20px 10px 20px;
+      color: $gray;
+      text-transform: uppercase;
+      border-bottom: 1px solid $border-color;
+    }
+
+    .card-content {
+      padding: 10px 20px;
+    }
+  }
+}

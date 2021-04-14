@@ -1,3 +1,32 @@
-<div class="ep-asset-list">
-  <div>Asset List</div>
+<div class="container container--responsive">
+  <div class="card asset-list-table">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th class="preview-column">Preview</th>
+          <th class="displays-column">Displays</th>
+          <th class="delete-column">Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let asset of assets">
+          <td>
+            <a (click)="onEditAsset(asset)">{{ asset.Value.name || '(no name)' }}</a>
+          </td>
+          <td>
+            <i class="ion-ios-eye-outline icon-button preview-button" (click)="onPreviewAsset(asset)"></i>
+          </td>
+          <td>
+            <div class="display-counter" [class.priority-play]="hasPriorityPlay(asset)" (click)="onDeployAsset(asset)">
+              {{ asset.VenueIds.length }}
+            </div>
+          </td>
+          <td>
+            <i class="ion-ios-trash-outline icon-button remove-button" (click)="onRemoveAsset(asset)"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

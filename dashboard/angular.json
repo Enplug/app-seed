@@ -11,6 +11,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -21,6 +22,7 @@
               "src/favicon.ico"
             ],
             "styles": [
+              "node_modules/ionicons/dist/css/ionicons.min.css",
               "src/styles.scss"
             ],
             "scripts": []
@@ -28,9 +30,21 @@
           "configurations": {
             "development": {
               "aot": true,
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "sourceMap": true
             },
             "staging": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -41,6 +55,12 @@
               "sourceMap": true
             },
             "production": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -50,7 +70,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -59,6 +78,12 @@
             },
             "test": {
               "aot": true,
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
               "sourceMap": true,
               "fileReplacements": [
                 {
@@ -104,6 +129,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [],
             "styles": [
+              "node_modules/ionicons/dist/css/ionicons.min.css",
               "src/styles.scss"
             ],
             "assets": [
@@ -152,7 +178,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "ep",
-      "styleext": "scss"
+      "style": "scss"
     },
     "@schematics/angular:directive": {
       "prefix": "ep"

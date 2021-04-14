@@ -2,6 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./src",
+    "module": "es2020",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
@@ -15,8 +16,7 @@
     ],
     "types": [
       "jasmine",
-      "node",
-      "@enplug/sdk-dashboard"
+      "node"
     ],
     "lib": [
       "es2016",

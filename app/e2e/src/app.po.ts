@@ -6,6 +6,6 @@ export class AppPage {
   }
 
   getParagraphText() {
-    return element(by.css('ep-appseed h1.appseed__title')).getText();
+    return element(by.css('ep-root h1.appseed__title')).getText();
   }
 }
