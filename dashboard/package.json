@@ -20,6 +20,24 @@
     "lint:stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
   },
+  "config": {
+    "destination": "/path/to/the/dashboard/",
+    "aws": {
+      "buckets": [
+        "your.s3-bucket.com"
+      ],
+      "s3": {
+        "cache": false,
+        "overwrite": true,
+        "region": "us-west-2",
+        "sslEnabled": true,
+        "apiVersion": "2016-05-01",
+        "params": {
+          "ACL": "public-read"
+        }
+      }
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "^11.2.9",
@@ -32,6 +50,8 @@
     "@angular/platform-server": "^11.2.9",
     "@angular/router": "^11.2.9",
     "@enplug/sdk-dashboard": "^5.3.9",
+    "@ngneat/until-destroy": "^8.0.4",
+    "immer": "^9.0.1",
     "ionicons": "3",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",

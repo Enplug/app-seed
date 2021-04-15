@@ -10,16 +10,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let asset of assets">
+        <tr *ngFor="let asset of assets$ | async">
           <td>
-            <a (click)="onEditAsset(asset)">{{ asset.Value.name || '(no name)' }}</a>
+            <a (click)="onEditAsset(asset)">{{ asset?.Value?.name || '(no name)' }}</a>
           </td>
           <td>
             <i class="ion-ios-eye-outline icon-button preview-button" (click)="onPreviewAsset(asset)"></i>
           </td>
           <td>
             <div class="display-counter" [class.priority-play]="hasPriorityPlay(asset)" (click)="onDeployAsset(asset)">
-              {{ asset.VenueIds.length }}
+              {{ asset?.VenueIds?.length || 0 }}
             </div>
           </td>
           <td>

@@ -20,6 +20,24 @@
     "lint:stylelint": "stylelint \"src/**/*.scss\"",
     "e2e": "ng e2e"
   },
+  "config": {
+    "destination": "/path/to/the/app/",
+    "aws": {
+      "buckets": [
+        "your.s3-bucket.com"
+      ],
+      "s3": {
+        "cache": false,
+        "overwrite": true,
+        "region": "us-west-2",
+        "sslEnabled": true,
+        "apiVersion": "2016-05-01",
+        "params": {
+          "ACL": "public-read"
+        }
+      }
+    }
+  },
   "private": true,
   "dependencies": {
     "@angular/animations": "11.2.9",
