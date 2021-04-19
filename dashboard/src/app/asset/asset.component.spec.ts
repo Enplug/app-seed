@@ -1,17 +1,25 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { getEnplugServiceMock } from 'app/mocks/enplug.service.mock.spec';
+import { TranslationTestingModule } from 'app/translation-testing.module.spec';
 import { AssetComponent } from './asset.component';
 
 describe('AssetComponent', () => {
   let component: AssetComponent;
   let fixture: ComponentFixture<AssetComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        NoopAnimationsModule,
+        RouterTestingModule,
+        FormsModule,
+        MatInputModule,
+        TranslationTestingModule
       ],
       declarations: [
         AssetComponent
@@ -19,8 +27,7 @@ describe('AssetComponent', () => {
       providers: [
         getEnplugServiceMock()
       ]
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

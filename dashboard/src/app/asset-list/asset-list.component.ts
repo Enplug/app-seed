@@ -6,8 +6,8 @@ import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { EnplugService } from 'app/services/enplug.service';
 import { produce } from 'immer';
-import { BehaviorSubject, from, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, from, Observable } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { AssetValue } from '../../../../shared/asset-value';
 
 @UntilDestroy()
@@ -28,48 +28,55 @@ export class AssetListComponent implements OnInit {
               private enplug: EnplugService,
               private transloco: TranslocoService) { }
 
+  // TODO: test
   ngOnInit() {
     // Navigate to adding new asset if no assets in the list
-    this.assets$.pipe(
+    combineLatest([this.assets$, this.selectedDisplayId$]).pipe( // TODO: test
       untilDestroyed(this),
-      filter(assets => assets !== undefined && assets.length === 0) // Assets list loaded and no items in the list
+      debounceTime(500), // Wait for dashboard refresh after display group filtering change
+      filter(([assets, displayId]) => !displayId && assets !== undefined && assets.length === 0) // No display group filtering, assets list loaded and no items in the list
     ).subscribe(() => this.addNewAsset());
 
-    this.assets$.next(this.route.snapshot.data.assets || undefined);
+    this.assets$.next(this.route.snapshot.data.assets || undefined); // TODO: test
     this.isLimitedUser$ = from(this.enplug.account.getUser()).pipe(map(user => user.has.limitedAccess));
 
     // Keep informing the dashboard about the state of unsaved changes made to the asset list
-    this.hasUnsavedAssetListChanges$.pipe(
+    this.hasUnsavedAssetListChanges$.pipe( // TODO: test
       untilDestroyed(this) // Unsubscribe after the component gets destroyed
     ).subscribe(hasUnsavedChanges => this.enplug.dashboard.setAppHasUnsavedChanges(hasUnsavedChanges));
 
-    this.setHeader();
-    this.enplug.dashboard.pageLoading(false);
+    this.setHeader(); // TODO: test
+    this.enplug.dashboard.pageLoading(false); // TODO: test
   }
   
   async onAssetNameEdit({asset, newName}: NameEditEvent) {
     if (newName !== asset.Value.name) {
-      asset.Value.name = newName.trim();
-      const savedAsset = await this.enplug.account.saveAsset(asset);
+      // Immutably update the name of the asset
+      const newAsset = produce(asset, draft => { draft.Value.name = newName.trim(); });
 
-      this.replaceAsset(asset, savedAsset);
-      await this.reloadAssets();
+      // Optimisticly update the asset in the list
+      this.replaceAsset(asset, newAsset);
+
+      try {
+        const savedAsset = await this.enplug.account.saveAsset(newAsset);
+        this.replaceAsset(newAsset, savedAsset);
+      } catch {
+        this.replaceAsset(newAsset, asset); // If error while saving, revert asset in the list
+      }
+
+      await this.reloadAssets(); // For consistency reload the whole list
     }
   }
   
-  onDeployAsset(asset: Asset<AssetValue>) {
-    this.openDeployDialog(asset, 'displays');
+  async onDeployAsset(asset: Asset<AssetValue>) {
+    await this.openDeployDialog(asset, 'displays');
   }
 
   async onDuplicateAsset(asset: Asset<AssetValue>) {
-    const data = {
-      ...asset,
-      Id: null,
-      Value: {
-        ...asset.Value,
-        name: this.transloco.translate('assetList.duplicateAsset.defaultCopyName', { assetName: asset.Value.name }),
-      }
-    };
+    const newAsset = produce(asset, draft => {
+      draft.Id = null;
+      draft.Value.name = this.transloco.translate('assetList.duplicateAsset.defaultCopyName', { assetName: asset.Value.name });
+    });
 
     const deployOptions: DeployDialogOptions = {
       showSchedule: true,
@@ -79,8 +86,6 @@ export class AssetListComponent implements OnInit {
       }
     };
 
-    const newAsset = { ...asset, ...data };
-
     try {
       await this.enplug.account.saveAsset(newAsset, deployOptions);
       this.reloadAssets();
@@ -89,7 +94,7 @@ export class AssetListComponent implements OnInit {
 
   async onEditAsset(asset: Asset<AssetValue>) {
     await this.enplug.dashboard.pageLoading(true);
-    this.router.navigate([`/assets/${asset.Id}`]);
+    await this.router.navigate([`/assets/${asset.Id}`]);
   }
 
   onHasUnsavedAssetListChanges(hasUnsavedChanges: boolean) {
@@ -213,7 +218,7 @@ export class AssetListComponent implements OnInit {
     try {
       const savedAsset = await this.enplug.account.saveAsset(asset, options);
       this.replaceAsset(asset, savedAsset); // Instantly update the saved asset
-      this.reloadAssets(); // For consistency reload the whole list
+      await this.reloadAssets(); // For consistency reload the whole list
     } catch {}
   }
 
