@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  // TODO: test
   private async initApp() {
     this.asset = await this.enplug.assets.getNext();
     this.enplug.appStatus.start();

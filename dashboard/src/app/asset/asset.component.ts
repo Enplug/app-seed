@@ -16,6 +16,7 @@ import produce from 'immer';
   templateUrl: './asset.component.html',
   styleUrls: ['./asset.component.scss']
 })
+// TODO: test
 export class AssetComponent implements OnInit {
   originalAsset = new BehaviorSubject<Asset<AssetValue>>(undefined);
   asset = new BehaviorSubject<Asset<AssetValue>>(undefined);
@@ -27,9 +28,11 @@ export class AssetComponent implements OnInit {
               private transloco: TranslocoService) { }
 
   async ngOnInit() {
+    // TODO: test
     this.enplug.dashboard.pageLoading(false);
 
     // Keep updating the header everytime the asset gets updated
+    // TODO: test
     combineLatest([this.originalAsset, this.asset]).pipe(
       untilDestroyed(this),
       map(([originalAsset, asset]) => isSaveActive(originalAsset, asset)),
@@ -38,32 +41,57 @@ export class AssetComponent implements OnInit {
       this.setHeader(isSaveActive);
     });
 
+    // TODO: test
     const loadedAsset = this.route.snapshot.data.asset || this.getInitialAsset();
     this.asset.next(loadedAsset);
     this.originalAsset.next(loadedAsset);
 
+    // TODO: test
     if (loadedAsset?.Id) {
       // If not a new asset - mark as recently viewed
       this.enplug.account.touchAsset(loadedAsset?.Id);
     }
   }
 
+  // TODO: test
   setAssetName(newName: string) {
     this.setAsset(asset => {
       asset.Value.name = newName;
     });
   }
 
+  // TODO: test
   setSomeSetting(someSetting: string) {
     this.setAsset(asset => {
       asset.Value.someSetting = someSetting;
     });
   }
 
+  // TODO: test
+  async saveAsset() {
+    const deployOptions: DeployDialogOptions = {
+      showSchedule: true,
+      scheduleOptions: {
+        showDuration: true,
+        showPriorityPlay: true,
+      }
+    };
+
+    try {
+      const savedAsset = await this.enplug.account.saveAsset(this.asset.value, deployOptions);
+      if (!this.asset.value.Id) { // missing Id means initial save
+        this.router.navigateByUrl('/assets');
+      } else {
+        this.asset.next(savedAsset);
+        this.originalAsset.next(savedAsset);
+      }
+    } catch {}
+  }
+  
   /**
    * Sets Dashboard header breadcrumbs and buttons.
    */
-  setHeader(isSaveActive = true) {
+   private setHeader(isSaveActive = true) {
     this.enplug.dashboard.setHeaderTitle(this.transloco.translate('asset.header.setup'));
 
     const buttons: Button[] = [];
@@ -85,29 +113,6 @@ export class AssetComponent implements OnInit {
 
     this.enplug.dashboard.setHeaderButtons(buttons);
     this.enplug.dashboard.setDisplaySelectorVisibility(false);
-  }
-
-  /**
-   * Saves current Asset.
-   */
-  async saveAsset() {
-    const deployOptions: DeployDialogOptions = {
-      showSchedule: true,
-      scheduleOptions: {
-        showDuration: true,
-        showPriorityPlay: true,
-      }
-    };
-
-    try {
-      const savedAsset = await this.enplug.account.saveAsset(this.asset.value, deployOptions);
-      if (!this.asset.value.Id) { // missing Id means initial save
-        this.router.navigateByUrl('/assets');
-      } else {
-        this.asset.next(savedAsset);
-        this.originalAsset.next(savedAsset);
-      }
-    } catch {}
   }
 
   private getInitialAsset(): Asset<AssetValue> {
