@@ -1,10 +1,10 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssetTagClickEvent, NameEditEvent, SaveReorderEvent } from '@enplug/components/asset-item-list';
+import { EnplugService } from '@enplug/components/enplug';
 import { Asset, DeployDialogOptions, OpenConfirmOptions } from '@enplug/sdk-dashboard/types';
 import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EnplugService } from 'app/services/enplug.service';
 import { produce } from 'immer';
 import { BehaviorSubject, combineLatest, from, Observable } from 'rxjs';
 import { debounceTime, filter, map } from 'rxjs/operators';
@@ -28,25 +28,24 @@ export class AssetListComponent implements OnInit {
               private enplug: EnplugService,
               private transloco: TranslocoService) { }
 
-  // TODO: test
   ngOnInit() {
     // Navigate to adding new asset if no assets in the list
-    combineLatest([this.assets$, this.selectedDisplayId$]).pipe( // TODO: test
+    combineLatest([this.assets$, this.selectedDisplayId$]).pipe(
       untilDestroyed(this),
       debounceTime(500), // Wait for dashboard refresh after display group filtering change
       filter(([assets, displayId]) => !displayId && assets !== undefined && assets.length === 0) // No display group filtering, assets list loaded and no items in the list
     ).subscribe(() => this.addNewAsset());
 
-    this.assets$.next(this.route.snapshot.data.assets || undefined); // TODO: test
+    this.assets$.next(this.route.snapshot.data.assets || undefined);
     this.isLimitedUser$ = from(this.enplug.account.getUser()).pipe(map(user => user.has.limitedAccess));
 
     // Keep informing the dashboard about the state of unsaved changes made to the asset list
-    this.hasUnsavedAssetListChanges$.pipe( // TODO: test
+    this.hasUnsavedAssetListChanges$.pipe(
       untilDestroyed(this) // Unsubscribe after the component gets destroyed
     ).subscribe(hasUnsavedChanges => this.enplug.dashboard.setAppHasUnsavedChanges(hasUnsavedChanges));
 
-    this.setHeader(); // TODO: test
-    this.enplug.dashboard.pageLoading(false); // TODO: test
+    this.setHeader();
+    this.enplug.dashboard.pageLoading(false);
   }
   
   async onAssetNameEdit({asset, newName}: NameEditEvent) {
@@ -243,7 +242,6 @@ export class AssetListComponent implements OnInit {
       },
     ]);
 
-    // TODO: test
     this.enplug.dashboard.setDisplaySelectorCallback(displayId => {
       this.zone.run(() => {
         this.hasUnsavedAssetListChanges$.next(false);

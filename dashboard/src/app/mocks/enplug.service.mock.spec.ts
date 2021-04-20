@@ -1,5 +1,5 @@
 import { Provider } from '@angular/core';
-import { EnplugService } from 'app/services/enplug.service';
+import { EnplugService } from '@enplug/components/enplug';
 import { Asset, Button, DeployDialogOptions, DisplaySelectorCallback, EnplugDashboardSDK, EnplugUser, OpenConfirmOptions } from '@enplug/sdk-dashboard/types';
 
 export type Partialize<T> = {
@@ -12,6 +12,7 @@ class MockEnplugService implements Partialize<EnplugDashboardSDK> {
     getUser: () => Promise.resolve({ has: { limitedAccess: false } } as EnplugUser),
     getAssets: <T>() => Promise.resolve([] as T[]),
     saveAsset: <T>(asset: Asset<T>, dialogOptions?: DeployDialogOptions) => Promise.resolve(asset),
+    touchAsset: (id: string) => Promise.resolve(),
     updateAssetOrder: <T>(assets: string[] | Array<Asset<T>>) => Promise.resolve(),
   };
   dashboard = {

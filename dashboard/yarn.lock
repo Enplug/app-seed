@@ -1151,10 +1151,10 @@
     is-absolute "^1.0.0"
     is-negated-glob "^1.0.0"
 
-"@enplug/components@^9.1.1":
-  version "9.1.1"
-  resolved "https://registry.yarnpkg.com/@enplug/components/-/components-9.1.1.tgz#8d6dd5ed93fee5189522909bd88881c01fe66139"
-  integrity sha512-KRjVkqfh5GSFYbrDDYqCIefiR+NwuUKUU39btrDJh8+TLuWk2PTE1c7bnUL0/oaJSHqvQd9x1p6gsQDaS9IkXw==
+"@enplug/components@^9.1.2":
+  version "9.1.2"
+  resolved "https://registry.yarnpkg.com/@enplug/components/-/components-9.1.2.tgz#5a85da00f8faafad223cdabd2cbcf3a9552e8e8a"
+  integrity sha512-PJDJOzRsvkrpUGq8qN3xx3EEMv27JJT287B/QCtA1FKIFwwfIZ7jwDXRj44ndWzZZWpiK/7g5NeH/c7uNV978Q==
   dependencies:
     "@angular/animations" "11.1.0"
     "@angular/cdk" "11.1.1"

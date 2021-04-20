@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HasAssetsResolver } from './resolvers/has-assets.resolver';
+import { EnplugService } from '@enplug/components/enplug';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { HasAssetsResolver } from './resolvers/has-assets.resolver';
     TranslocoRootModule
   ],
   providers: [
+    EnplugService,
     AssetResolver,
     AssetsResolver,
     HasAssetsResolver,
