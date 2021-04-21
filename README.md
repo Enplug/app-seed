@@ -22,20 +22,17 @@ to your own project name and begin editing the files!
 
 If you need to share some resources between `app` and `dashboard`, it's recommended to keep them in `shared` directory.
 
-## Running app with SSL enabled
+## Local development
+### Installing node
+This project uses a node version 12 or higher, so we recommend you to use a node version manager such a [nvm](https://github.com/nvm-sh/nvm) so it's easier to install new node versions and switch between them. 
 
-If App needs to be run in an SSL mode, one needs to create proper certificates for using it with Enplug Dashboard.
-
-Instructions below provide basic steps to create one and use locally with `enplug.in` domain (staging).
-
-### Creating the certificate
-
-Prerequisites:
-- `openssl` application
+To run local app dashboard build it must be served via HTTPS. To do that developer must generate a certificate and add it to Trusted Root Certification Authorities.
+### Generating the certificate
+#### Prerequisites
+* openssl application
 
 Create a file openssl.conf with the content below:
-
-```editorconfig
+```
 [req]
 default_bits = 2048
 default_keyfile = oats.key
@@ -44,56 +41,101 @@ utf8 = yes
 distinguished_name = req_distinguished_name
 x509_extensions = v3_req
 prompt = no
-
 [req_distinguished_name]
 C = US
 ST = LA
 L = LA
 O  = Enplug
 CN = *.enplug.in
-
 [v3_req]
 keyUsage = critical, digitalSignature, keyAgreement, keyEncipherment, dataEncipherment
 extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
-
 [alt_names]
 DNS.1 = *.enplug.in
 DNS.2 = *.enplug.in
 ```
 
-Go to your `openssl.conf` file directory and run these commands:
-
-```bash
+Go to your openssl.conf file directory and run these commands:
+```
 openssl req -x509 -sha256 -nodes -days 3650 -newkey rsa:2048 -keyout key.pem -out certificate.pem -config openssl.conf
-
 openssl x509 -text -noout -in certificate.pem
-
 openssl pkcs12 -inkey key.pem -in certificate.pem -export -out certificate.p12
-
 openssl pkcs12 -in certificate.p12 -noout -info
 ```
 
 ### Installing the certificate
-Add a development certificate certificate.p12 to trusted certificates. 
+Add a development certificate certificate.p12 to trusted certificates. This will allow the development server to run on HTTPS without errors. Here is [how you can add a certificate.](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc754841(v=ws.11)?redirectedfrom=MSDN)
 
-This will allow the development server to run on HTTPS without errors. 
-Here is [how you can add a certificate on Windows](https://docs.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc754841(v=ws.11)).
-Here is [how you can add a certificate on Mac](https://reactpaths.com/how-to-get-https-working-in-localhost-development-environment-f17de34af046)
+### Adding hosts
+On Windows, in a text editor run with admin privileges, open C:\Windows\System32\drivers\etc\hosts file and add the following:
+```
+# for app dev
+127.0.0.1 localhost.enplug.in
+# for dashboard dev
+127.0.0.1 local-dashboard.enplug.in
+```
 
 ### Adding dev.private.json
 HTTPS dev-server requires certificate and key files. 
-In the project root directory (separately for each `App Seed` and `Dashboard Seed`) create `dev.private.json` file and set proper files paths:
 
-```json
+In the project root directory create dev.private.json file and set proper files paths.
+```
 {
-  "cert": "PATH_TO_certificate.pem",
-  "key": "PATH_TO_key.pem"
+  "cert": "P:/enplug/_certs/certificate.pem",
+  "key": "P:/enplug/_certs/key.pem"
 }
 ```
+### Installing npm packages
+You must have access to the Enplug's packages in npm so you can download all of the required project dependencies. To login you must run `npm login` in a terminal and put your credentials. Then you can proceed to execute `yarn install`
 
 ### Running the seed with SSL
 
 After following steps above (remember to put `*.private.json` files in respective folders!) just run `npm run start:ssl`. 
 
 This will use `@enplug/scripts` script called `enplug-serve` that will interpret entries in `*.private.json` file and use them for securely serving the content.
+
+## Crowdin: translation service config
+
+- log into the [crowdin page](https://crowdin.com).
+- In projects tab, select `Enplug>settings>files`. 
+- Find your app inside the apps tree directory. 
+- In your local `app-seed` code looking for the `app/package.json` file and replace this:
+
+```
+ "crowdin": {
+      "crowdinPath": "TODO: UPDATE APP_ID: /apps/APP_ID/app/en.json",
+      "localPath": "src/assets/i18n/en.json"
+    }
+```
+
+to:
+(YOUR_APP_NAME is the name of the app you found on the `crowdin page`)
+
+```
+ "crowdin": {
+      "crowdinPath": "/apps/YOUR_APP_NAME/app/en.json",
+      "localPath": "src/assets/i18n/en.json"
+    }
+```
+- Repeat the previous step in the `dashboard/package.json` file.
+- Inside of `dashboard` folder in your `terminal` type this:
+```
+yarn i18n:find
+```
+
+## Release to staging
+
+- Inside of `dashboard` folder in your `terminal` type this:
+```
+yarn release:staging
+```
+- When prompt options, you must select `apps.enplug.in`.
+- Answer `Y` when ask for `updating URLs to staging` and `Do you confirm the uploaded to S3`.
+
+- Inside of `app` folder in your `terminal` type this:
+```
+yarn release:staging
+```
+- When prompt options, you must select `apps.enplug.in`.
+- Answer `Y` when ask for `updating URLs to staging` and `Do you confirm the uploaded to S3`.
