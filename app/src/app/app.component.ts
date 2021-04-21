@@ -13,13 +13,14 @@ export class AppComponent implements OnInit {
 
   constructor(private enplug: EnplugService) {}
 
-  ngOnInit() {
-    this.enplug.appStatus.registerServiceWorker('App Seed').then(() => {
-      this.initApp();
-    }).catch((err: string) => {
+  async ngOnInit() {
+    try {
+      await this.enplug.appStatus.registerServiceWorker('App Seed');
+    } catch (err) {
       console.error(err);
-      this.initApp();
-    });
+    } finally {
+      await this.initApp();
+    }
   }
 
   private async initApp() {

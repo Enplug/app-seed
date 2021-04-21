@@ -1,13 +1,13 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AssetTagClickEvent, NameEditEvent, SaveReorderEvent } from '@enplug/components/asset-item-list';
+import { EnplugService } from '@enplug/components/enplug';
 import { Asset, DeployDialogOptions, OpenConfirmOptions } from '@enplug/sdk-dashboard/types';
 import { TranslocoService } from '@ngneat/transloco';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { EnplugService } from 'app/services/enplug.service';
 import { produce } from 'immer';
-import { BehaviorSubject, from, Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, from, Observable } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs/operators';
 import { AssetValue } from '../../../../shared/asset-value';
 
 @UntilDestroy()
@@ -30,9 +30,10 @@ export class AssetListComponent implements OnInit {
 
   ngOnInit() {
     // Navigate to adding new asset if no assets in the list
-    this.assets$.pipe(
+    combineLatest([this.assets$, this.selectedDisplayId$]).pipe(
       untilDestroyed(this),
-      filter(assets => assets !== undefined && assets.length === 0) // Assets list loaded and no items in the list
+      debounceTime(500), // Wait for dashboard refresh after display group filtering change
+      filter(([assets, displayId]) => !displayId && assets !== undefined && assets.length === 0) // No display group filtering, assets list loaded and no items in the list
     ).subscribe(() => this.addNewAsset());
 
     this.assets$.next(this.route.snapshot.data.assets || undefined);
@@ -49,27 +50,32 @@ export class AssetListComponent implements OnInit {
   
   async onAssetNameEdit({asset, newName}: NameEditEvent) {
     if (newName !== asset.Value.name) {
-      asset.Value.name = newName.trim();
-      const savedAsset = await this.enplug.account.saveAsset(asset);
+      // Immutably update the name of the asset
+      const newAsset = produce(asset, draft => { draft.Value.name = newName.trim(); });
 
-      this.replaceAsset(asset, savedAsset);
-      await this.reloadAssets();
+      // Optimisticly update the asset in the list
+      this.replaceAsset(asset, newAsset);
+
+      try {
+        const savedAsset = await this.enplug.account.saveAsset(newAsset);
+        this.replaceAsset(newAsset, savedAsset);
+      } catch {
+        this.replaceAsset(newAsset, asset); // If error while saving, revert asset in the list
+      }
+
+      await this.reloadAssets(); // For consistency reload the whole list
     }
   }
   
-  onDeployAsset(asset: Asset<AssetValue>) {
-    this.openDeployDialog(asset, 'displays');
+  async onDeployAsset(asset: Asset<AssetValue>) {
+    await this.openDeployDialog(asset, 'displays');
   }
 
   async onDuplicateAsset(asset: Asset<AssetValue>) {
-    const data = {
-      ...asset,
-      Id: null,
-      Value: {
-        ...asset.Value,
-        name: this.transloco.translate('assetList.duplicateAsset.defaultCopyName', { assetName: asset.Value.name }),
-      }
-    };
+    const newAsset = produce(asset, draft => {
+      draft.Id = null;
+      draft.Value.name = this.transloco.translate('assetList.duplicateAsset.defaultCopyName', { assetName: asset.Value.name });
+    });
 
     const deployOptions: DeployDialogOptions = {
       showSchedule: true,
@@ -79,8 +85,6 @@ export class AssetListComponent implements OnInit {
       }
     };
 
-    const newAsset = { ...asset, ...data };
-
     try {
       await this.enplug.account.saveAsset(newAsset, deployOptions);
       this.reloadAssets();
@@ -89,7 +93,7 @@ export class AssetListComponent implements OnInit {
 
   async onEditAsset(asset: Asset<AssetValue>) {
     await this.enplug.dashboard.pageLoading(true);
-    this.router.navigate([`/assets/${asset.Id}`]);
+    await this.router.navigate([`/assets/${asset.Id}`]);
   }
 
   onHasUnsavedAssetListChanges(hasUnsavedChanges: boolean) {
@@ -118,43 +122,44 @@ export class AssetListComponent implements OnInit {
 
       try {
         await this.enplug.account.deleteAsset(asset.Id);
+        await this.reloadAssets();
         this.enplug.dashboard.successIndicator(this.transloco.translate('assetList.remove.success', { assetName }));
-        this.reloadAssets();
       } catch {
         this.enplug.dashboard.errorIndicator(this.transloco.translate('assetList.remove.error'));
       }
     } catch {}
   }
 
-  onRemoveSelectedAssets(selectedAssets: Asset<AssetValue>[]) {
+  async onRemoveSelectedAssets(selectedAssets: Asset<AssetValue>[]) {
     const assetCount = selectedAssets.length;
 
     const title = this.transloco.translate('assetList.removeSelected.confirm.title');
     const text = this.transloco.translate('assetList.removeSelected.confirm.text', { assetCount });
 
-    this.enplug.dashboard.openConfirm({
-      title,
-      text,
-      cancelText: this.transloco.translate('assetList.removeSelected.confirm.cancel'),
-      confirmText: this.transloco.translate('assetList.removeSelected.confirm.delete'),
-      confirmClass: 'btn-danger'
-    }).then(async () => {
+    try  {
+      await this.enplug.dashboard.openConfirm({
+        title,
+        text,
+        cancelText: this.transloco.translate('assetList.removeSelected.confirm.cancel'),
+        confirmText: this.transloco.translate('assetList.removeSelected.confirm.delete'),
+        confirmClass: 'btn-danger'
+      });
+
       this.enplug.dashboard.loadingIndicator(this.transloco.translate('assetList.removeSelected.inProgress', { assetCount }));
 
       try {
         await this.enplug.account.deleteAsset(selectedAssets.map(asset => asset.Id));
+        await this.reloadAssets();
         this.enplug.dashboard.successIndicator(this.transloco.translate('assetList.removeSelected.success', { assetCount }));
-        this.reloadAssets();
       } catch {
         this.enplug.dashboard.errorIndicator(this.transloco.translate('assetList.removeSelected.fail'));
       }
-    }, () => {});
+    } catch {}
   }
 
-  onSaveReorder({ reorderedAssets, isAccountView, hasFilter }: SaveReorderEvent) {
+  async onSaveReorder({ reorderedAssets, isAccountView, hasFilter }: SaveReorderEvent) {
     if (!isAccountView && !hasFilter) { // no confirmation needed
-      this.reorderAssets(reorderedAssets);
-      return;
+      return await this.reorderAssets(reorderedAssets);
     }
 
     const options: OpenConfirmOptions = {
@@ -165,33 +170,14 @@ export class AssetListComponent implements OnInit {
       confirmText: this.transloco.translate('assetList.saveReorder.confirm.confirmReorderButton')
     };
 
-    this.enplug.dashboard.openConfirm(options).then(
-      () => { this.reorderAssets(reorderedAssets); },
-      () => { /* canceled */ }
-    );
+    try {
+      await this.enplug.dashboard.openConfirm(options);
+      await this.reorderAssets(reorderedAssets);
+    } catch {}
   }
 
-  onTagClick(event: AssetTagClickEvent) {
-    this.openDeployDialog(event.asset, 'tags');
-  }
-
-  setHeader() {
-    this.enplug.dashboard.setHeaderTitle('');
-    this.enplug.dashboard.setHeaderButtons([
-      {
-        text: this.transloco.translate('assetList.header.addButton'),
-        action: () => this.zone.run(() => this.addNewAsset()),
-        class: 'btn-primary'
-      },
-    ]);
-
-    this.enplug.dashboard.setDisplaySelectorCallback(displayId => {
-      this.zone.run(() => {
-        this.hasUnsavedAssetListChanges$.next(false);
-        this.selectedDisplayId$.next(displayId);
-        this.reloadAssets();
-      });
-    });
+  async onTagClick(event: AssetTagClickEvent) {
+    await this.openDeployDialog(event.asset, 'tags');
   }
 
   private addNewAsset() {
@@ -213,7 +199,7 @@ export class AssetListComponent implements OnInit {
     try {
       const savedAsset = await this.enplug.account.saveAsset(asset, options);
       this.replaceAsset(asset, savedAsset); // Instantly update the saved asset
-      this.reloadAssets(); // For consistency reload the whole list
+      await this.reloadAssets(); // For consistency reload the whole list
     } catch {}
   }
 
@@ -222,8 +208,8 @@ export class AssetListComponent implements OnInit {
 
     try {
       await this.enplug.account.updateAssetOrder(reorderedAssets);
+      await this.reloadAssets();
       this.enplug.dashboard.successIndicator(this.transloco.translate('assetList.saveReorder.success'));
-      this.reloadAssets();
     } catch (error) {
       this.enplug.dashboard.errorIndicator(this.transloco.translate('assetList.saveReorder.fail'));
       console.error('Could not save reordered assets', error);
@@ -244,5 +230,24 @@ export class AssetListComponent implements OnInit {
       const assets = await this.enplug.account.getAssets<AssetValue>();
       this.assets$.next(assets);
     } catch {}
+  }
+  
+  private setHeader() {
+    this.enplug.dashboard.setHeaderTitle('');
+    this.enplug.dashboard.setHeaderButtons([
+      {
+        text: this.transloco.translate('assetList.header.addButton'),
+        action: () => this.zone.run(() => this.addNewAsset()),
+        class: 'btn-primary'
+      },
+    ]);
+
+    this.enplug.dashboard.setDisplaySelectorCallback(displayId => {
+      this.zone.run(() => {
+        this.hasUnsavedAssetListChanges$.next(false);
+        this.selectedDisplayId$.next(displayId);
+        this.reloadAssets();
+      });
+    });
   }
 }
