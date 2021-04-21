@@ -43,14 +43,13 @@ export class AssetComponent implements OnInit {
     this.enplug.dashboard.pageLoading(false);
 
     // Keep updating the header
-    // TODO: test
     combineLatest([this.originalAsset$, this.asset$, this.hasAssets$]).pipe(
       untilDestroyed(this),
       map(([originalAsset, asset, hasAssets]) => ({
         isSaveActive: isSaveActive(originalAsset, asset),
         hasAssets
       })),
-      distinctUntilChanged(isDeepEqual)
+      distinctUntilChanged(isDeepEqual) // update header only if needed
     ).subscribe(({isSaveActive, hasAssets}) => this.setHeader(isSaveActive, hasAssets));
 
     const loadedAsset = this.route.snapshot.data?.asset || this.getInitialAsset();
@@ -65,21 +64,18 @@ export class AssetComponent implements OnInit {
     }
   }
 
-  // TODO: test
   setAssetName(newName: string) {
     this.setAsset(asset => {
       asset.Value.name = newName;
     });
   }
 
-  // TODO: test
   setSomeSetting(someSetting: string) {
     this.setAsset(asset => {
       asset.Value.someSetting = someSetting;
     });
   }
 
-  // TODO: test
   private async saveAsset() {
     const deployOptions: DeployDialogOptions = {
       showSchedule: true,
@@ -91,12 +87,13 @@ export class AssetComponent implements OnInit {
 
     try {
       const savedAsset = await this.enplug.account.saveAsset(this.asset$.value, deployOptions);
+
       if (!this.asset$.value.Id) { // missing Id means initial save
         this.hasAssets$.next(true); // if there were no assets previously - there is one now
-      } else {
-        this.asset$.next(savedAsset);
-        this.originalAsset$.next(savedAsset);
       }
+
+      this.asset$.next(savedAsset);
+      this.originalAsset$.next(savedAsset);
     } catch {}
   }
   

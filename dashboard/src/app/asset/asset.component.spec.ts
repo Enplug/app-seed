@@ -13,7 +13,7 @@ import { TranslationTestingModule } from 'app/translation-testing.module.spec';
 import { produce } from 'immer';
 import { AssetComponent } from './asset.component';
 
-fdescribe('AssetComponent', () => {
+describe('AssetComponent', () => {
   let component: AssetComponent;
   let fixture: ComponentFixture<AssetComponent>;
   let enplugService: EnplugService;
@@ -116,19 +116,20 @@ fdescribe('AssetComponent', () => {
     });
   });
 
-  // TODO: implement better setHeader update testing - based not on spies, but fake header state? or most recent calls?
   describe('header', () => {
     it('should be set if editing new asset with changes and no previous assets', async () => {
       const asset = getAssetMock();
       asset.Id = undefined; // new asset
-      activatedRoute.snapshot.data = { asset, hasAssets: false };
 
-      fixture.detectChanges();
-
+      const savedAsset = produce(asset, draft => { draft.Id = 'some-id' });
       const setHeaderTitleSpy = spyOn(enplugService.dashboard, 'setHeaderTitle').and.stub();
       const setHeaderButtonsSpy = spyOn(enplugService.dashboard, 'setHeaderButtons').and.stub();
       const setDisplaySelectorVisibilitySpy = spyOn(enplugService.dashboard, 'setDisplaySelectorVisibility').and.stub();
-      const saveAssetSpy = spyOn(enplugService.account, 'saveAsset').and.returnValue(Promise.reject()); // Simulate cancellation
+      const saveAssetSpy = spyOn(enplugService.account, 'saveAsset').and.returnValue(Promise.resolve(savedAsset)); // Simulate save
+
+      activatedRoute.snapshot.data = { asset, hasAssets: false };
+
+      fixture.detectChanges();
 
       const expectedDeployOptions: DeployDialogOptions = {
         showSchedule: true,
@@ -138,12 +139,15 @@ fdescribe('AssetComponent', () => {
         }
       };
 
+      // Add some change in the asset
       const newAsset = produce(asset, draft => {
         draft.Value.someSetting = 'changed-setting';
       });
       component.asset$.next(newAsset);
-  
-      expect(setHeaderTitleSpy).toHaveBeenCalledOnceWith('Setup');
+
+      expect(setHeaderTitleSpy).toHaveBeenCalled();
+      expect(setHeaderTitleSpy.calls.mostRecent().args).toEqual(['Setup']);
+
       expect(setHeaderButtonsSpy).toHaveBeenCalled();
       const buttons: Button[] = setHeaderButtonsSpy.calls.mostRecent().args[0];
       expect(buttons.length).toBe(1);
@@ -154,25 +158,29 @@ fdescribe('AssetComponent', () => {
       buttons[0].action.call(component);
       await fixture.whenStable();
       expect(saveAssetSpy).toHaveBeenCalledOnceWith(newAsset, expectedDeployOptions);
+      expect(component.asset$.value).toBe(savedAsset);
+      expect(component.originalAsset$.value).toBe(savedAsset);
+      expect(component.hasAssets$.value).toBe(true);
 
-      expect(setDisplaySelectorVisibilitySpy).toHaveBeenCalledOnceWith(false);
+      expect(setDisplaySelectorVisibilitySpy).toHaveBeenCalled();
+      expect(setDisplaySelectorVisibilitySpy.calls.mostRecent().args).toEqual([false]);
     });
 
     it('should be set if editing new asset without changes and with previous assets', () => {
-      const asset = getAssetMock();
-      asset.Id = undefined; // new asset
-      activatedRoute.snapshot.data = { asset, hasAssets: false };
-      
-      fixture.detectChanges();
-
       const setHeaderTitleSpy = spyOn(enplugService.dashboard, 'setHeaderTitle').and.stub();
       const setHeaderButtonsSpy = spyOn(enplugService.dashboard, 'setHeaderButtons').and.stub();
       const setDisplaySelectorVisibilitySpy = spyOn(enplugService.dashboard, 'setDisplaySelectorVisibility').and.stub();
       const navigateByUrlSpy = spyOn(router, 'navigateByUrl').and.stub();
 
-      component.hasAssets$.next(true);
+      const asset = getAssetMock();
+      asset.Id = undefined; // new asset
+      activatedRoute.snapshot.data = { asset, hasAssets: true };
+      
+      fixture.detectChanges();
 
-      expect(setHeaderTitleSpy).toHaveBeenCalledOnceWith('Setup');
+      expect(setHeaderTitleSpy).toHaveBeenCalled();
+      expect(setHeaderTitleSpy.calls.mostRecent().args).toEqual(['Setup']);
+
       expect(setHeaderButtonsSpy).toHaveBeenCalled();
       const buttons: Button[] = setHeaderButtonsSpy.calls.mostRecent().args[0];
       expect(buttons.length).toBe(2);
@@ -185,19 +193,18 @@ fdescribe('AssetComponent', () => {
       expect(buttons[1].class).toBe('btn-primary');
       expect(buttons[1].disabled).toBe(false);
 
-      expect(setDisplaySelectorVisibilitySpy).toHaveBeenCalledOnceWith(false);
+      expect(setDisplaySelectorVisibilitySpy).toHaveBeenCalled();
+      expect(setDisplaySelectorVisibilitySpy.calls.mostRecent().args).toEqual([false]);
     });
 
     it('should set buttons if editing existing asset without any changes', () => {
-      const asset = getAssetMock();
-      asset.Id = 'some-id'; // existing asset
-      activatedRoute.snapshot.data = { asset, hasAssets: false };
-      
-      fixture.detectChanges();
-
       const setHeaderButtonsSpy = spyOn(enplugService.dashboard, 'setHeaderButtons').and.stub();
 
-      component.hasAssets$.next(true); // Emit change to trigger the header update
+      const asset = getAssetMock();
+      asset.Id = 'some-id'; // existing asset
+      activatedRoute.snapshot.data = { asset, hasAssets: true };
+      
+      fixture.detectChanges();
 
       expect(setHeaderButtonsSpy).toHaveBeenCalled();
 
@@ -205,7 +212,6 @@ fdescribe('AssetComponent', () => {
       expect(buttons.length).toBe(2);
       expect(buttons[0].text).toBe('My Assets');
       expect(buttons[0].class).toBe('btn-default');
-
       expect(buttons[1].text).toBe('Save');
       expect(buttons[1].class).toBe('btn-primary');
       expect(buttons[1].disabled).toBe(true);
@@ -220,9 +226,10 @@ fdescribe('AssetComponent', () => {
 
       const setHeaderButtonsSpy = spyOn(enplugService.dashboard, 'setHeaderButtons').and.stub();
 
+      // Simulate editing the asset
       component.asset$.next(produce(asset, draft => {
         draft.Value.someSetting = 'New value';
-      })); // Emit change to trigger the header update
+      }));
 
       expect(setHeaderButtonsSpy).toHaveBeenCalled();
 
@@ -234,6 +241,34 @@ fdescribe('AssetComponent', () => {
       expect(buttons[1].text).toBe('Save');
       expect(buttons[1].class).toBe('btn-primary');
       expect(buttons[1].disabled).toBe(false);
+    });
+  });
+
+  describe('setAssetName', () => {
+    it('should update the asset name in an immutable way', () => {
+      const asset = getAssetMock();
+
+      component.asset$.next(asset);
+
+      component.setAssetName('New Asset Name');
+
+      expect(component.asset$.value).not.toBe(asset);
+      expect(asset.Value.name).toBe('Asset Name');
+      expect(component.asset$.value.Value.name).toBe('New Asset Name');
+    });
+  });
+
+  describe('setSomeSetting', () => {
+    it('should update some setting in an immutable way', () => {
+      const asset = getAssetMock();
+
+      component.asset$.next(asset);
+
+      component.setSomeSetting('New Some Setting Value');
+
+      expect(component.asset$.value).not.toBe(asset);
+      expect(asset.Value.someSetting).toBe('Setting value');
+      expect(component.asset$.value.Value.someSetting).toBe('New Some Setting Value');
     });
   });
 });
