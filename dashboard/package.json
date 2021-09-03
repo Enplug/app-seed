@@ -51,7 +51,7 @@
     "@angular/router": "^11.2.9",
     "@enplug/sdk-dashboard": "^5.3.9",
     "@ngneat/until-destroy": "^8.0.4",
-    "immer": "^9.0.1",
+    "immer": "^9.0.6",
     "ionicons": "3",
     "rxjs": "^6.6.7",
     "tslib": "^2.0.0",
