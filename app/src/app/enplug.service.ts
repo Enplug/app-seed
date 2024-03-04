@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 
-/**
- * This service proxies Enplug Player API for using in components as it is
- */
+const enplug = window['enplug'] as any;
 
 @Injectable()
 export class EnplugService {
