@@ -21,3 +21,6 @@ bower_components/
 aws.private.json
 .vscode
 .angulardoc.json
+
+# Local SSL certificates
+cert/
