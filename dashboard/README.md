@@ -1,38 +1,59 @@
-# AppSeed - Dashboard part
+# Dashboard
 
-This is a sub-repository that consists of base code for building Dashboard configuration interfaces for apps.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.14 and later upgraded to Angular 21.
 
-## Running, building and testing
+## Development server
 
-Please refer to `package.json` `scripts` section for info on running the repository.
+To start a local development server, run:
 
-It consists of all the needed scripts, running in multiple configurations.
+```bash
+ng serve
+```
 
-## Project structure
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-This project aims at providing basic info and codebase to get started with writing own Enplug Apps. Most of the code resides in `src/app`:
+## Code scaffolding
 
-- `index.html` content
-- `app/*.component.*` files contain basic components code. Main component file triggers `start()` command of the Player
-- `app.module.ts` is the main module entry
-- `app.routing.module.ts` consists of basic routing. This may be useful for implementing different app configuration interfaces (e.g. having one app handling multiple different use cases).
-- `enplug.service.ts` consists of simple service that proxies Enplug Player methods. It's recommended to separate Player calls and component code that way.
-- `translation.initializer.ts` consists of code used to bootstrap translation engine for the App
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-As with any other standard `Angular` app, `environments` directory may be used to provide environment-specific variables to the code.
+```bash
+ng generate component component-name
+```
 
-## Linting
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-This repository uses extended set of lint rules, including ordering imports, standard SCSS linter and more. 
+```bash
+ng generate --help
+```
 
-If one decides to follow practices included in the repository, we recommend installing proper extensions to IDE of choice (`stylelint` + `tslint`). 
+## Building
 
-Another way of running checks is to run either `npm run lint` or `npm run lint:fix` (linting with safe auto-fixers).
+To build the project run:
 
-## Running the app
+```bash
+ng build
+```
 
-In order to run app normally, just run proper `start` script. If you want to run the app in SSL mode, follow guidelines from main README.md first and then use `start:ssl` script.
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Further help - Angular CLI
+## Running unit tests
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+
+```bash
+ng test
+```
+
+## Running end-to-end tests
+
+For end-to-end (e2e) testing, run:
+
+```bash
+ng e2e
+```
+
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+
+## Additional Resources
+
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

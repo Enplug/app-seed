@@ -1,4 +1,4 @@
-@import 'brand';
+@use 'brand' as *;
 
 input[type="text"] {
   height: 18px;

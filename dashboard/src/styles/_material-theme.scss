@@ -1,0 +1,54 @@
+@use '@angular/material' as mat;
+$dashboard-font-family: 'proximanova', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+@include mat.core();
+
+// Custom Typography
+$custom-typography: mat.m2-define-typography-config(
+  $font-family: $dashboard-font-family,
+);
+
+@include mat.all-component-typographies($custom-typography);
+
+// Define palettes using M2 API (compatible with enplug-components2)
+$primary-palette: (
+  50: #e3f0ff,
+  100: #b9d9ff,
+  200: #8cc1ff,
+  300: #5ea9ff,
+  400: #3d96ff,
+  500: #356bba,
+  600: #2d5fa8,
+  700: #234f91,
+  800: #1a407a,
+  900: #0e2d5c,
+  contrast: (
+    50: rgba(black, 0.87),
+    100: rgba(black, 0.87),
+    200: rgba(black, 0.87),
+    300: rgba(black, 0.87),
+    400: white,
+    500: white,
+    600: white,
+    700: white,
+    800: white,
+    900: white,
+  )
+);
+
+$my-primary: mat.m2-define-palette($primary-palette, 500);
+$my-accent: mat.m2-define-palette($primary-palette, 500);
+$my-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$dashboard-theme: mat.m2-define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+    warn: $my-warn,
+  )
+));
+
+// Apply the theme
+html {
+  @include mat.all-component-themes($dashboard-theme);
+}

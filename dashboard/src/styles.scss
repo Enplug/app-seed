@@ -1,12 +1,53 @@
-@import '~styles/bootstrap';
-@import '~styles/brand';
-@import '~styles/card';
-@import '~styles/fonts';
-@import '~styles/input';
-@import '~styles/layout';
-@import '~styles/typography';
+@use 'styles/bootstrap';
+@use 'styles/brand';
+@use 'styles/card';
+@use 'styles/fonts';
+@use 'styles/input';
+@use 'styles/layout';
+@use 'styles/typography';
+@use 'styles/material-theme';
+@use 'styles/mat-overrides';
+@use '@enplug/components2/src/lib/styles' as enplug;
+
+$enplug-font-family: 'proximanova', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 html, body {
   box-sizing: border-box;
-  font-family: 'proximanova', sans-serif;
+  font-family: $enplug-font-family;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: inherit;
+}
+
+/* ==========================================================================
+   CDK Drag & Drop - Global Styles for Asset List Table
+   ========================================================================== */
+
+/* Estilo del preview - la fila clonada mientras se arrastra */
+
+/* Placeholder - donde se soltará el elemento */
+.cdk-drag-placeholder {
+  background: #e3f2fd !important;
+  border: 2px dashed #356bba !important;
+  border-radius: 4px !important;
+  opacity: 1 !important;
+
+  td {
+    visibility: hidden;
+  }
+}
+
+/* Animación suave al soltar */
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+/* Estilo de la lista mientras se arrastra */
+.cdk-drop-list-dragging {
+  .mat-mdc-row:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
 }

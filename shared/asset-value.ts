@@ -4,5 +4,7 @@
 
 export interface AssetValue {
   name: string;
+  Name?: string;
   someSetting: string;
+  IsTemplate?: boolean;
 }

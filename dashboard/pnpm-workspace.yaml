@@ -1,0 +1,46 @@
+# pnpm workspace configuration
+
+# Native dependency build scripts. Kept disabled (matches the previous pnpm 10
+# behavior where these were ignored and the build still succeeded); avoids
+# running third-party postinstall scripts.
+allowBuilds:
+  '@parcel/watcher': false
+  esbuild: false
+  lmdb: false
+  msgpackr-extract: false
+
+# minimumReleaseAge: Minimum time in minutes that must elapse from the release
+# of a package before pnpm installs it helps avoid compromised versions
+minimumReleaseAge: 1440 # 24 hours (value is in minutes)
+
+# Exclude the first-party @enplug libraries from minimumReleaseAge so the seed
+# can consume freshly published versions immediately (low supply-chain risk).
+minimumReleaseAgeExclude:
+  - '@enplug/components2'
+
+# Dependency overrides (pnpm 11 reads these here, no longer from the package.json "pnpm" field)
+overrides:
+  # Local Angular 21 build of @enplug/components2 — uncomment to consume the
+  # library from a local build instead of the published version (local dev only).
+  # '@enplug/components2': 'file:../../enplug-ui-libs/enplug-components2/dist/components2'
+  # Security pins
+  axios: '>=1.13.5'
+  form-data: '>=2.5.4'
+  '@isaacs/brace-expansion': '>=5.0.1'
+  'brace-expansion@^1': '>=1.1.13'
+  'brace-expansion@^2': '>=2.0.2'
+  'minimatch@^3': '>=3.1.4'
+  'minimatch@^9': '>=9.0.7'
+  'minimatch@^10': '>=10.2.3'
+  picomatch: '>=2.3.2'
+  flatted: '>=3.4.2'
+  immutable: '>=5.1.5'
+  tough-cookie: '>=4.1.3'
+  ajv: '>=6.14.0'
+  qs: '>=6.14.2'
+  lodash: '>=4.18.0'
+  lodash-es: '>=4.18.0'
+  socket.io-parser: '>=4.2.6'
+  follow-redirects: '>=1.16.0'
+  postcss: '>=8.5.10'
+  diff: '>=4.0.4'
