@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-
+import { inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
 import { EnplugService } from '../services/enplug.service';
 
-@Injectable()
-export class HasAssetsResolver implements Resolve<boolean> {
-  constructor(private enplug: EnplugService) { }
-
-  async resolve(route: ActivatedRouteSnapshot): Promise<boolean> {
-    const assets = await this.enplug.account.getAssets();
+export const hasAssetsResolver: ResolveFn<boolean> = async () => {
+  const enplug = inject(EnplugService);
+  try {
+    const assets = await enplug.account.getAssets();
     return assets?.length > 0;
+  } catch {
+    return false;
   }
-}
+};

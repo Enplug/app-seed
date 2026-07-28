@@ -1,0 +1,55 @@
+{
+  "dashboard": {
+    "title": "Dashboard"
+  },
+  "assetList": {
+    "mySigns": {
+      "duplicateAsset": {
+        "defaultCopyName": "{{assetName}} copy",
+        "inProgress": "Duplicating {{assetName}}...",
+        "success": "{{assetName}} duplicated",
+        "failed": "Could not duplicate asset"
+      },
+      "removeAssetConfirmDialog": {
+        "title": "Delete asset?",
+        "text": "Are you sure you want to delete {{assetName}} from your assets? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirmDelete": "Delete"
+      },
+      "removeAsset": {
+        "inProgress": "Deleting {{assetName}}",
+        "success": "Deleted {{assetName}}",
+        "failed": "Could not delete configuration"
+      },
+      "reorderAssets": {
+        "inProgress": "Saving order",
+        "success": "Saved order",
+        "failed": "Could not save reordered assets"
+      },
+      "reorderSaveConfirmDialog": {
+        "title": "Confirm Reordering",
+        "text": {
+          "accountView": "You are currently viewing your account library. Reordering signs will affect all Display Groups. To change signs on a specific Display Group, please visit your Display Group Library. Do you still want to change the order?",
+          "filteredView": "You currently have filters enabled. Any changes you make in this view will place the selected signs together as a group in your playlist. To change the order of individual signs, please remove your filter."
+        },
+        "confirmReorder": "Reorder"
+      },
+      "editName": {
+        "failed": "Could not update asset name"
+      },
+      "removeSelectedAssets": {
+        "title": "Delete selected assets?",
+        "confirmText": "Are you sure you want to delete {{count}} assets? This action cannot be undone.",
+        "confirmTextSingular": "Are you sure you want to delete this asset? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "inProgress": "Deleting assets...",
+        "success": "Deleted {{count}} assets",
+        "failed": "Could not delete selected assets"
+      }
+    },
+    "header": {
+      "addButton": "Add"
+    }
+  }
+}

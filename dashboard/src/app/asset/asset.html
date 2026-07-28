@@ -1,0 +1,92 @@
+<!-- 
+  ASSET DETAIL PAGE TEMPLATE
+  ==========================
+  This is a template for the asset detail/edit page.
+  Add your app-specific configuration sections below.
+  
+  Pattern based on: enplug-ui-apps/abn-live/dashboard
+  
+  Key features to implement:
+  - Asset name editing
+  - App-specific settings
+  - Theme selection (if applicable)
+  - Webhook configuration (if applicable)
+  - Any other asset-specific configuration
+-->
+
+<div class="asset-detail">
+  <!-- Name Section -->
+  <section class="container">
+    <div class="col-sm-3 section-summary">
+      <h3>Name</h3>
+      <p>Set a name for this asset to easily identify it in your asset list.</p>
+    </div>
+    <div class="col-sm-9">
+      <div class="card">
+        <div class="card-content">
+          <enplug-text-input
+            label="Asset Name"
+            [placeholder]="namePlaceholder"
+            [(ngModel)]="asset.Value.name"
+            (valueChange)="onAssetChange()"
+          ></enplug-text-input>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Configuration Section -->
+  <section class="container">
+    <div class="col-sm-3 section-summary">
+      <h3>Configuration</h3>
+      <p>Configure the settings for this asset.</p>
+    </div>
+    <div class="col-sm-9">
+      <div class="card">
+        <div class="card-content">
+          <enplug-text-input
+            label="Some Setting"
+            placeholder="Enter value"
+            [(ngModel)]="asset.Value.someSetting"
+            (valueChange)="onAssetChange()"
+          ></enplug-text-input>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+    TODO: Add more sections as needed for your app
+    
+    Examples:
+    - Theme selection
+    - Media upload
+    - Webhook configuration
+    - Data source settings
+    - Display options
+    - Schedule settings
+  -->
+
+  <!-- Placeholder Section for Additional Features -->
+  <section class="container">
+    <div class="col-sm-3 section-summary">
+      <h3>Additional Settings</h3>
+      <p>Add your app-specific settings here.</p>
+    </div>
+    <div class="col-sm-9">
+      <div class="card">
+        <div class="card-content placeholder-content">
+          <p class="placeholder-text">
+            This is a placeholder section. Replace this with your app-specific configuration options.
+          </p>
+          <ul class="placeholder-list">
+            <li>Theme selection</li>
+            <li>Media upload</li>
+            <li>Data source configuration</li>
+            <li>Display options</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

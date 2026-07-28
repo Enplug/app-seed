@@ -1,0 +1,61 @@
+@use "@angular/material" as mat;
+@use "brand" as *;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+:root {
+  @include mat.form-field-overrides(
+    (
+      // outlined-outline-color: colors.$border-color,
+      /* outlined-hover-outline-color: colors.$border-color,
+    outlined-focus-outline-color: colors.$border-color, */
+    )
+  );
+}
+
+/* Global Material Form Field Overrides - Remove gray background */
+.mat-mdc-form-field {
+  .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+    background-color: transparent !important;
+  }
+  
+  .mdc-text-field--filled .mdc-text-field__ripple::before,
+  .mdc-text-field--filled .mdc-text-field__ripple::after {
+    background-color: transparent !important;
+  }
+  
+  // Remove focus background
+  .mdc-text-field--filled:not(.mdc-text-field--disabled):hover,
+  .mdc-text-field--filled:not(.mdc-text-field--disabled):focus,
+  .mdc-text-field--filled:not(.mdc-text-field--disabled):focus-within,
+  .mdc-text-field--filled.mdc-text-field--focused:not(.mdc-text-field--disabled) {
+    background-color: transparent !important;
+  }
+  
+  .mat-mdc-text-field-wrapper:hover,
+  .mat-mdc-text-field-wrapper:focus,
+  .mat-mdc-text-field-wrapper:focus-within {
+    background-color: transparent !important;
+  }
+  
+  .mdc-text-field--filled:hover::before,
+  .mdc-text-field--filled:focus::before,
+  .mdc-text-field--filled.mdc-text-field--focused::before {
+    opacity: 0 !important;
+    background-color: transparent !important;
+  }
+}
+
+/* CDK Overlay - ensure mat-select dropdown works correctly */
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
+
+.cdk-overlay-pane {
+  z-index: 10001 !important;
+}
+
+/* Mat Select Panel */
+.mat-mdc-select-panel {
+  background: #fff;
+  box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+}

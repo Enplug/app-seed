@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 /* ==========================================================================
    Brand variables
    ========================================================================== */
@@ -11,7 +13,7 @@ $box-shadow:            0 0 0 1px rgba(39,44,48,0.05), 0 2px 7px 1px rgba(39,44,
 ========================================================================== */
 $brand-primary:         #4078C0 ; // we need a rich blue
 $brand-secondary:       #798c9c ;
-$brand-primary-dark:    darken($brand-primary, 5);
+$brand-primary-dark:    color.adjust($brand-primary, $lightness: -5%);
 $brand-success:         #6CC644 ;
 $brand-info:            #23b7e5 ;
 $brand-warning:         #ff902b ;
@@ -21,13 +23,13 @@ $brand-selected:        #FFFBE9 ;
 
 $gray:                  #798c9c;
 $gray-dark:             #31373D;
-$gray-darker:           darken($gray, 35);
-$gray-light:            lighten($gray, 10);
-$gray-light-medium:     lighten($gray, 25);
-$gray-lighter:          lighten($gray, 40);
+$gray-darker:           color.adjust($gray, $lightness: -35%);
+$gray-light:            color.adjust($gray, $lightness: 10%);
+$gray-light-medium:     color.adjust($gray, $lightness: 25%);
+$gray-lighter:          color.adjust($gray, $lightness: 40%);
 $border-color:          #ebeef0;
-$border-color-dark:     darken($border-color, 5);
-$gray-bg:               lighten($gray-lighter, 3);
+$border-color-dark:     color.adjust($border-color, $lightness: -5%);
+$gray-bg:               color.adjust($gray-lighter, $lightness: 3%);
 
 $brand-secondary-dark:  $gray-dark;
 $brand-secondary-darker: $gray-darker;

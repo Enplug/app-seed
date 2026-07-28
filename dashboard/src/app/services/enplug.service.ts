@@ -1,12 +1,8 @@
 import { Injectable } from '@angular/core';
 
-/**
- * An angular service wrapper on Enplug Dashboard SDK.
- */
+declare const enplug: any;
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class EnplugService {
   dashboard = enplug.dashboard;
   account = enplug.account;

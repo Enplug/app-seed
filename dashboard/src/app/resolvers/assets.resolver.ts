@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-
+import { inject } from '@angular/core';
+import { ResolveFn } from '@angular/router';
 import { EnplugService } from '../services/enplug.service';
+import { AssetValue } from '../../../../shared/asset-value';
+import { Asset } from './asset.resolver';
 
-@Injectable()
-export class AssetsResolver implements Resolve<any[]> {
-  constructor(private enplug: EnplugService) { }
-
-  resolve(route: ActivatedRouteSnapshot) {
-    return this.enplug.account.getAssets();
+export const assetsResolver: ResolveFn<Asset<AssetValue>[]> = async () => {
+  const enplug = inject(EnplugService);
+  try {
+    return await enplug.account.getAssets();
+  } catch {
+    return [];
   }
-}
+};
