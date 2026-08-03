@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 
-/**
- * This service proxies Enplug Player API for using in components as it is
- */
+declare const enplug: any;
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class EnplugService {
   appStatus = enplug.appStatus;
   assets = enplug.assets;
   notifications = enplug.notifications;
   playRecorder = enplug.playRecorder;
   settings = enplug.settings;
+  signageOs = enplug.signageOs;
   on = enplug.on;
   off = enplug.off;
   once = enplug.once;
