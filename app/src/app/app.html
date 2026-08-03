@@ -1,0 +1,39 @@
+<div class="appseed">
+  <!-- Loading State -->
+  <div class="appseed__loading" *ngIf="isLoading">
+    <div class="appseed__spinner"></div>
+    <p>Loading asset...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="appseed__error" *ngIf="hasError && !isLoading">
+    <p>Unable to load content</p>
+  </div>
+
+  <!-- Image Asset -->
+  <div 
+    class="appseed__image" 
+    *ngIf="!isLoading && !hasError && assetType === 'image'"
+    [ngStyle]="imageAssetStyle">
+  </div>
+
+  <!-- Video Asset -->
+  <div 
+    class="appseed__video" 
+    *ngIf="!isLoading && !hasError && assetType === 'video'">
+    <p class="appseed__video-placeholder">Video: {{ asset?.Name }}</p>
+    <!-- Add video player component here when needed -->
+  </div>
+
+  <!-- Custom Asset -->
+  <div 
+    class="appseed__custom" 
+    *ngIf="!isLoading && !hasError && assetType === 'custom' && asset">
+    <h1 class="appseed__title">{{ asset.Name }}</h1>
+    <div class="appseed__content">
+      <!-- Add your custom content here -->
+      <p>Asset Type: {{ assetType }}</p>
+      <p>Display Config: 4K={{ displayConfig?.is4K }}, SignageOS={{ displayConfig?.isSignageOs }}</p>
+    </div>
+  </div>
+</div>
