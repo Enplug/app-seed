@@ -1,8 +1,0 @@
-{
-  "staticResources": [
-  ],
-  "noCorsUrls": [
-    "google-analytics.com"
-  ],
-  "refreshUrls": {}
-}
